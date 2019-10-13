@@ -4,6 +4,7 @@ import Places.ChickenFarm;
 import Places.CowFarm;
 import Places.WheatFarm;
 import Simulations.Simulate;
+import UserCode.Actions.Action;
 import UserInterfaces.Ui;
 import org.json.simple.JSONObject;
 
