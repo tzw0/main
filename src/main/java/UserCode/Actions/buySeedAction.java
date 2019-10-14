@@ -4,6 +4,7 @@ import Places.ChickenFarm;
 import Places.CowFarm;
 import Places.WheatFarm;
 import Simulations.Simulate;
+import Simulations.Simulation;
 import UserCode.Actions.Action;
 import UserInterfaces.Ui;
 import org.json.simple.JSONObject;
@@ -20,7 +21,7 @@ public class BuySeedAction extends Action {
     @Override
     public int execute(Ui ui) {
         wheatFarm.buySeeds();
-        new Simulate(ui, "BuySeed", 3).simulate();
+        new Simulate(ui, Simulation.BUYSEED).simulate();
         ui.show("Buying seeds!");
         return moneyChange;
     }
