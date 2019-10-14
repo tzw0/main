@@ -3,6 +3,7 @@ package UserCode.Tasks;
 import UserCode.Actions.Action;
 import UserCode.Actions.PlantSeedAction;
 import FarmioExceptions.FarmioException;
+import UserCode.Conditions.BooleanConditionType;
 import UserCode.Conditions.ConditionChecker;
 import UserCode.Conditions.Condition;
 import UserInterfaces.Ui;
@@ -16,17 +17,18 @@ public abstract class Task {
         this.condition = condition;
         this.action = action;
     }
-
+    /**
     public Task(JSONObject obj) throws FarmioException {
-        this.condition = Condition.valueOf((String) obj.get("condition"));
+        this.condition = BooleanConditionType.valueOf((String) obj.get("condition"));
         this.action = parseJsonAction((JSONObject) obj.get("action"));
+    }**/
+
+    public boolean checkCondition() {
+        return condition.check();
+
     }
 
-    protected boolean checkCondition() {
-        return ConditionChecker.check(condition, action.extractWheatFarm(), action.extractChickenFarm(), action.extractCowFarm());
-    }
-
-    public abstract int execute(Ui ui);
+    public abstract void execute(Ui ui);
 
     private Action parseJsonAction(JSONObject obj) throws FarmioException {
         Action action;
@@ -42,7 +44,7 @@ public abstract class Task {
 
     public JSONObject toJSON(){
         JSONObject obj = new JSONObject();
-        obj.put("condition", condition.name());
+        //obj.put("condition", condition.name());
         obj.put("action", action.toJSON());
         return obj;
     }
