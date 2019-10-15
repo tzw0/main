@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -51,6 +52,44 @@ public class Ui {
         }
         return output;
     }
+
+    private String blankSpace(int n) {
+        String output = "";
+        for (int i = 0; i < n; i ++) {
+            output += " ";
+        }
+        return output;
+    }
+
+    public ArrayList<String> loadStage(String path, int frame) {
+        String filepath = "./src/main/resources/asciiArt/" + path + "/frame" + frame + ".txt";
+        ArrayList<String> output = new ArrayList<>();
+        try {
+            BufferedReader bufferreader = new BufferedReader(new FileReader(filepath));
+            String line;
+            while ((line = bufferreader.readLine()) != null) {
+                if (line.length() < 55) {
+                    int padding_left = (55 - line.length()) / 2;
+                    int padding_right = 55 - line.length() - padding_left;
+                    line = blankSpace(padding_left) + line + blankSpace(padding_right);
+                } else if (line.length() > 55) {
+                    line = blankSpace(55);
+                }
+                output.add("|"+ AsciiColours.BACKGROUND_WHITE + AsciiColours.BLACK + line + AsciiColours.SANE +"|");
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        if (output.size() < 18) {
+            for (int i = 0; i < 18 - output.size(); i ++) {
+                output.add(blankSpace(55));
+            }
+        }
+        return output;
+    }
+
     public void showMenu(boolean hasSave) {
         show("Menu:");
         if(hasSave){
@@ -87,6 +126,7 @@ public class Ui {
     }
     public void typeWriter(String text) { //use terminal to see full effects, in console only seem to beline by line..
         int i;
+        System.out.print(">>> ");
         try{
             Thread.sleep(1500);//0.5s pause between characters
         }catch(InterruptedException ex){
@@ -95,7 +135,7 @@ public class Ui {
         for(i = 0; i < text.length(); i++) {
             System.out.printf("%c", text.charAt(i));
             try{
-                Thread.sleep(150);//0.5s pause between characters
+                Thread.sleep(120);//0.5s pause between characters
             }catch(InterruptedException ex){
                 Thread.currentThread().interrupt();
             }

@@ -1,6 +1,7 @@
 import Commands.Command;
 import FarmioExceptions.FarmioException;
 import UserCode.Conditions.ConditionChecker;
+import UserInterfaces.GameConsole;
 import UserInterfaces.Ui;
 import org.json.simple.parser.ParseException;
 
@@ -79,10 +80,11 @@ public class Farmio {
 
     private void displayWelcome() {
         ui.clearScreen();
-        displayArt("welcome");
-        ui.show("Press ENTER to continue.");
-//        ui.typeWriter("Typewriter test message here"); //does not work in console, only terminal, uncomment to test
-        ui.getEnter();
+//        displayArt("welcome");
+//        ui.show("Press ENTER to continue.");
+//        ui.getEnter();
+        ui.show(GameConsole.content(ui.loadStage("levelTemplate", 1)));
+        ui.typeWriter("story/instructions go here typewriter style...\t\t\t\tpress Enter to continue\n");
     }
 
     private void displayMenu(){

@@ -51,10 +51,15 @@ public class Storage {
         }
         return art.toString();
     }
+
+    public String getLevel(int level) throws IOException {
+        //runs level
+        return "";
+    }
     private File getResourceFile(String name) throws FarmioException {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(name + ".txt");
-        if(resource == null){
+        if (resource == null) {
             throw new FarmioException("Game is corrupted!");
         }
         return new File(resource.getFile());
