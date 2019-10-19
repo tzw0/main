@@ -111,7 +111,7 @@ public class GameConsole {
         Map<String, Integer> dummy = new HashMap< String,Integer>();
         dummy.put("Seeds", 3);
         dummy.put("Chicken", 1);
-        dummy.put("Wheat", 0);
+        dummy.put("Wheat", 1);
         dummy.put("Cow", 0);
         return dummy;
     }

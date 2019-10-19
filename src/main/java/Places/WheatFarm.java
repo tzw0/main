@@ -17,9 +17,9 @@ public class WheatFarm extends Farm {
     }
 
     public WheatFarm() {
-        seeds = 0;
-        greenWheat = 0;
-        ripeWheat = 0;
+        seeds = 1;
+        greenWheat = 1;
+        ripeWheat = 1;
     }
 
     public WheatFarm(JSONObject obj){
@@ -41,7 +41,7 @@ public class WheatFarm extends Farm {
     }
 
     public void buySeeds() {
-        seeds += 100;
+        seeds += 5;
     }
 
     public void plantSeeds() {
@@ -51,6 +51,11 @@ public class WheatFarm extends Farm {
     public void harvestWheat() {
         ripeWheat += greenWheat;
         greenWheat = 0;
+    }
+    public int sellWheat() {
+        int units = ripeWheat;
+        ripeWheat = 0;
+        return units;
     }
     @Override
     public int sell() {

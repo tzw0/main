@@ -3,13 +3,8 @@ package UserCode.Actions;
 
 import Farmio.Farmio;
 import FarmioExceptions.FarmioException;
-import Places.ChickenFarm;
-import Places.CowFarm;
-import Places.WheatFarm;
-import Places.Market;
 import FrontEnd.Ui;
 import Farmio.Farmer;
-import org.json.simple.JSONObject;
 
 public abstract class Action {
     Farmer farmer;
@@ -30,7 +25,7 @@ public abstract class Action {
         this.farmio = farmio;
     }
 
-    public abstract void execute(Ui ui);
+    public abstract void execute(Ui ui) throws FarmioException;
 
     public static boolean validateAction(String userInput) {
         for (ActionType type : ActionType.values()) {
@@ -60,6 +55,8 @@ public abstract class Action {
                 return new SellWheatAction(farmio);
             case gotoMarket:
                 return new GotoMarketAction(farmio);
+            case gotoWheatFarm:
+                return new GotoWheatFarmAction(farmio);
             default:
             throw new FarmioException("Error Creating Action!");
         }

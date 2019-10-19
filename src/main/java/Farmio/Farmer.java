@@ -115,7 +115,7 @@ public class Farmer {
         this.money = money;
     }
 
-    public void changeMoney(int change) { money -= change; }
+    public void changeMoney(int change) { money += change; }
 
     public int getCurrentTask() {return this.currentTask;}
     public void nextLevel(){
