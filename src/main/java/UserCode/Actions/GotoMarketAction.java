@@ -13,7 +13,7 @@ public class GotoMarketAction extends Action {
     public void execute(Ui ui) {
         try {
             Simulation GotoMarketSimulation = new Simulation("GotoMarketSimulation", super.farmio);
-            farmer.changeLocation("-Traveling-");
+            farmer.changeLocation("Traveling");
             GotoMarketSimulation.animate(1, 11);
             farmer.changeLocation("Market");
             GotoMarketSimulation.delayFrame(12, 1000);
