@@ -138,60 +138,60 @@ public class Level {
      * @param farmer Farmer object
      * @return Feedback on incomplete objectives
      */
-    private List<String> checkIncompleteObjectives(Farmer farmer) {
-        List<String> output = new ArrayList<String>();
-        int seeds = farmer.wheatFarm.getSeeds();
-        int wheat = farmer.wheatFarm.getWheat();
-        int grain = farmer.wheatFarm.getGrain();
-        int gold = farmer.getGold();
-        double levelNumber = farmer.getLevel();
-        if (levelNumber == 1.1) {
-            return output;
-        }
-
-        if (levelNumber == 1.2) {
-            if (seeds != endSeeds) {
-
-                int balancedWheatSeed = endSeeds - seeds;
-
-                output.add(" Seeds left :" + balancedWheatSeed);
-            } else {
-                output.add(" Seeds Completed");
-            }
-        }
-
-        if (levelNumber == 1.5) {
-            if (grain != endGrain) {
-                int balancedWheatRipe =   grain - endGrain;
-                output.add(" | Grain left :" + balancedWheatRipe);
-            } else {
-                output.add(" | Grain completed");
-            }
-        }
-
-        if (levelNumber == 1.6 || levelNumber == 1.5) {
-            if (gold != endGold) {
-
-                int balancedGold = endGold - gold;
-                output.add(" Gold required :" + balancedGold);
-
-            } else {
-                output.add(" gold Completed");
-            }
-        }
-
-
-        if (levelNumber == 1.4) {
-            if (grain != endGrain) {
-                int balancedWheatRipe = endGrain - grain;
-                output.add(" | Grain left :" + balancedWheatRipe);
-            } else {
-                output.add(" | Grain completed");
-            }
-        }
-
-        return output;
-    }
+//    private List<String> checkIncompleteObjectives(Farmer farmer) {
+//        List<String> output = new ArrayList<String>();
+//        int seeds = farmer.wheatFarm.getSeeds();
+//        int wheat = farmer.wheatFarm.getWheat();
+//        int grain = farmer.wheatFarm.getGrain();
+//        int gold = farmer.getGold();
+//        double levelNumber = farmer.getLevel();
+//        if (levelNumber == 1.1) {
+//            return output;
+//        }
+//
+//        if (levelNumber == 1.2) {
+//            if (seeds != endSeeds) {
+//
+//                int balancedWheatSeed = endSeeds - seeds;
+//
+//                output.add(" Seeds left :" + balancedWheatSeed);
+//            } else {
+//                output.add(" Seeds Completed");
+//            }
+//        }
+//
+//        if (levelNumber == 1.5) {
+//            if (grain != endGrain) {
+//                int balancedWheatRipe =   grain - endGrain;
+//                output.add(" | Grain left :" + balancedWheatRipe);
+//            } else {
+//                output.add(" | Grain completed");
+//            }
+//        }
+//
+//        if (levelNumber == 1.6 || levelNumber == 1.5) {
+//            if (gold != endGold) {
+//
+//                int balancedGold = endGold - gold;
+//                output.add(" Gold required :" + balancedGold);
+//
+//            } else {
+//                output.add(" gold Completed");
+//            }
+//        }
+//
+//
+//        if (levelNumber == 1.4) {
+//            if (grain != endGrain) {
+//                int balancedWheatRipe = endGrain - grain;
+//                output.add(" | Grain left :" + balancedWheatRipe);
+//            } else {
+//                output.add(" | Grain completed");
+//            }
+//        }
+//
+//        return output;
+//    }
 
     /**
      * Splits string by | to List of Strings.
@@ -303,8 +303,8 @@ public class Level {
             String feedback = "tasks have yet to be completed";
             output.add(feedback);
             if (detailedFeedbackProvided) {
-                output.add("detailed feedback : -- \n");
-                output.addAll(checkIncompleteObjectives(farmer));
+//                output.add("detailed feedback : -- \n");
+//                output.addAll(checkIncompleteObjectives(farmer));
             }
             output.add("Press [ENTER] to continue the game or enter [reset] to restart the level");
             return output;
