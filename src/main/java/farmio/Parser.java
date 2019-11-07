@@ -23,8 +23,8 @@ import commands.CommandTaskDelete;
 import commands.CommandTaskDeleteAll;
 import commands.CommandTaskEdit;
 import commands.CommandTaskInsert;
-import commands.CommandTasksHint;
-import commands.CommandTasksRun;
+import commands.CommandTaskHint;
+import commands.CommandTaskRun;
 import usercode.tasks.Task;
 import usercode.tasks.IfTask;
 import usercode.tasks.ForTask;
@@ -75,7 +75,7 @@ public class Parser {
         case LEVEL_START:
             return new CommandLevelStart();
         case RUNNING_DAY:
-            return new CommandTasksRun();
+            return new CommandTaskRun();
         case CHECK_OBJECTIVES:
             return new CommandCheckObjectives();
         case DAY_START:
@@ -159,7 +159,7 @@ public class Parser {
                 || userInput.startsWith("for") || userInput.startsWith("while")) {
             return new CommandTaskCreate(parseTask(userInput));
         } else if (userInput.equals("hint")) {
-            return new CommandTasksHint();
+            return new CommandTaskHint();
         } else if (userInput.equals("")) {
             return new CommandTaskAddReset();
         }

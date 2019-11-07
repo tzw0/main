@@ -5,7 +5,7 @@ import farmio.Farmio;
 import farmio.Level;
 import frontend.Ui;
 
-public class CommandTasksHint extends Command {
+public class CommandTaskHint extends Command {
 
     /**
      * Print hint or instructions for current level.
