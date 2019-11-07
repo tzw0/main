@@ -10,6 +10,8 @@ public class UiDummy implements Ui {
         uiTestString = "";
     }
 
+    public void removeClearScreen() { }
+
     public void show(String message) {
         uiTestString += "show";
     }

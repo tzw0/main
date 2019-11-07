@@ -43,6 +43,7 @@ public class Farmio {
             setupLogger();
             LOGGER.log(java.util.logging.Level.INFO, "New game session started.");
             if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
+                ui.removeClearScreen();
                 AsciiColours.inActivate();
             }
             Command command;
