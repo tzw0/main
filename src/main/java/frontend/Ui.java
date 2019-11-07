@@ -1,8 +1,16 @@
 package frontend;
 
+import exceptions.FarmioFatalException;
+import farmio.Level;
+
 import java.util.Scanner;
 
 public interface Ui {
+    /**
+     * Removes the clear screen string if the OS is windows
+     */
+    void removeClearScreen();
+
     /**
      * Prints the message in the terminal.
      * @param message to be printed.
@@ -49,7 +57,12 @@ public interface Ui {
      */
     void sleep(int delay);
 
+    /**
+     * shows a hint.
+     * @param text the text to be shown as a hint
+     */
     void showHint(String text);
+
 
     /**
      * Prints text to the terminal type writer style.
@@ -57,4 +70,13 @@ public interface Ui {
      * @param hasPressEnter if 'Press ENTER' should be added to the print.
      */
     void typeWriter(String text, boolean hasPressEnter);
+
+    /**
+     * Prints the Narrative of a given level with a simulation instance.
+     * @param level that the narrative is to be shown.
+     * @param simulation that the simulation of the level will utilise.
+     * @throws FarmioFatalException if simulation file is not found
+     */
+    void showNarrative(Level level, Simulation simulation) throws FarmioFatalException;
+
 }
