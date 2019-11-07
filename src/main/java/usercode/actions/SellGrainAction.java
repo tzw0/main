@@ -10,9 +10,9 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 
-public class SellWheatAction extends Action {
+public class SellGrainAction extends Action {
 
-    public SellWheatAction() {
+    public SellGrainAction() {
         super(ActionType.sellGrain);
     }
 
