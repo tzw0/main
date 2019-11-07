@@ -255,8 +255,6 @@ public class Level {
         return output;
     }
 
-    //only applicable if level fails
-    //todo convert detailed feedback to List<String>
     /**
      * Feedback on failed objectives.
      * @param farmio farmio
