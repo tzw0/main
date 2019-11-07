@@ -11,10 +11,10 @@ import places.Farm;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FrontEndTest {
+public class SimulationTest {
     Farmio farmio;
 
-    public FrontEndTest() throws FarmioFatalException{
+    public SimulationTest() throws FarmioFatalException{
         farmio = new Farmio();
         farmio.setUi(new UiDummy());
         farmio.setLevel(new Level(farmio.getStorage().getLevel(1.1), "tester"));
@@ -57,41 +57,8 @@ public class FrontEndTest {
             Level level = farmio.getLevel();
             Ui ui = farmio.getUi();
             ui.showNarrative(level, farmio.getSimulation());
-            assert ("inputsleepclearshowtypewriter".repeat(level.getNarratives().size())
-                    + "levelBegin").equals(UiDummy.uiTestString);
-            levelId = farmio.getFarmer().nextLevel();
+            System.out.println(UiDummy.output);
+            UiDummy.output = new StringBuffer();
         }
-    }
-    @Test
-    void warningTest() {
-        UiDummy.uiTestString = "";
-        farmio.getUi().showWarning("");
-        assertEquals("warning", UiDummy.uiTestString);
-    }
-    @Test
-    void errorTest() {
-        UiDummy.uiTestString = "";
-        farmio.getUi().showError("");
-        assertEquals("error", UiDummy.uiTestString);
-    }
-    @Test
-    void infoTest() {
-        UiDummy.uiTestString = "";
-        farmio.getUi().showInfo("");
-        assertEquals("info", UiDummy.uiTestString);
-    }
-
-    @Test
-    void hintTest() {
-        UiDummy.uiTestString = "";
-        farmio.getUi().showHint("");
-        assertEquals("hint", UiDummy.uiTestString);
-    }
-
-    @Test
-    void exitTest() {
-        UiDummy.uiTestString = "";
-        farmio.getUi().showExit();
-        assertEquals("exit", UiDummy.uiTestString);
     }
 }

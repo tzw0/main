@@ -51,28 +51,6 @@ public class UiDummy implements Ui {
 
     public void typeWriter(String text, boolean hasPressEnter) {
         uiTestString += "typewriter";
-        int lineLength = 0;
-        if (!text.isBlank()) {
-            output.append(">>> ");
-        }
-        sleep(150);
-        for (int i = 0; i < text.length(); i++) {
-            output.append(text.charAt(i));
-            lineLength++;
-            if (lineLength > GameConsole.FULL_CONSOLE_WIDTH - 10 && text.charAt(i) == ' ') {
-                output.append("\n    ");
-                lineLength = 0;
-            } else if (text.charAt(i) == '\n') {
-                output.append("    ");
-                lineLength = 0;
-            }
-            sleep(10);
-        }
-        if (hasPressEnter) {
-            show("\n\n" + " ".repeat(GameConsole.FULL_CONSOLE_WIDTH - GameConsole.USER_CODE_SECTION_WIDTH)
-                    + "Press [ENTER] to continue..");
-        }
-        show("");
     }
 
     /**
