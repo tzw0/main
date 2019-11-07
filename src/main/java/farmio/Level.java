@@ -145,11 +145,11 @@ public class Level {
         int grain = farmer.wheatFarm.getGrain();
         int gold = farmer.getGold();
         double levelNumber = farmer.getLevel();
-        if(levelNumber == 1.1){
+        if (levelNumber == 1.1) {
             return output;
         }
 
-        if(levelNumber == 1.2) {
+        if (levelNumber == 1.2) {
             if (seeds != endSeeds) {
 
                 int balancedWheatSeed = endSeeds - seeds;
@@ -160,7 +160,7 @@ public class Level {
             }
         }
 
-        if(levelNumber == 1.5) {
+        if (levelNumber == 1.5) {
             if (grain != endGrain) {
                 int balancedWheatRipe =   grain - endGrain;
                 output.add(" | Grain left :" + balancedWheatRipe);
@@ -169,7 +169,7 @@ public class Level {
             }
         }
 
-        if(levelNumber == 1.6 || levelNumber == 1.5){
+        if (levelNumber == 1.6 || levelNumber == 1.5) {
             if (gold != endGold) {
 
                 int balancedGold = endGold - gold;
@@ -181,7 +181,7 @@ public class Level {
         }
 
 
-        if(levelNumber == 1.4) {
+        if (levelNumber == 1.4) {
             if (grain != endGrain) {
                 int balancedWheatRipe = endGrain - grain;
                 output.add(" | Grain left :" + balancedWheatRipe);
@@ -246,15 +246,13 @@ public class Level {
         List<String> modifieduserTaskList = convertTaskListFormat(userTaskList);
 
         if (levelNumber == 1.5) {
-                output.add("for this level you need to check for presence of grain by using the if command before");
-                output.add("using the do command to sell your grain");
+            output.add("for this level you need to check for presence of grain by using the if command before");
+            output.add("using the do command to sell your grain");
 
-            }
+        }
         return output;
     }
 
-    //only applicable if level fails
-    //todo convert detailed feedback to List<String>
     /**
      * Feedback on failed objectives.
      * @param farmio farmio
@@ -263,10 +261,10 @@ public class Level {
     public List<String> getDetailedFeedback(Farmio farmio) {
         List<String> output = new ArrayList<String>();
         double levelNumber = farmio.getFarmer().getLevel(); // unsure if this is needed rn
-        output.add(" The objective of this level was to " + objective );
+        output.add(" The objective of this level was to " + objective);
         output.add("\nUnfortunately you were unable to complete within the allocated time of " + deadline + " days");
 
-        output.add( "\nYour actions ");
+        output.add("\nYour actions ");
         output.add(farmio.getFarmer().tasks.toString());
 
         output.addAll(getPermutationFeedback(farmio, levelNumber));
