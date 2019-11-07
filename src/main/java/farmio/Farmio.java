@@ -54,17 +54,7 @@ public class Farmio {
                 ui.showWarning(e.getMessage());
             }
             while (!isExit) {
-                try {
-                    if (Stage.noInput.contains(stage)) {
-                        command = Parser.parse(" ", stage);
-                    } else {
-                        command = Parser.parse(ui.getInput(), stage);
-                    }
-                    command.execute(this);
-                } catch (FarmioException e) {
-                    simulation.simulate();
-                    ui.showWarning(e.getMessage());
-                }
+                Logic.execute(stage, this);
             }
         } catch (FarmioFatalException e) {
             ui.showError(e.getMessage());
