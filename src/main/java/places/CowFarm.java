@@ -130,6 +130,9 @@ public class CowFarm extends Farm {
     @Override
     public JSONObject toJson() {
         JSONObject obj = new JSONObject();
+        obj.put(JSON_KEY_COW, cow);
+        obj.put(JSON_KEY_FULLCOW, fullCow);
+        obj.put(JSON_KEY_MILK, milk);
         return obj;
     }
 }
