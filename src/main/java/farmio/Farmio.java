@@ -4,8 +4,10 @@ import commands.Command;
 import commands.CommandWelcome;
 import exceptions.FarmioException;
 import exceptions.FarmioFatalException;
+import frontend.AsciiColours;
 import frontend.Simulation;
 import frontend.Ui;
+import frontend.UiManager;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -15,7 +17,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Farmio {
-    private final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private Storage storage;
     private Farmer farmer;
     private Simulation simulation;
@@ -24,10 +26,13 @@ public class Farmio {
     private boolean isExit;
     private Stage stage;
 
+    /**
+     * Farmio constructor used to initiate an instance of Farmio.
+     */
     public Farmio() {
         storage = new StorageManager();
         farmer = new Farmer();
-        ui = new Ui();
+        ui = new UiManager();
         simulation = new Simulation(this);
         stage = Stage.WELCOME;
         isExit = false;
@@ -37,6 +42,9 @@ public class Farmio {
         try {
             setupLogger();
             LOGGER.log(java.util.logging.Level.INFO, "New game session started.");
+            if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
+                AsciiColours.inActivate();
+            }
             Command command;
             command = new CommandWelcome();
             try {
@@ -82,8 +90,12 @@ public class Farmio {
         DAY_START,
         LEVEL_END,
         LEVEL_FAILED;
-
-        public static EnumSet<Stage> noInput = EnumSet.of(LEVEL_START, RUNNING_DAY, CHECK_OBJECTIVES, DAY_START, LEVEL_END, LEVEL_FAILED);
+        public static EnumSet<Stage> noInput = EnumSet.of(LEVEL_START,
+                RUNNING_DAY,
+                CHECK_OBJECTIVES,
+                DAY_START,
+                LEVEL_END,
+                LEVEL_FAILED);
         public static EnumSet<Stage> reqInput = EnumSet.complementOf(noInput);
     }
 
@@ -99,7 +111,9 @@ public class Farmio {
         return farmer;
     }
 
-    public Simulation getSimulation() {return simulation;}
+    public Simulation getSimulation() {
+        return simulation;
+    }
 
     public Stage getStage() {
         return stage;
@@ -117,6 +131,10 @@ public class Farmio {
         this.stage = stage;
     }
 
+    public void setUi(Ui dummyUi) {
+        ui = dummyUi;
+    }
+
     public void setLevel(Level level) {
         this.level = level;
     }
@@ -127,9 +145,9 @@ public class Farmio {
 
     private void setupLogger() throws FarmioFatalException {
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-        Logger rootLogger = Logger.getLogger("global");
+        Logger rootLogger = Logger.getLogger("");
         Handler[] handlers = rootLogger.getHandlers();
-        for(Handler handler: handlers){
+        for (Handler handler : handlers) {
             rootLogger.removeHandler(handler);
         }
         logger.setLevel(java.util.logging.Level.INFO);
@@ -137,7 +155,8 @@ public class Farmio {
         try {
             handler = new FileHandler("farmio.log");
         } catch (IOException e) {
-            throw new FarmioFatalException("Failed to access \'farmio.log\'.\nPlease try running farmio in another directory.");
+            throw new FarmioFatalException("Failed to access \'farmio.log\'."
+                    + "\nPlease try running farmio in another directory.");
         }
         handler.setFormatter(new SimpleFormatter());
         logger.addHandler(handler);

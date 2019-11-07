@@ -2,11 +2,11 @@ package commands;
 
 import exceptions.FarmioFatalException;
 import farmio.Farmio;
-import farmio.Menu;
 import frontend.Ui;
 
 public class CommandShowList extends Command {
     private String filePath;
+
     public CommandShowList(String listPath) {
         filePath = listPath;
     }
@@ -17,13 +17,12 @@ public class CommandShowList extends Command {
      * @throws FarmioFatalException if Simulation file cannot be found.
      */
     @Override
-
     public void execute(Farmio farmio) throws FarmioFatalException {
         Ui ui = farmio.getUi();
         double level = farmio.getFarmer().getLevel();
         farmio.getSimulation().simulate(filePath, (int)(level * 10),false);
 
-        ui.show("Press [Enter] to go back to game");
+        ui.show("Press [ENTER] to go back to game");
     }
 
 }

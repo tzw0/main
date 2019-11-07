@@ -3,7 +3,11 @@ package farmio;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Arrays;
 
 public class Level {
     private ArrayList<String> narratives;
@@ -24,9 +28,9 @@ public class Level {
     private ObjectiveResult levelState;
 
     /**
-     * Intitalises variables based off values obtain form the JSON File
-     * @param object JSON Object
-     * @param name player name
+     * Intitalises variables based off values obtain form the JSON File.
+     * @param object JSON Object to be parsed.
+     * @param name player's name
      */
     public Level(JSONObject object, String name) {
         JSONArray array = (JSONArray) object.get("narratives");
@@ -132,6 +136,7 @@ public class Level {
     }
 
     /**
+<<<<<<< HEAD
      * Checks for incomplete objectives and returns feedback on objectives.
      * @param farmer Farmer object
      * @return Feedback on incomplete objectives
@@ -192,6 +197,45 @@ public class Level {
     }
 
     /**
+||||||| merged common ancestors
+     * Checks for incomplete objectives and returns feedback on objectives.
+     * @param farmer Farmer object
+     * @return Feedback on incomplete objectives
+     */
+    private String checkIncompleteObjectives(Farmer farmer) {
+        //todo -Level-dependant objective checker
+        String output = "";
+        int seeds = farmer.wheatFarm.getSeeds();
+        int wheat = farmer.wheatFarm.getWheat();
+        int grain = farmer.wheatFarm.getGrain();
+
+        if (seeds != endSeeds) {
+            int balancedWheatSeed = endSeeds - seeds;
+            output += " Seeds left :"  + balancedWheatSeed;
+        } else {
+            output += " Seeds Completed";
+        }
+
+        if (wheat != endWheat) {
+            int balancedWheatGreen = endWheat - wheat;
+            output += " | Wheat left :"  + balancedWheatGreen;
+        } else {
+            output += " | Wheat Completed";
+        }
+
+        if (grain != endGrain) {
+            int balancedWheatRipe = endGrain - grain;
+            output += " | Grain left :" + balancedWheatRipe;
+        } else {
+            output += " | Grain Completed";
+        }
+
+        return output;
+    }
+
+    /**
+=======
+>>>>>>> upstream/master
      * Splits string by | to List of Strings.
      * @param modelAnswer String to be split
      * @return List of Strings
@@ -306,7 +350,7 @@ public class Level {
                 output.add("detailed feedback : -- \n");
                 output.addAll(checkIncompleteObjectives(farmer)); //todo
             }
-            output.add("Press [ENTER] to continue the game or [RESET] to restart the level");
+            output.add("Press [ENTER] to continue the game or enter [reset] to restart the level");
             return output;
         } else if (currentLevelState == ObjectiveResult.FAILED) {
             String feedback = "Oh no! The objectives were not met by the deadline! Level failed ! \n";
@@ -320,10 +364,6 @@ public class Level {
             return  output;
         }
         return output;
-    }
-
-    public ObjectiveResult getLevelState() {
-        return levelState;
     }
 
     /**
