@@ -7,6 +7,11 @@ import java.util.Scanner;
 
 public interface Ui {
     /**
+     * Removes the clear screen string if the OS is windows
+     */
+    void removeClearScreen();
+
+    /**
      * Prints the message in the terminal.
      * @param message to be printed.
      */
@@ -73,4 +78,5 @@ public interface Ui {
      * @throws FarmioFatalException if simulation file is not found
      */
     void showNarrative(Level level, Simulation simulation) throws FarmioFatalException;
+
 }
