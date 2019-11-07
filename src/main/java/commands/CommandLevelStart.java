@@ -20,7 +20,7 @@ public class CommandLevelStart extends Command {
         storage.storeFarmer(farmer);
         Level level = new Level(storage.getLevel(farmer.getLevel()),farmer.getName());
         farmio.setLevel(level);
-        farmio.getUi().showNarrative(level, farmio.getSimulation());
+        farmio.getSimulation().showNarrative();
         farmio.setStage(Farmio.Stage.TASK_ADD);
     }
 }

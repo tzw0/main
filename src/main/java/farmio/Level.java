@@ -25,8 +25,6 @@ public class Level {
 
     private boolean detailedFeedbackProvided = false;
 
-    private ObjectiveResult levelState;
-
     /**
      * Intitalises variables based off values obtain form the JSON File.
      * @param object JSON Object to be parsed.
@@ -173,34 +171,6 @@ public class Level {
 
         }
         return splitTaskList;
-    }
-
-    /**
-     * Returns the feedback based off the different permutations of tasks when the level failes.
-     * @param farmio farmio current state
-     * @param levelNumber the level the game is currently running
-     * @return feedback on failed tasks
-     */
-    public String getPermutationFeedback(Farmio farmio,double levelNumber) {
-        //todo convert to some sort of metric for future iterations
-        List<String> userTaskList = farmio.getFarmer().tasks.toStringArray();
-        List<String> modelTaskList = convertStringToList(modelAnswer);
-        List<String> modifieduserTaskList = convertTaskListFormat(userTaskList);
-
-        if (levelNumber == 1.4) {
-            for (int i = 0; i < userTaskList.size(); i++) {
-                //action checker
-                String[] userTaskString = userTaskList.get(i).split("\\s+");
-                String[] modelTaskString = modelTaskList.get(i).split("\\s+");
-                /*
-                String[] userTask = userTaskString.split("\\s+");
-                String[] modelTaskString = modelTaskString.split("\\s+");
-                */
-            }
-        }
-
-        //return  levelParser(userTaskList, modelAnswer);
-        return "getPermutation Feedback";
     }
 
     //only applicable if level fails

@@ -1,3 +1,4 @@
+import exceptions.FarmioException;
 import exceptions.FarmioFatalException;
 import farmio.Farmer;
 import farmio.Farmio;
@@ -48,17 +49,32 @@ public class SimulationTest {
         farmio.getSimulation().simulate("Test", 3, 0, true);
         assertEquals("sleepclearshow".repeat(4), UiDummy.uiTestString);
     }
+
     @Test
-    void NarrativeSimulationTest() throws FarmioFatalException {
+    void narrativeSimulationContinueTest() throws FarmioFatalException {
+        UiDummy.input = "";
         double levelId = 1.1;
         while (levelId != 0) {
             UiDummy.uiTestString = "";
             farmio.setLevel(new Level(farmio.getStorage().getLevel(levelId), "tester"));
             Level level = farmio.getLevel();
-            Ui ui = farmio.getUi();
-            ui.showNarrative(level, farmio.getSimulation());
-            System.out.println(UiDummy.output);
-            UiDummy.output = new StringBuffer();
+            farmio.getSimulation().showNarrative();
+            assert ("inputsleepclearshowtypewriter".repeat(level.getNarratives().size())
+                    + "levelBegin").equals(UiDummy.uiTestString);
+            levelId = farmio.getFarmer().nextLevel();
+        }
+    }
+
+    @Test
+    void narrativeSimulationSkipTest() throws FarmioFatalException {
+        UiDummy.input = "skip";
+        double levelId = 1.1;
+        while (levelId != 0) {
+            UiDummy.uiTestString = "";
+            farmio.setLevel(new Level(farmio.getStorage().getLevel(levelId), "tester"));
+            farmio.getSimulation().showNarrative();
+            assert ("inputsleepclearshowtypewriterlevelBegin").equals(UiDummy.uiTestString);
+            levelId = farmio.getFarmer().nextLevel();
         }
     }
 }
