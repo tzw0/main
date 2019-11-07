@@ -1,6 +1,6 @@
 import exceptions.FarmioException;
 import org.junit.jupiter.api.Test;
-import usercode.actions.BuySeedAction;
+import usercode.actions.BuySeedsAction;
 import usercode.conditions.BooleanCondition;
 import usercode.conditions.BooleanConditionType;
 import usercode.tasks.DoTask;
@@ -19,7 +19,7 @@ public class TaskListTest {
     public void testTaskAdd() {
         try {
             tasks.clear();
-            DoTask t = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedAction());
+            DoTask t = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
             tasks.addTask(t);
             assertEquals(tasks.size(), 1);
             tasks.addTask(t);
@@ -33,7 +33,7 @@ public class TaskListTest {
     @Test
     public void testTaskAddCap() {
         try {
-            DoTask t = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedAction());
+            DoTask t = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
             while (tasks.size() < 18) {
                 tasks.addTask(t);
             }
@@ -47,8 +47,8 @@ public class TaskListTest {
 
     @Test
     public void testTaskEdit() throws FarmioException {
-        DoTask t1 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedAction());
-        DoTask t2 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedAction());
+        DoTask t1 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
+        DoTask t2 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
         try {
             tasks.clear();
             assertEquals(tasks.size(), 0);
@@ -76,8 +76,8 @@ public class TaskListTest {
 
     @Test
     public void testTaskInsert() {
-        DoTask t1 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedAction());
-        DoTask t2 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedAction());
+        DoTask t1 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
+        DoTask t2 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
         try {
             tasks.clear();
             for (int i = 0; i < 3; i++) {
@@ -105,8 +105,8 @@ public class TaskListTest {
     @Test
     public void testTaskDelete() throws FarmioException {
         try {
-            DoTask t1 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedAction());
-            DoTask t2 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedAction());
+            DoTask t1 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
+            DoTask t2 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
             tasks.deleteAll();
             assertEquals(tasks.size(), 0);
             tasks.addTask(t1);

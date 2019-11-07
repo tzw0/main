@@ -25,8 +25,6 @@ public class Level {
 
     private boolean detailedFeedbackProvided = true;
 
-    private ObjectiveResult levelState;
-
     /**
      * Intitalises variables based off values obtain form the JSON File.
      * @param object JSON Object to be parsed.

@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public interface Ui {
     /**
-     * Removes the clear screen string if the OS is windows
+     * Removes the clear screen string if the OS is windows.
      */
     void removeClearScreen();
 
@@ -72,11 +72,7 @@ public interface Ui {
     void typeWriter(String text, boolean hasPressEnter);
 
     /**
-     * Prints the Narrative of a given level with a simulation instance.
-     * @param level that the narrative is to be shown.
-     * @param simulation that the simulation of the level will utilise.
-     * @throws FarmioFatalException if simulation file is not found
+     * Shows the level begin String.
      */
-    void showNarrative(Level level, Simulation simulation) throws FarmioFatalException;
-
+    void showLevelBegin();
 }

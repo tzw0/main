@@ -2,7 +2,6 @@ import farmio.Level;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.Test;
 
 public class LevelTest {
     String object = " " +
@@ -31,7 +30,6 @@ public class LevelTest {
     JSONObject json = (JSONObject) parser.parse(object);
 
 
-    @Test
     public LevelTest() throws ParseException {
        Level level = new Level(json, "tester");
 

@@ -16,10 +16,11 @@ public class ValueCondition extends Condition {
     private int value;
 
     /**
-     * ValueCondition Summary.
-     * @param type something
-     * @param comparator something
-     * @param value something
+     * Constructor for ValueCondition
+     *
+     * @param type asset type from ValueConditionType enum
+     * @param comparator comparatore from Comparator enum
+     * @param value integer value to compare the asset against
      */
     public ValueCondition(ValueConditionType type, Comparator comparator, int value) {
         super(Type.VALUE);
