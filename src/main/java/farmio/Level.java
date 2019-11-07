@@ -207,19 +207,6 @@ public class Level {
         return splitTaskList;
     }
 
-    /* //todo - possible refactor/ creation of levelParsed Class
-    //need to refactor to a levelParser class
-    public String levelParser(List<String> userTaskList, String modelAnswer){
-        //separate user list into arraylist , separate model ans into subsections
-        List<String> modelTaskList = convertStringToList(modelAnswer);
-        List<String> modifieduserTaskList = convertTaskListFormat(userTaskList);
-        //compare the two given
-        //i need to print out what it looks like on the
-       return "model ans";
-    }
-    */
-
-
     /**
      * Returns the feedback based off the different permutations of tasks when the level failes.
      * @param farmio farmio current state
@@ -250,7 +237,6 @@ public class Level {
 
     //only applicable if level fails
     //todo convert detailed feedback to List<String>
-
     /**
      * Feedback on failed objectives.
      * @param farmio farmio
@@ -278,7 +264,6 @@ public class Level {
      */
     public List<String> getSuccessfulFeedback() {
         List<String> output = new ArrayList<String>();
-        //String output = "";
         for (String x: successfulFeedback) {
             output.add(x);
         }
