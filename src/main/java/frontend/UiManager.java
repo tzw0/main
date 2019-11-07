@@ -18,6 +18,12 @@ public class UiManager implements Ui {
     }
 
     /**
+     * Removes the clear screen string if the OS is windows
+     */
+    public void removeClearScreen() {
+        this.clearScreen = "";
+    }
+    /**
      * Prints the message in the terminal.
      *
      * @param message to be printed.
