@@ -19,7 +19,7 @@ public class Level {
     public String modelAnswer;
     public ArrayList<String> successfulFeedback;
 
-    private boolean detailedFeedbackProvided = false;
+    private boolean detailedFeedbackProvided = true;
 
     private ObjectiveResult levelState;
 
@@ -136,32 +136,56 @@ public class Level {
      * @param farmer Farmer object
      * @return Feedback on incomplete objectives
      */
-    private String checkIncompleteObjectives(Farmer farmer) {
-        //todo -Level-dependant objective checker
-        String output = "";
+    private List<String> checkIncompleteObjectives(Farmer farmer) {
+        List<String> output = new ArrayList<String>();
         int seeds = farmer.wheatFarm.getSeeds();
         int wheat = farmer.wheatFarm.getWheat();
         int grain = farmer.wheatFarm.getGrain();
-
-        if (seeds != endSeeds) {
-            int balancedWheatSeed = endSeeds - seeds;
-            output += " Seeds left :"  + balancedWheatSeed;
-        } else {
-            output += " Seeds Completed";
+        int gold = farmer.getGold();
+        double levelNumber = farmer.getLevel();
+        if(levelNumber == 1.1){
+            return output;
         }
 
-        if (wheat != endWheat) {
-            int balancedWheatGreen = endWheat - wheat;
-            output += " | Wheat left :"  + balancedWheatGreen;
-        } else {
-            output += " | Wheat Completed";
+        if(levelNumber == 1.2) {
+            if (seeds != endSeeds) {
+
+                int balancedWheatSeed = endSeeds - seeds;
+
+                output.add(" Seeds left :" + balancedWheatSeed);
+            } else {
+                output.add(" Seeds Completed");
+            }
         }
 
-        if (grain != endGrain) {
-            int balancedWheatRipe = endGrain - grain;
-            output += " | Grain left :" + balancedWheatRipe;
-        } else {
-            output += " | Grain Completed";
+        if(levelNumber == 1.5) {
+            if (grain != endGrain) {
+                int balancedWheatRipe =   grain - endGrain;
+                output.add(" | Grain left :" + balancedWheatRipe);
+            } else {
+                output.add(" | Grain completed");
+            }
+        }
+
+        if(levelNumber == 1.6 || levelNumber == 1.5){
+            if (gold != endGold) {
+
+                int balancedGold = endGold - gold;
+                output.add(" Gold required :" + balancedGold);
+
+            } else {
+                output.add(" gold Completed");
+            }
+        }
+
+
+        if(levelNumber == 1.4) {
+            if (grain != endGrain) {
+                int balancedWheatRipe = endGrain - grain;
+                output.add(" | Grain left :" + balancedWheatRipe);
+            } else {
+                output.add(" | Grain completed");
+            }
         }
 
         return output;
@@ -180,7 +204,6 @@ public class Level {
         return  modelTaskList;
     }
 
-    //todo- logical error correction
     /**
      * Converts numbered format for tasks to a  standard format Strings.
      * @param taskList  List of strings to be converted
@@ -213,26 +236,19 @@ public class Level {
      * @param levelNumber the level the game is currently running
      * @return feedback on failed tasks
      */
-    public String getPermutationFeedback(Farmio farmio,double levelNumber) {
+    public List<String> getPermutationFeedback(Farmio farmio,double levelNumber) {
+        List<String> output = new ArrayList<String>();
         //todo convert to some sort of metric for future iterations
         List<String> userTaskList = farmio.getFarmer().tasks.toStringArray();
         List<String> modelTaskList = convertStringToList(modelAnswer);
         List<String> modifieduserTaskList = convertTaskListFormat(userTaskList);
 
-        if (levelNumber == 1.4) {
-            for (int i = 0; i < userTaskList.size(); i++) {
-                //action checker
-                String[] userTaskString = userTaskList.get(i).split("\\s+");
-                String[] modelTaskString = modelTaskList.get(i).split("\\s+");
-                /*
-                String[] userTask = userTaskString.split("\\s+");
-                String[] modelTaskString = modelTaskString.split("\\s+");
-                */
-            }
-        }
+        if (levelNumber == 1.5) {
+                output.add("for this level you need to check for presence of grain by using the if command before");
+                output.add("using the do command to sell your grain");
 
-        //return  levelParser(userTaskList, modelAnswer);
-        return "getPermutation Feedback";
+            }
+        return output;
     }
 
     //only applicable if level fails
@@ -242,18 +258,16 @@ public class Level {
      * @param farmio farmio
      * @return feedback
      */
-    public String getDetailedFeedback(Farmio farmio) {
+    public List<String> getDetailedFeedback(Farmio farmio) {
+        List<String> output = new ArrayList<String>();
         double levelNumber = farmio.getFarmer().getLevel(); // unsure if this is needed rn
-        String output = "";
-        output += " The objective of this level was to " + objective;
-        output += "\nUnfortunately you were unable to complete within the allocated time of " + deadline + " days";
+        output.add(" The objective of this level was to " + objective );
+        output.add("\nUnfortunately you were unable to complete within the allocated time of " + deadline + " days");
 
-        //Iterate through task list
-        output += "\nYour actions ";
-        output += farmio.getFarmer().tasks.toString();
+        output.add( "\nYour actions ");
+        output.add(farmio.getFarmer().tasks.toString());
 
-        //todo complete perm
-        //output += getPermutationFeedback(farmio, levelNumber);
+        output.addAll(getPermutationFeedback(farmio, levelNumber));
 
         return output;
     }
@@ -289,9 +303,8 @@ public class Level {
             String feedback = "tasks have yet to be completed";
             output.add(feedback);
             if (detailedFeedbackProvided) {
-                //add enter and day end
-                feedback += "detailed feedback : -- \n";
-                feedback += checkIncompleteObjectives(farmer);
+                output.add("detailed feedback : -- \n");
+                output.addAll(checkIncompleteObjectives(farmer)); //todo
             }
             output.add("Press [ENTER] to continue the game or [RESET] to restart the level");
             return output;
@@ -299,7 +312,7 @@ public class Level {
             String feedback = "Oh no! The objectives were not met by the deadline! Level failed ! \n";
             output.add(feedback);
             if (detailedFeedbackProvided) { //todo -redo this code
-                // feedback +=  getDetailedFeedback(farmio); // only applicable for failed levels
+                output.addAll(getDetailedFeedback(farmio));
             }
             return output;
         } else if (currentLevelState == ObjectiveResult.INVALID) {

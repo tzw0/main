@@ -123,6 +123,7 @@ public class Farmer {
         return gold > 0;
     }
 
+
     /**
      * Gets user level.
      * @return the user level.
