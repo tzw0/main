@@ -164,10 +164,10 @@ public class GameConsole {
         for (String s: userCode) {
             if (i == currentTask && !hasFailedCurrentTask) {
                 userCodeOutput.add(AsciiColours.HIGHLIGHT + horizontalPanel(s, USER_CODE_SECTION_WIDTH)
-                        + AsciiColours.SANE + "|");
+                        + AsciiColours.SANE + "|<<");
             } else if (i == currentTask) {
                 userCodeOutput.add(AsciiColours.ERROR + horizontalPanel(s, USER_CODE_SECTION_WIDTH)
-                        + AsciiColours.SANE + "|");
+                        + AsciiColours.SANE + "|X");
             } else {
                 userCodeOutput.add(horizontalPanel(s, USER_CODE_SECTION_WIDTH) + "|");
             }
