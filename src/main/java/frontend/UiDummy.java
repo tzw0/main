@@ -5,9 +5,11 @@ import farmio.Level;
 
 public class UiDummy implements Ui {
     public static String uiTestString;
+    public static StringBuffer output;
 
     public UiDummy() {
         uiTestString = "";
+        output = new StringBuffer();
     }
 
     public void show(String message) {
@@ -49,10 +51,28 @@ public class UiDummy implements Ui {
 
     public void typeWriter(String text, boolean hasPressEnter) {
         uiTestString += "typewriter";
-    }
-
-    private void showLevelBegin() {
-        uiTestString += "levelBegin";
+        int lineLength = 0;
+        if (!text.isBlank()) {
+            output.append(">>> ");
+        }
+        sleep(150);
+        for (int i = 0; i < text.length(); i++) {
+            output.append(text.charAt(i));
+            lineLength++;
+            if (lineLength > GameConsole.FULL_CONSOLE_WIDTH - 10 && text.charAt(i) == ' ') {
+                output.append("\n    ");
+                lineLength = 0;
+            } else if (text.charAt(i) == '\n') {
+                output.append("    ");
+                lineLength = 0;
+            }
+            sleep(10);
+        }
+        if (hasPressEnter) {
+            show("\n\n" + " ".repeat(GameConsole.FULL_CONSOLE_WIDTH - GameConsole.USER_CODE_SECTION_WIDTH)
+                    + "Press [ENTER] to continue..");
+        }
+        show("");
     }
 
     /**
@@ -71,6 +91,6 @@ public class UiDummy implements Ui {
         getInput();
         simulation.simulate(level.getPath(), frameId);
         typeWriter("", true);
-        showLevelBegin();
+        uiTestString += "levelBegin";
     }
 }
