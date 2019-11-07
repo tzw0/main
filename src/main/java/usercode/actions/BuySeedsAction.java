@@ -11,9 +11,9 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 
-public class BuySeedAction extends Action {
+public class BuySeedsAction extends Action {
 
-    public BuySeedAction() {
+    public BuySeedsAction() {
         super(ActionType.buySeeds);
     }
 
