@@ -115,7 +115,6 @@ public class Level {
      */
     public ObjectiveResult checkAnswer(Farmio farmio) {
         if (farmio.getFarmer().isHasfailedCurrentTask()) {
-            farmio.getFarmer().resetTaskFailed();
             return ObjectiveResult.INVALID;
         }
         Farmer farmer = farmio.getFarmer();
@@ -319,7 +318,7 @@ public class Level {
             return output;
         } else if (currentLevelState == ObjectiveResult.INVALID) {
             output.add("Oh no! There has been an error during code execution!");
-            return  output;
+            return output;
         }
         return output;
     }

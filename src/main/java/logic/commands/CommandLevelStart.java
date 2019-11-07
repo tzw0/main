@@ -15,6 +15,7 @@ public class CommandLevelStart extends Command {
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
         Storage storage = farmio.getStorage();
+        farmio.getFarmer().resetTaskFailed();
         Farmer farmer = farmio.getFarmer();
         storage.storeFarmer(farmer);
         Level level = new Level(storage.getLevel(farmer.getLevel()),farmer.getName());
