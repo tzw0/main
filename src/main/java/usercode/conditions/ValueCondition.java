@@ -16,7 +16,7 @@ public class ValueCondition extends Condition {
     private int value;
 
     /**
-     * Constructor for ValueCondition
+     * Constructor for ValueCondition .
      *
      * @param type asset type from ValueConditionType enum
      * @param comparator comparatore from Comparator enum
