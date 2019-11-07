@@ -3,6 +3,7 @@ package frontend;
 import exceptions.FarmioFatalException;
 import farmio.Farmio;
 import farmio.Farmer;
+import farmio.Level;
 import farmio.Storage;
 
 public class Simulation {
@@ -110,5 +111,38 @@ public class Simulation {
         farmer = farmio.getFarmer();
         ui.sleep(SLEEP_TIME);
         ui.clearScreen();
+    }
+
+    /**
+     * Prints the Narrative of a given level with a simulation instance.
+     * @throws FarmioFatalException if simulation file is not found
+     */
+    public void showNarrative() throws FarmioFatalException {
+        ui = farmio.getUi();
+        storage = farmio.getStorage();
+        farmer = farmio.getFarmer();
+        Level level = farmio.getLevel();
+        int frameId = 0;
+        int lastFrameId = level.getNarratives().size() - 1;
+        for (String narrative: level.getNarratives()) {
+            String userInput;
+            userInput = ui.getInput();
+            while (!userInput.equals("") && !userInput.toLowerCase().equals("skip")) {
+                simulate();
+                ui.showWarning("Invalid Command for story mode!");
+                ui.show("Story segment only accepts [skip] to skip the story or pressing [ENTER] to continue with the "
+                        + "narrative.\nIf you wish to use other commands, enter [skip] followed by entering the "
+                        + "command of your choice.");
+                userInput = ui.getInput();
+            }
+            if (userInput.toLowerCase().equals("skip") || frameId == lastFrameId) {
+                break;
+            }
+            simulate(level.getPath(), frameId++);
+            ui.typeWriter(narrative, true);
+        }
+        simulate(level.getPath(), lastFrameId);
+        ui.typeWriter(level.getNarratives().get(lastFrameId), false);
+        ui.showLevelBegin();
     }
 }

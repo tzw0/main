@@ -46,7 +46,7 @@ public class Farmer {
      */
     public Farmer() {
         this.gold = 10;
-        this.level = 1.1; // temp relaced
+        this.level = 1.1;
         this.day = 1;
         this.location = "WheatFarm";
         this.wheatFarm = new WheatFarm();
@@ -158,10 +158,10 @@ public class Farmer {
         return gold > 0;
     }
 
-     /**
-     * Gets user level.
-     * @return the user level.
-     */
+    /**
+    * Gets user level.
+    * @return the user level.
+    */
     public double getLevel() {
         return level;
     }

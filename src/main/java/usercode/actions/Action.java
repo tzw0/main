@@ -62,13 +62,13 @@ public abstract class Action {
         }
         switch (actionType) {
         case buySeeds:
-            return new BuySeedAction();
+            return new BuySeedsAction();
         case harvestWheat:
             return new HarvestWheatAction();
         case plantSeeds:
-            return new PlantSeedAction();
+            return new PlantSeedsAction();
         case sellGrain:
-            return new SellWheatAction();
+            return new SellGrainAction();
         case gotoMarket:
             return new GotoMarketAction();
         case gotoWheatFarm:
