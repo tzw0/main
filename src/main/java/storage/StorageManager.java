@@ -30,7 +30,7 @@ public class StorageManager implements Storage {
     /**
      * Storage constructor to initialise storage object.
      */
-    StorageManager() {
+    public StorageManager() {
         jsonFarmer = null;
     }
 
