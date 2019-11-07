@@ -1,10 +1,14 @@
 package frontend;
 
+import exceptions.FarmioFatalException;
+import farmio.Level;
+
 import java.util.Scanner;
 
 public class UiManager implements Ui {
     private Scanner scanner;
-    private final String CLEAR_SCREEN = "\033c" + "\033[2J";
+    private String clearScreen = "\033c" + "\033[2J";
+
 
     /**
      * Creates a user interface object.
@@ -15,10 +19,19 @@ public class UiManager implements Ui {
 
     /**
      * Prints the message in the terminal.
+     *
      * @param message to be printed.
      */
     public void show(String message) {
         System.out.println(message);
+    }
+
+    /**
+     * Prints the message in the terminal without a new line.
+     * @param message to be printed.
+     */
+    private void print(String message) {
+        System.out.print(message);
     }
 
     /**
@@ -30,6 +43,7 @@ public class UiManager implements Ui {
 
     /**
      * Prints an error in the terminal.
+     *
      * @param message to be printed as an error.
      */
     public void showError(String message) {
@@ -38,6 +52,7 @@ public class UiManager implements Ui {
 
     /**
      * Prints a warning in the terminal.
+     *
      * @param message as the warning message.
      */
     public void showWarning(String message) {
@@ -48,11 +63,12 @@ public class UiManager implements Ui {
      * Clears the screen.
      */
     public void clearScreen() {
-        System.out.println(CLEAR_SCREEN);
+        System.out.println(clearScreen);
     }
 
     /**
      * Prints a message as an info.
+     *
      * @param message as the info message.
      */
     public void showInfo(String message) {
@@ -61,64 +77,77 @@ public class UiManager implements Ui {
 
     /**
      * Gets user input.
+     *
      * @return the user input.
      */
     public String getInput() {
         show("\nInput: ");
-        return scanner.nextLine().replace("[","").replace("]","");
+        return scanner.nextLine().replace("[", "").replace("]", "");
     }
 
     /**
      * Delays the program.
+     *
      * @param delay time in milliseconds.
      */
     public void sleep(int delay) {
         try {
             Thread.sleep(delay);
-        } catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
             clearScreen();
             showWarning("Simulator refersh interrupted! Interface may not display correctly.");
         }
     }
 
+    /**
+     * Display hints to the levels onto console.
+     * @param text hint to be displayed.
+     */
     public void showHint(String text) {
-        show(AsciiColours.YELLOW + "Hint:" + AsciiColours.SANE);
+        show(AsciiColours.YELLOW
+                + "Hint:"
+                + AsciiColours.SANE);
         show(text);
         show("~.Enter [Start] when you are ready to complete the objective");
     }
 
     /**
+     * Shows the level begin String.
+     */
+    private void showLevelBegin() {
+        show("\n"
+                + " ".repeat(GameConsole.FULL_CONSOLE_WIDTH / 2 - 8)
+                + AsciiColours.GREEN
+                + AsciiColours.UNDERLINE
+                + "[LEVEL BEGIN]"
+                + AsciiColours.SANE
+                + "\n\n       "
+                + "Enter [start] if you are ready to complete the objective or Enter [hint] if you get stuck!");
+    }
+
+    /**
      * Prints text to the terminal type writer style.
+     *
      * @param text to be printed.
      * @param hasPressEnter if 'Press ENTER' should be added to the print.
      */
-    public void typeWriter(String text, boolean hasPressEnter) { //TODO clean this method up
-        final char LEVEL_BEGIN_PLACEHOLDER = '~';
-        boolean isNewline = false;
+
+    public void typeWriter(String text, boolean hasPressEnter) {
         int lineLength = 0;
-        if (!text.isBlank()) System.out.print(">>> ");
+        if (!text.isBlank()) {
+            print(">>> ");
+        }
         sleep(150);
         for (int i = 0; i < text.length(); i++) {
+            System.out.printf("%c", text.charAt(i));
             lineLength++;
             if (lineLength > GameConsole.FULL_CONSOLE_WIDTH - 10 && text.charAt(i) == ' ') {
-                System.out.print("\n   ");
+                print("\n    ");
                 lineLength = 0;
             } else if (text.charAt(i) == '\n') {
-                isNewline = true;
+                print("    ");
                 lineLength = 0;
-            } else if (text.charAt(i) == LEVEL_BEGIN_PLACEHOLDER) {
-                System.out.println("\n" + " ".repeat(GameConsole.FULL_CONSOLE_WIDTH / 2 - 8) + AsciiColours.GREEN
-                        + AsciiColours.UNDERLINE + "[LEVEL BEGIN]" + AsciiColours.SANE + "\n");
-                show("       Enter [start] if you are ready to complete the objective or Enter [hint] if you get stuck!");
-                return;
-            }
-            else {
-                System.out.printf("%c", text.charAt(i));
-            }
-            if (isNewline) {
-                System.out.print("\n    ");
-                isNewline = false;
             }
             sleep(10);
         }
@@ -127,5 +156,36 @@ public class UiManager implements Ui {
                     + "Press [ENTER] to continue..");
         }
         show("");
+    }
+
+    /**
+     * Prints the Narrative of a given level with a simulation instance.
+     * @param level that the narrative is to be shown.
+     * @param simulation that the simulation of the level will utilise.
+     * @throws FarmioFatalException if simulation file is not found
+     */
+    public void showNarrative(Level level, Simulation simulation) throws FarmioFatalException {
+        int frameId = 0;
+        int lastFrameId = level.getNarratives().size() - 1;
+        for (String narrative: level.getNarratives()) {
+            String userInput;
+            userInput = getInput();
+            while (!userInput.equals("") && !userInput.toLowerCase().equals("skip")) {
+                simulation.simulate();
+                showWarning("Invalid Command for story mode!");
+                show("Story mode only accepts [skip] to skip the story or pressing [ENTER] to continue with the "
+                        + "narrative.\nIf you wish to use other commands, enter [skip] followed by entering the "
+                        + "command of your choice.");
+                userInput = getInput();
+            }
+            if (userInput.toLowerCase().equals("skip") || frameId == lastFrameId) {
+                break;
+            }
+            simulation.simulate(level.getPath(), frameId++);
+            typeWriter(narrative, true);
+        }
+        simulation.simulate(level.getPath(), lastFrameId);
+        typeWriter(level.getNarratives().get(lastFrameId), false);
+        showLevelBegin();
     }
 }
