@@ -3,7 +3,7 @@ package commands;
 import exceptions.FarmioFatalException;
 import farmio.Farmio;
 
-public class CommandTasksRun extends Command {
+public class CommandTaskRun extends Command {
     /**
      * Run the tasklist and prepare to check if objectives are met.
      * @param farmio the game which stage change will be changed.
