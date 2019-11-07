@@ -74,8 +74,8 @@ public class Farmer {
             this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
             this.cowFarm = new CowFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_COW));
             this.tasks = new TaskList((JSONArray) jsonObject.get(JSON_KEY_TASK_LIST));
-            this.currentTask = -1;//(int) (long) jsonObject.get(JSON_KEY_TASK_CURRENT);
-            this.hasfailedCurrentTask = false;//(Boolean) jsonObject.get(JSON_KEY_TASK_STATUS_FAIL);
+            this.currentTask = -1;
+            this.hasfailedCurrentTask = false;
             String savedName = (String) jsonObject.get(JSON_KEY_NAME);
             String loadName = savedName.toUpperCase();
             isValidName(loadName);
@@ -251,7 +251,6 @@ public class Farmer {
      */
     public boolean isHasfailedCurrentTask() {
         if (hasfailedCurrentTask) {
-            currentTask = -1;
             return true;
         }
         return false;
@@ -262,6 +261,7 @@ public class Farmer {
      */
     public void resetTaskFailed() {
         hasfailedCurrentTask = false;
+        currentTask = -1;
     }
 
     /**
