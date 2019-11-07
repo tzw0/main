@@ -154,7 +154,11 @@ public class Farmer {
         return gold;
     }
 
-    /**
+    public boolean hasGold() {
+        return gold > 0;
+    }
+
+     /**
      * Gets user level.
      * @return the user level.
      */
