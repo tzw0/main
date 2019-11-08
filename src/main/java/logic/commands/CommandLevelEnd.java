@@ -15,11 +15,11 @@ public class CommandLevelEnd extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-        farmio.getUi().typeWriter("",true);
-        farmio.getUi().getInput();
-        farmio.getSimulation().simulate("LevelEnd", 0,4);
-        farmio.getUi().show(AsciiColours.GREEN + AsciiColours.UNDERLINE +  "Level Ended" + AsciiColours.SANE);
-        farmio.getUi().typeWriter("Farmer " + farmio.getFarmer().getName()
+        farmio.getFrontend().typeWriter("",true);
+        farmio.getFrontend().getInput();
+        farmio.getFrontend().simulate("LevelEnd", 0,4);
+        farmio.getFrontend().show(AsciiColours.GREEN + AsciiColours.UNDERLINE +  "Level Ended" + AsciiColours.SANE);
+        farmio.getFrontend().typeWriter("Farmer " + farmio.getFarmer().getName()
                 + " is now ready for his next adventure! "
                 + "\nPress [ENTER] to continue or Enter [skip] to skip the story", false);
         Storage storage = farmio.getStorage();
@@ -27,7 +27,7 @@ public class CommandLevelEnd extends Command {
         Level level = new Level(storage.getLevel(farmer.nextLevel()),farmer.getName());
         storage.storeFarmer(farmer);
         farmio.setLevel(level);
-        farmio.getFarmer().getTasks().clear();
+        farmio.getFarmer().taskClear();
         farmio.setStage(Farmio.Stage.LEVEL_START);
     }
 }

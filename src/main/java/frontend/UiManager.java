@@ -10,7 +10,7 @@ public class UiManager implements Ui {
     /**
      * Creates a user interface object.
      */
-    public UiManager() {
+    UiManager() {
         this.scanner = new Scanner(System.in);
     }
 
@@ -116,19 +116,6 @@ public class UiManager implements Ui {
         show("~.Enter [Start] when you are ready to complete the objective");
     }
 
-    /**
-     * Shows the level begin String.
-     */
-    public void showLevelBegin() {
-        show("\n"
-                + " ".repeat(GameConsole.FULL_CONSOLE_WIDTH / 2 - 8)
-                + AsciiColours.GREEN
-                + AsciiColours.UNDERLINE
-                + "[LEVEL BEGIN]"
-                + AsciiColours.SANE
-                + "\n\n       "
-                + "Enter [start] if you are ready to complete the objective or Enter [hint] if you get stuck!");
-    }
 
     /**
      * Prints text to the terminal type writer style.

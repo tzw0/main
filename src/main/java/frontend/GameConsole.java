@@ -113,7 +113,7 @@ public class GameConsole {
         StringBuilder output = new StringBuilder();
         String location = farmer.getLocation();
         double level = farmer.getLevel();
-        ArrayList<String> userCode = farmer.getTasks().toStringArray();
+        ArrayList<String> userCode = farmer.toStringArray();
         ArrayList<String> assets = formatAssets(farmer.getAssets(), goalMap);
         ArrayList<String> goals;
         goals = (level == 1.1) ? tutorial1_1Goals(location) : formatGoals(goalMap, farmer.getAssets());

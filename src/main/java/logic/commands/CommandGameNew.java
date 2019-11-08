@@ -3,7 +3,7 @@ package logic.commands;
 import farmio.exceptions.FarmioFatalException;
 import gameassets.Farmer;
 import farmio.Farmio;
-import frontend.Ui;
+import frontend.Frontend;
 
 public class CommandGameNew extends Command {
     /**
@@ -13,11 +13,11 @@ public class CommandGameNew extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-        Ui ui = farmio.getUi();
+        Frontend frontend = farmio.getFrontend();
         farmio.setFarmer(new Farmer());
-        farmio.getSimulation().simulate("GameNew", 0, true);
-        ui.typeWriter("New Game Created!", false);
-        ui.typeWriter("Enter your name:", false);
+        farmio.getFrontend().simulate("GameNew", 0, true);
+        frontend.typeWriter("New Game Created!", false);
+        frontend.typeWriter("Enter your name:", false);
         farmio.setStage(Farmio.Stage.NAME_ADD);
     }
 }

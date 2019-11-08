@@ -10,12 +10,12 @@ public class Logic {
         try {
             String userInput = "";
             if (Farmio.Stage.reqInput.contains(stage)) {
-                userInput = farmio.getUi().getInput();
+                userInput = farmio.getFrontend().getInput();
             }
             Parser.parse(userInput, stage).execute(farmio);
         } catch (FarmioException | FarmioFatalException e) {
-            farmio.getSimulation().simulate();
-            farmio.getUi().showWarning(e.getMessage());
+            farmio.getFrontend().simulate();
+            farmio.getFrontend().showWarning(e.getMessage());
         }
     }
 }

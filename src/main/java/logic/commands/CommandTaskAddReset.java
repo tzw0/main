@@ -2,8 +2,8 @@ package logic.commands;
 
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
+import frontend.Frontend;
 import gameassets.Level;
-import frontend.Ui;
 
 public class CommandTaskAddReset extends Command {
 
@@ -14,9 +14,9 @@ public class CommandTaskAddReset extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-        Ui ui = farmio.getUi();
+        Frontend frontend = farmio.getFrontend();
         Level level = farmio.getLevel();
-        farmio.getSimulation().simulate(level.getPath(),level.getNarratives().size() - 1);
-        ui.show("Enter [start] if you are ready to complete the objective or Enter [hint] if you get stuck!");
+        frontend.simulate(level.getPath(),level.getNarratives().size() - 1);
+        frontend.show("Enter [start] if you are ready to complete the objective or Enter [hint] if you get stuck!");
     }
 }
