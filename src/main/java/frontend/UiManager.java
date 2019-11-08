@@ -1,8 +1,5 @@
 package frontend;
 
-import exceptions.FarmioFatalException;
-import farmio.Level;
-
 import java.util.Scanner;
 
 public class UiManager implements Ui {
@@ -18,11 +15,12 @@ public class UiManager implements Ui {
     }
 
     /**
-     * Removes the clear screen string if the OS is windows
+     * Removes the clear screen string if the OS is windows.
      */
     public void removeClearScreen() {
         this.clearScreen = "";
     }
+
     /**
      * Prints the message in the terminal.
      *
@@ -121,7 +119,7 @@ public class UiManager implements Ui {
     /**
      * Shows the level begin String.
      */
-    private void showLevelBegin() {
+    public void showLevelBegin() {
         show("\n"
                 + " ".repeat(GameConsole.FULL_CONSOLE_WIDTH / 2 - 8)
                 + AsciiColours.GREEN
@@ -162,36 +160,5 @@ public class UiManager implements Ui {
                     + "Press [ENTER] to continue..");
         }
         show("");
-    }
-
-    /**
-     * Prints the Narrative of a given level with a simulation instance.
-     * @param level that the narrative is to be shown.
-     * @param simulation that the simulation of the level will utilise.
-     * @throws FarmioFatalException if simulation file is not found
-     */
-    public void showNarrative(Level level, Simulation simulation) throws FarmioFatalException {
-        int frameId = 0;
-        int lastFrameId = level.getNarratives().size() - 1;
-        for (String narrative: level.getNarratives()) {
-            String userInput;
-            userInput = getInput();
-            while (!userInput.equals("") && !userInput.toLowerCase().equals("skip")) {
-                simulation.simulate();
-                showWarning("Invalid Command for story mode!");
-                show("Story mode only accepts [skip] to skip the story or pressing [ENTER] to continue with the "
-                        + "narrative.\nIf you wish to use other commands, enter [skip] followed by entering the "
-                        + "command of your choice.");
-                userInput = getInput();
-            }
-            if (userInput.toLowerCase().equals("skip") || frameId == lastFrameId) {
-                break;
-            }
-            simulation.simulate(level.getPath(), frameId++);
-            typeWriter(narrative, true);
-        }
-        simulation.simulate(level.getPath(), lastFrameId);
-        typeWriter(level.getNarratives().get(lastFrameId), false);
-        showLevelBegin();
     }
 }

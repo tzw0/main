@@ -1,19 +1,25 @@
 package frontend;
 
-import exceptions.FarmioFatalException;
-import farmio.Level;
-
 public class UiDummy implements Ui {
     public static String uiTestString;
+    public static String input;
+    public static String output;
 
+    /**
+     * creates a Ui dummy for testing.
+     */
     public UiDummy() {
         uiTestString = "";
+        input = "";
+        output = "";
     }
 
-    public void removeClearScreen() { }
+    public void removeClearScreen() {
+    }
 
     public void show(String message) {
         uiTestString += "show";
+        output += message;
     }
 
     public void showExit() {
@@ -38,7 +44,7 @@ public class UiDummy implements Ui {
 
     public String getInput() {
         uiTestString += "input";
-        return "";
+        return input;
     }
 
     public void sleep(int delay) {
@@ -53,26 +59,7 @@ public class UiDummy implements Ui {
         uiTestString += "typewriter";
     }
 
-    private void showLevelBegin() {
+    public void showLevelBegin() {
         uiTestString += "levelBegin";
-    }
-
-    /**
-     * Mimics showing a narrative.
-     * @param level that the narrative is to be shown.
-     * @param simulation that the simulation of the level will utilise.
-     * @throws FarmioFatalException if simulation file is missing
-     */
-    public void showNarrative(Level level, Simulation simulation) throws FarmioFatalException {
-        int frameId;
-        for (frameId = 0; frameId < level.getNarratives().size() - 1; frameId++) {
-            getInput();
-            simulation.simulate(level.getPath(), frameId);
-            typeWriter("", true);
-        }
-        getInput();
-        simulation.simulate(level.getPath(), frameId);
-        typeWriter("", true);
-        showLevelBegin();
     }
 }

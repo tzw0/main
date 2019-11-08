@@ -1,13 +1,18 @@
 package farmio;
 
-import commands.Command;
-import commands.CommandWelcome;
-import exceptions.FarmioException;
-import exceptions.FarmioFatalException;
+import gameassets.Farmer;
+import gameassets.Level;
+import logic.commands.Command;
+import logic.commands.CommandWelcome;
+import farmio.exceptions.FarmioException;
+import farmio.exceptions.FarmioFatalException;
 import frontend.AsciiColours;
 import frontend.Simulation;
 import frontend.Ui;
 import frontend.UiManager;
+import logic.Logic;
+import storage.Storage;
+import storage.StorageManager;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -54,17 +59,7 @@ public class Farmio {
                 ui.showWarning(e.getMessage());
             }
             while (!isExit) {
-                try {
-                    if (Stage.noInput.contains(stage)) {
-                        command = Parser.parse(" ", stage);
-                    } else {
-                        command = Parser.parse(ui.getInput(), stage);
-                    }
-                    command.execute(this);
-                } catch (FarmioException e) {
-                    simulation.simulate();
-                    ui.showWarning(e.getMessage());
-                }
+                Logic.execute(stage, this);
             }
         } catch (FarmioFatalException e) {
             ui.showError(e.getMessage());
