@@ -12,8 +12,8 @@ public class CommandTaskRun extends Command {
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
         farmio.getFarmer().startDay(farmio);
-        farmio.getUi().sleep(300);
-        farmio.getSimulation().simulate("DayStart", 1);
+        farmio.getFrontend().sleep(300);
+        farmio.getFrontend().simulate("DayStart", 1);
         farmio.setStage(Farmio.Stage.CHECK_OBJECTIVES);
     }
 }

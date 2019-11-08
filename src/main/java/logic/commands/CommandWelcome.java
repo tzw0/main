@@ -13,8 +13,7 @@ public class CommandWelcome extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-        Ui ui = farmio.getUi();
-        farmio.getSimulation().simulate("Welcome", 1,true);
-        ui.show("Press ENTER to continue.");
+        farmio.getFrontend().simulate("Welcome", 1,true);
+        farmio.getFrontend().show("Press ENTER to continue.");
     }
 }

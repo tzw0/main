@@ -2,6 +2,7 @@ package logic.commands;
 
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
+import frontend.Frontend;
 import gameassets.Farmer;
 import farmio.exceptions.FarmioException;
 import frontend.Ui;
@@ -22,10 +23,11 @@ public class CommandTaskCreate extends CommandChangeTask {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
-        Ui ui = farmio.getUi();
+        Frontend frontend = farmio.getFrontend();
         Farmer farmer = farmio.getFarmer();
         farmer.getTasks().addTask(task);
         super.saveTaskandResetScreen(farmio);
-        ui.showInfo("Task [" + task.toString() + "] added! \nYou now have " + farmer.getTasks().size() + " tasks!");
+        frontend.showInfo("Task [" + task.toString() + "] added! \nYou now have "
+                + farmer.getTasks().size() + " tasks!");
     }
 }

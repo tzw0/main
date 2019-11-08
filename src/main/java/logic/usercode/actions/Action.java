@@ -1,10 +1,9 @@
 package logic.usercode.actions;
 
 import farmio.exceptions.FarmioFatalException;
+import frontend.Frontend;
 import storage.Storage;
 import farmio.exceptions.FarmioException;
-import frontend.Simulation;
-import frontend.Ui;
 import gameassets.Farmer;
 import javafx.util.Pair;
 
@@ -21,14 +20,13 @@ public abstract class Action {
     /**
      * Executes the Action.
      *
-     * @param ui The user interface used to print messages of the action
+     * @param frontend The user interface used to print messages of the action
      * @param storage which stores the assets after acton execution
      * @param farmer The farmer whose variables are displayed and changed
-     * @param simulation The simulation object initialised with farmio
      * @throws FarmioException if there is an error in executing the tasklist
      * @throws FarmioFatalException if file for simulation is missing
      */
-    public abstract void execute(Ui ui, Storage storage, Farmer farmer, Simulation simulation)
+    public abstract void execute(Frontend frontend, Storage storage, Farmer farmer)
             throws FarmioException, FarmioFatalException;
 
     /**
@@ -85,31 +83,32 @@ public abstract class Action {
     /**
      * Checks if Action criteria is met before execution.
      *
-     * @param ui The user interface used to print messages of the action
+     * @param frontend The user interface used to print messages of the action
      * @param farmer The farmer whose variables are displayed and changed
-     * @param simulation The simulation object initialised with farmio
+     * @param frontend The user interface used to print messages of the action
      * @param criteriaFeedbackList The list of criterias and their respective feedback messages
      * @throws FarmioException if there is an error in executing the tasklist
      * @throws FarmioFatalException if file for simulation is missing
 
      */
-    protected void checkActionCriteria(Ui ui, Farmer farmer, Simulation simulation,
-               ArrayList<Pair<Boolean, String>> criteriaFeedbackList) throws FarmioException, FarmioFatalException {
+    protected void checkActionCriteria(Frontend frontend, Farmer farmer,
+                                       ArrayList<Pair<Boolean, String>> criteriaFeedbackList)
+            throws FarmioException, FarmioFatalException {
         boolean hasError = false;
-        ui.sleep(2000);
+        frontend.sleep(2000);
         for (Pair<Boolean, String> criteriaFeedback: criteriaFeedbackList) {
             if (criteriaFeedback.getKey()) {
                 if (!hasError) {
                     farmer.setTaskFailed();
-                    simulation.simulate("ErrorInExecution", 1, 9);
-                    ui.show(criteriaFeedback.getValue());
+                    frontend.simulate("ErrorInExecution", 1, 9);
+                    frontend.show(criteriaFeedback.getValue());
                     hasError = true;
                 }
             }
         }
         if (hasError) {
-            ui.typeWriter("",true);
-            ui.getInput();
+            frontend.typeWriter("",true);
+            frontend.getInput();
             throw new FarmioException("Task Error!");
         }
     }

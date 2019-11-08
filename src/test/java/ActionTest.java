@@ -24,7 +24,7 @@ public class ActionTest {
     private Farmio farmio;
     public ActionTest() throws FarmioFatalException {
         farmio = new Farmio();
-        farmio.setUi(new UiDummy());
+        farmio.getFrontend().setDummy();
         farmio.setLevel(new Level(farmio.getStorage().getLevel(1.1), "tester"));
         gotoMarketAction = new GotoMarketAction();
         buySeedsAction = new BuySeedsAction();
@@ -98,14 +98,14 @@ public class ActionTest {
 
     @Test
     void actionSequenceOfGameTest() throws FarmioException, FarmioFatalException {
-        gotoMarketAction.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
-        buySeedsAction.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
-        gotoWheatFarmAction.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
-        plantSeedsAction.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
+        gotoMarketAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
+        buySeedsAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
+        gotoWheatFarmAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
+        plantSeedsAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
         farmio.getFarmer().nextDay();
-        harvestWheatAction.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
-        gotoMarketAction.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
-        sellGrainAction.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
+        harvestWheatAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
+        gotoMarketAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
+        sellGrainAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
     }
 
     @Test

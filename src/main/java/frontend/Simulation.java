@@ -10,7 +10,7 @@ public class Simulation {
     private static final int SLEEP_TIME = 300;
     private Farmio farmio;
     private Storage storage;
-    private Ui ui;
+    private Frontend frontend;
     private Farmer farmer;
     private static String lastPath;
     private static int lastFrameId;
@@ -23,7 +23,7 @@ public class Simulation {
     public Simulation(Farmio farmio) {
         this.farmio = farmio;
         storage = farmio.getStorage();
-        ui = farmio.getUi();
+        frontend = farmio.getFrontend();
         farmer = farmio.getFarmer();
         lastPath = "Welcome";
         lastFrameId = 1;
@@ -43,10 +43,10 @@ public class Simulation {
         hadFullscreen = isFullscreen;
         refresh();
         if (isFullscreen) {
-            ui.show(GameConsole.blankConsole(storage.loadFrame(framePath, frameId, GameConsole.FULL_CONSOLE_WIDTH,
+            frontend.show(GameConsole.blankConsole(storage.loadFrame(framePath, frameId, GameConsole.FULL_CONSOLE_WIDTH,
                     GameConsole.FULL_CONSOLE_HEIGHT)));
         } else {
-            ui.show(GameConsole.fullconsole(storage.loadFrame(framePath, frameId, GameConsole.FRAME_SECTION_WIDTH,
+            frontend.show(GameConsole.fullconsole(storage.loadFrame(framePath, frameId, GameConsole.FRAME_SECTION_WIDTH,
                     GameConsole.FRAME_SECTION_HEIGHT), farmer, farmio.getLevel().getGoals(),
                     farmio.getLevel().getObjective()));
         }
@@ -107,10 +107,10 @@ public class Simulation {
      */
     private void refresh() {
         storage = farmio.getStorage();
-        ui = farmio.getUi();
+        frontend = farmio.getFrontend();
         farmer = farmio.getFarmer();
-        ui.sleep(SLEEP_TIME);
-        ui.clearScreen();
+        frontend.sleep(SLEEP_TIME);
+        frontend.clearScreen();
     }
 
     /**
@@ -118,7 +118,7 @@ public class Simulation {
      * @throws FarmioFatalException if simulation file is not found
      */
     public void showNarrative() throws FarmioFatalException {
-        ui = farmio.getUi();
+        frontend = farmio.getFrontend();
         storage = farmio.getStorage();
         farmer = farmio.getFarmer();
         Level level = farmio.getLevel();
@@ -126,23 +126,23 @@ public class Simulation {
         int lastFrameId = level.getNarratives().size() - 1;
         for (String narrative: level.getNarratives()) {
             String userInput;
-            userInput = ui.getInput();
+            userInput = frontend.getInput();
             while (!userInput.equals("") && !userInput.toLowerCase().equals("skip")) {
                 simulate();
-                ui.showWarning("Invalid Command for story mode!");
-                ui.show("Story segment only accepts [skip] to skip the story or pressing [ENTER] to continue with the "
-                        + "narrative.\nIf you wish to use other logic.commands, enter [skip] followed by entering the "
-                        + "command of your choice.");
-                userInput = ui.getInput();
+                frontend.showWarning("Invalid Command for story mode!");
+                frontend.show("Story segment only accepts [skip] to skip the story or pressing [ENTER] to continue "
+                        + "with the narrative.\nIf you wish to use other logic.commands, enter [skip] followed by "
+                        + "entering the command of your choice.");
+                userInput = frontend.getInput();
             }
             if (userInput.toLowerCase().equals("skip") || frameId == lastFrameId) {
                 break;
             }
             simulate(level.getPath(), frameId++);
-            ui.typeWriter(narrative, true);
+            frontend.typeWriter(narrative, true);
         }
         simulate(level.getPath(), lastFrameId);
-        ui.typeWriter(level.getNarratives().get(lastFrameId), false);
-        ui.showLevelBegin();
+        frontend.typeWriter(level.getNarratives().get(lastFrameId), false);
+        frontend.showLevelBegin();
     }
 }

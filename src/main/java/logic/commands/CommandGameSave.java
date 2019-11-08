@@ -2,7 +2,7 @@ package logic.commands;
 
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
-import frontend.Ui;
+import frontend.Frontend;
 
 public class CommandGameSave extends Command {
     /**
@@ -12,14 +12,14 @@ public class CommandGameSave extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-        Ui ui = farmio.getUi();
+        Frontend frontend = farmio.getFrontend();
         String location = farmio.getStorage().storeFarmerPartial(farmio.getFarmer());
         if (location != null) {
-            farmio.getSimulation().simulate();
-            ui.show("Game saved successfully!\nGame save location:\n" + location);
+            farmio.getFrontend().simulate();
+            frontend.show("Game saved successfully!\nGame save location:\n" + location);
         } else {
-            farmio.getSimulation().simulate();
-            ui.show("Game save failed!! Try again later.");
+            farmio.getFrontend().simulate();
+            frontend.show("Game save failed!! Try again later.");
         }
     }
 }

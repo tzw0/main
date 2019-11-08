@@ -1,10 +1,9 @@
 package logic.usercode.actions;
 
 import farmio.exceptions.FarmioFatalException;
+import frontend.Frontend;
 import gameassets.Farmer;
 import storage.Storage;
-import frontend.Simulation;
-import frontend.Ui;
 
 public class GotoMarketAction extends Action {
 
@@ -13,18 +12,18 @@ public class GotoMarketAction extends Action {
     }
 
     @Override
-    public void execute(Ui ui, Storage storage, Farmer farmer, Simulation simulation) throws FarmioFatalException {
+    public void execute(Frontend frontend, Storage storage, Farmer farmer) throws FarmioFatalException {
         if (farmer.getLocation().equals("Market")) {
-            simulation.simulate("GotoMarketSimulation", 12);
-            ui.typeWriter("You are already at the market", false);
+            frontend.simulate("GotoMarketSimulation", 12);
+            frontend.typeWriter("You are already at the market", false);
         } else {
             farmer.changeLocation("Traveling");
-            simulation.simulate("GotoMarketSimulation", 12, 1);
+            frontend.simulate("GotoMarketSimulation", 12, 1);
             farmer.changeLocation("Market");
-            simulation.simulate("GotoMarketSimulation", 1);
-            ui.typeWriter("You have arrived at the market", false);
+            frontend.simulate("GotoMarketSimulation", 1);
+            frontend.typeWriter("You have arrived at the market", false);
         }
-        ui.sleep(200);
+        frontend.sleep(200);
     }
 }
 

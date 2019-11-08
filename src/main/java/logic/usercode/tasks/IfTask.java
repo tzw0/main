@@ -21,11 +21,11 @@ public class IfTask extends Task {
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
         {
             if (condition.check(farmio)) {
-                action.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
+                action.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
             } else {
-                farmio.getSimulation().simulate();
-                farmio.getUi().show("Condition not fulfilled, not executing task!");
-                farmio.getUi().sleep(1000);
+                farmio.getFrontend().simulate();
+                farmio.getFrontend().show("Condition not fulfilled, not executing task!");
+                farmio.getFrontend().sleep(1000);
             }
         }
     }

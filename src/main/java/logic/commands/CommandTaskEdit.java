@@ -30,7 +30,6 @@ public class CommandTaskEdit extends CommandChangeTask {
         }
         farmer.getTasks().editTask(taskID, task);
         super.saveTaskandResetScreen(farmio);
-        Ui ui = farmio.getUi();
-        ui.showInfo("Successfully edited task!");
+        farmio.getFrontend().showInfo("Successfully edited task!");
     }
 }

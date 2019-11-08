@@ -3,7 +3,7 @@ package logic.commands;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import frontend.AsciiColours;
-import frontend.Ui;
+import frontend.Frontend;
 
 public class CommandDayStart extends Command {
     /**
@@ -13,10 +13,10 @@ public class CommandDayStart extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-        Ui ui = farmio.getUi();
-        farmio.getSimulation().simulate("DayStart", 1, 5);
-        ui.show(AsciiColours.MAGENTA + AsciiColours.UNDERLINE + "Day Started!" + AsciiColours.SANE);
-        ui.sleep(300);
+        Frontend frontend = farmio.getFrontend();
+        farmio.getFrontend().simulate("DayStart", 1, 5);
+        frontend.show(AsciiColours.MAGENTA + AsciiColours.UNDERLINE + "Day Started!" + AsciiColours.SANE);
+        frontend.sleep(300);
         farmio.setStage(Farmio.Stage.RUNNING_DAY);
     }
 }
