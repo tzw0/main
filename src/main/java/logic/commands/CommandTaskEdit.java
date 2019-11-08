@@ -25,10 +25,10 @@ public class CommandTaskEdit extends CommandChangeTask {
     @Override
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
         Farmer farmer = farmio.getFarmer();
-        if (taskID < 1 || taskID > farmer.getTasks().size()) {
+        if (taskID < 1 || taskID > farmer.taskSize()) {
             throw new FarmioException("Invalid Task ID!");
         }
-        farmer.getTasks().editTask(taskID, task);
+        farmer.editTask(taskID, task);
         super.saveTaskandResetScreen(farmio);
         Ui ui = farmio.getUi();
         ui.showInfo("Successfully edited task!");

@@ -24,8 +24,8 @@ public class CommandTaskCreate extends CommandChangeTask {
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
         Ui ui = farmio.getUi();
         Farmer farmer = farmio.getFarmer();
-        farmer.getTasks().addTask(task);
+        farmer.addTask(task);
         super.saveTaskandResetScreen(farmio);
-        ui.showInfo("Task [" + task.toString() + "] added! \nYou now have " + farmer.getTasks().size() + " tasks!");
+        ui.showInfo("Task [" + task.toString() + "] added! \nYou now have " + farmer.taskSize() + " tasks!");
     }
 }
