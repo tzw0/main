@@ -29,6 +29,7 @@ public class Farmer {
     private static final String JSON_KEY_TASK_CURRENT = "task_current";
     private static final String JSON_KEY_TASK_STATUS_FAIL = "task_status_fail";
     private static final String JSON_KEY_NAME = "name";
+    private static TaskList logTaskList;
 
     private int gold;
     private double level;
@@ -42,6 +43,7 @@ public class Farmer {
     private int currentTask;
     private boolean hasfailedCurrentTask;
     private ArrayList<Double> levelList = new ArrayList<Double>(Arrays.asList(1.1,1.2,1.3,1.4,1.5,1.6,2.1));
+
 
     /**
      * Constructor for Farmer to intialize farmer object.
@@ -224,6 +226,14 @@ public class Farmer {
         return tasks;
     }
 
+    //Todo - Log Tasklist
+
+    public static TaskList getLogTaskList(){
+        return logTaskList;
+    }
+
+    //todo end- log tasklist
+
     public void addTask(Task task) throws FarmioException {
         tasks.addTask(task);
     }
@@ -327,6 +337,10 @@ public class Farmer {
         try {
             for (int i = 0; i < tasks.size(); i++) {
                 this.currentTask = i;
+
+                //todo add the log to the logList
+                logTaskList.add(tasks.get(i)); //adds tasks to logTaskList
+
                 tasks.get(i).execute(farmio);
             }
         } catch (FarmioException e) {

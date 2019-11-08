@@ -15,6 +15,7 @@ public class CommandLevelReset extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
+
         Frontend frontend = farmio.getFrontend();
         Storage storage = farmio.getStorage();
         try {

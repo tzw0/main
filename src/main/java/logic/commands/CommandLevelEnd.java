@@ -15,6 +15,7 @@ public class CommandLevelEnd extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
+
         farmio.getFrontend().typeWriter("",true);
         farmio.getFrontend().getInput();
         farmio.getFrontend().simulate("LevelEnd", 0,4);
