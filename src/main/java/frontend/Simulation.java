@@ -6,7 +6,7 @@ import gameassets.Farmer;
 import gameassets.Level;
 import storage.Storage;
 
-public class Simulation {
+class Simulation {
     private static final int SLEEP_TIME = 300;
     private Farmio farmio;
     private Storage storage;
@@ -20,7 +20,7 @@ public class Simulation {
      * Creates a Simulation for the game, farmio.
      * @param farmio the game that is being simulated.
      */
-    public Simulation(Farmio farmio) {
+    Simulation(Farmio farmio) {
         this.farmio = farmio;
         storage = farmio.getStorage();
         frontend = farmio.getFrontend();
@@ -37,7 +37,7 @@ public class Simulation {
      * @param isFullscreen if the ascii image is to be shown as the full console or within the frame section.
      * @throws FarmioFatalException if the file cannot be found.
      */
-    public void simulate(String framePath, int frameId, boolean isFullscreen) throws FarmioFatalException {
+    void simulate(String framePath, int frameId, boolean isFullscreen) throws FarmioFatalException {
         lastPath = framePath;
         lastFrameId = frameId;
         hadFullscreen = isFullscreen;
@@ -60,7 +60,7 @@ public class Simulation {
      * @param isFullscreen if the ascii image is to be shown as the full console or within the frame section.
      * @throws FarmioFatalException if any file cannot be found.
      */
-    public void simulate(String framePath, int startFrame, int endFrame, boolean isFullscreen)
+    void simulate(String framePath, int startFrame, int endFrame, boolean isFullscreen)
             throws FarmioFatalException {
         if (startFrame <= endFrame) {
             for (int i = startFrame; i <= endFrame; i++) {
@@ -79,7 +79,7 @@ public class Simulation {
      * @param frameId the frame numer to be shown.
      * @throws FarmioFatalException if the file cannot be found.
      */
-    public void simulate(String framePath, int frameId) throws FarmioFatalException {
+    void simulate(String framePath, int frameId) throws FarmioFatalException {
         simulate(framePath, frameId, false);
     }
 
@@ -87,7 +87,7 @@ public class Simulation {
      * Simulates the last file simulated.
      * @throws FarmioFatalException if the file cannot be found.
      */
-    public void simulate() throws FarmioFatalException {
+    void simulate() throws FarmioFatalException {
         simulate(lastPath, lastFrameId, hadFullscreen);
     }
 
@@ -98,7 +98,7 @@ public class Simulation {
      * @param endFrame the ending frame number.
      * @throws FarmioFatalException if any file cannot be found.
      */
-    public void simulate(String framePath, int startFrame, int endFrame) throws FarmioFatalException {
+    void simulate(String framePath, int startFrame, int endFrame) throws FarmioFatalException {
         simulate(framePath, startFrame, endFrame, false);
     }
 
@@ -117,7 +117,7 @@ public class Simulation {
      * Prints the Narrative of a given level with a simulation instance.
      * @throws FarmioFatalException if simulation file is not found
      */
-    public void showNarrative() throws FarmioFatalException {
+    void showNarrative() throws FarmioFatalException {
         frontend = farmio.getFrontend();
         storage = farmio.getStorage();
         farmer = farmio.getFarmer();
@@ -143,6 +143,20 @@ public class Simulation {
         }
         simulate(level.getPath(), lastFrameId);
         frontend.typeWriter(level.getNarratives().get(lastFrameId), false);
-        frontend.showLevelBegin();
+        showLevelBegin();
+    }
+
+    /**
+     * Shows the level begin String.
+     */
+    private void showLevelBegin() {
+        frontend.show("\n"
+                + " ".repeat(GameConsole.FULL_CONSOLE_WIDTH / 2 - 8)
+                + AsciiColours.GREEN
+                + AsciiColours.UNDERLINE
+                + "[LEVEL BEGIN]"
+                + AsciiColours.SANE
+                + "\n\n       "
+                + "Enter [start] if you are ready to complete the objective or Enter [hint] if you get stuck!");
     }
 }

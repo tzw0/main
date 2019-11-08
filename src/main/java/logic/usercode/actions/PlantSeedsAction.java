@@ -19,13 +19,13 @@ public class PlantSeedsAction extends Action {
     public void execute(Frontend frontend, Storage storage, Farmer farmer)
             throws FarmioFatalException, FarmioException {
         ArrayList<Pair<Boolean, String>> criteriaFeedbackList = new ArrayList<>();
-        criteriaFeedbackList.add(new Pair<>(!farmer.getWheatFarm().hasSeeds(),
+        criteriaFeedbackList.add(new Pair<>(!farmer.hasSeeds(),
                 "Error! you have attempted to plant seeds despite not having any seeds"));
         criteriaFeedbackList.add(new Pair<>(!farmer.getLocation().equals("WheatFarm"),
                 "Error! you have attempted to plant seeds despite not being at the Wheatfarm"));
         checkActionCriteria(frontend, farmer, criteriaFeedbackList);
         frontend.simulate("PlantSeedSimulation", 0, 11);
-        farmer.getWheatFarm().plantSeeds();
+        farmer.plantSeeds();
         frontend.simulate();
         frontend.sleep(700);
     }

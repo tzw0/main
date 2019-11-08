@@ -17,13 +17,13 @@ public class ConditionChecker {
      */
     public static boolean check(BooleanConditionType condition, Farmio farmio) {
         if (condition == BooleanConditionType.hasSeeds) {
-            return farmio.getFarmer().getWheatFarm().hasSeeds();
+            return farmio.getFarmer().hasSeeds();
         }
         if (condition == BooleanConditionType.hasWheat) {
-            return farmio.getFarmer().getWheatFarm().hasWheat();
+            return farmio.getFarmer().hasWheat();
         }
         if (condition == BooleanConditionType.hasGrain) {
-            return farmio.getFarmer().getWheatFarm().hasGrain();
+            return farmio.getFarmer().hasGrain();
         }
         if (condition == BooleanConditionType.TRUE) {
             return true;

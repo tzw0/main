@@ -8,9 +8,6 @@ import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import frontend.AsciiColours;
 import frontend.Frontend;
-import frontend.Simulation;
-import frontend.Ui;
-import frontend.UiManager;
 import logic.Logic;
 import storage.Storage;
 import storage.StorageManager;
@@ -26,8 +23,6 @@ public class Farmio {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private Storage storage;
     private Farmer farmer;
-    private Simulation simulation;
-    private Ui ui;
     private Level level;
     private boolean isExit;
     private Stage stage;
@@ -123,11 +118,7 @@ public class Farmio {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-
-    public void setUi(Ui dummyUi) {
-        ui = dummyUi;
-    }
-
+    
     public void setLevel(Level level) {
         this.level = level;
     }

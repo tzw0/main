@@ -3,7 +3,6 @@ package logic.commands;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import frontend.Frontend;
-import frontend.Ui;
 
 public class CommandShowList extends Command {
     private String filePath;

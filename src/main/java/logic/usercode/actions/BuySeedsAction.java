@@ -26,7 +26,7 @@ public class BuySeedsAction extends Action {
                 "Error! you have attempted to buy seeds despite not being at the market"));
         checkActionCriteria(frontend, farmer, criteriaFeedbackList);
         frontend.simulate("BuySeedSimulation", 0, 9);
-        farmer.getWheatFarm().buySeeds();
+        farmer.buySeeds();
         farmer.spendGold(Market.PRICE_OF_SEED);
         frontend.simulate();
         frontend.sleep(700);

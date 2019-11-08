@@ -2,7 +2,6 @@ package logic.commands;
 
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
-import frontend.Menu;
 
 public class CommandMenuInGame extends Command {
 
@@ -13,6 +12,6 @@ public class CommandMenuInGame extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-        Menu.show(farmio.getFrontend(), farmio.getStorage().getSaveExist(), true);
+        farmio.getFrontend().showMenu(farmio.getStorage().getSaveExist(), true);
     }
 }

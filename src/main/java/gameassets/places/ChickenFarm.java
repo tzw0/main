@@ -125,7 +125,7 @@ public class ChickenFarm extends Farm {
      */
     @Override
     public int sell() {
-        int earned = egg * Market.PRICE_OF_WHEAT;
+        int earned = egg * Market.PRICE_OF_EGG;
         egg = 0;
         return earned;
     }

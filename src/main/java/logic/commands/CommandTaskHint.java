@@ -3,7 +3,6 @@ package logic.commands;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import gameassets.Level;
-import frontend.Ui;
 
 public class CommandTaskHint extends Command {
 

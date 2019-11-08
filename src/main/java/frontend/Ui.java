@@ -1,6 +1,6 @@
 package frontend;
 
-public interface Ui {
+interface Ui {
     /**
      * Removes the clear screen string if the OS is windows.
      */
@@ -65,9 +65,4 @@ public interface Ui {
      * @param hasPressEnter if 'Press ENTER' should be added to the print.
      */
     void typeWriter(String text, boolean hasPressEnter);
-
-    /**
-     * Shows the level begin String.
-     */
-    void showLevelBegin();
 }

@@ -2,7 +2,6 @@ package logic.commands;
 
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
-import frontend.Ui;
 
 public class CommandWelcome extends Command {
 

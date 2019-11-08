@@ -4,7 +4,6 @@ import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import frontend.Frontend;
 import gameassets.Level;
-import frontend.Ui;
 
 public class CommandTaskAddReset extends Command {
 

@@ -19,11 +19,11 @@ public class CommandTaskDelete extends CommandChangeTask {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
-        if (taskID < 1 || taskID > farmio.getFarmer().getTasks().size()) {
+        if (taskID < 1 || taskID > farmio.getFarmer().taskSize()) {
             throw new FarmioException("Invalid TaskID!");
         }
         try {
-            String taskToString = farmio.getFarmer().getTasks().deleteTask(taskID);
+            String taskToString = farmio.getFarmer().deleteTask(taskID);
             super.saveTaskandResetScreen(farmio);
             farmio.getFrontend().showInfo("You have deleted task: " + taskToString);
         } catch (Exception e) {

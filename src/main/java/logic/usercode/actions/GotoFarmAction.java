@@ -12,18 +12,11 @@ public class GotoFarmAction extends Action {
     }
 
     /**
-<<<<<<< HEAD
      * Executes the action of going to the farm.
-=======
-     * Run simulation to display location transition .
->>>>>>> upstream/master
      * @param frontend The user interface used to print messages of the action
      * @param storage which stores the assets after acton execution
      * @param farmer The farmer whose variables are displayed and changed
-     * @throws FarmioFatalException if simulation file is missing
-=======
      * @throws FarmioFatalException Fatel error from simulation, need to stop program.
->>>>>>> upstream/master
      */
     public void execute(Frontend frontend, Storage storage, Farmer farmer) throws FarmioFatalException {
         if (farmer.getLocation().equals("WheatFarm")) {

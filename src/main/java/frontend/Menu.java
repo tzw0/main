@@ -2,7 +2,7 @@ package frontend;
 
 import farmio.exceptions.FarmioFatalException;
 
-public class Menu {
+class Menu {
 
     /**
      * Display menu options onto terminal.
@@ -11,7 +11,7 @@ public class Menu {
      * @param canResume True if game can be resumed.
      * @throws FarmioFatalException Fatal error from Simulator and must stop program.
      */
-    public static void show(Frontend frontend, boolean hasSave, boolean canResume)
+    static void show(Frontend frontend, boolean hasSave, boolean canResume)
             throws FarmioFatalException {
         if (canResume && hasSave) {
             frontend.simulate("Menu", 2, false);

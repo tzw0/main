@@ -60,17 +60,13 @@ public class Frontend {
         ui.typeWriter(text, hasPressEnter);
     }
 
-    public void showLevelBegin() {
-        ui.showLevelBegin();
-    }
-
     public void simulate(String framePath, int frameId, boolean isFullscreen) throws FarmioFatalException {
         simulation.simulate(framePath, frameId, isFullscreen);
     }
 
     public void simulate(String framePath, int startFrame, int endFrame, boolean isFullscreen)
             throws FarmioFatalException {
-        simulation.simulate(framePath, startFrame, endFrame);
+        simulation.simulate(framePath, startFrame, endFrame, isFullscreen);
     }
 
     public void simulate(String framePath, int frameId) throws FarmioFatalException {
@@ -87,5 +83,9 @@ public class Frontend {
 
     public void showNarrative() throws FarmioFatalException {
         simulation.showNarrative();
+    }
+
+    public void showMenu(boolean hasSave, boolean canResume) throws FarmioFatalException {
+        Menu.show(this, hasSave, canResume);
     }
 }
