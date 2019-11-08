@@ -3,7 +3,6 @@ package logic.commands;
 import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
-import frontend.Ui;
 import logic.usercode.tasks.Task;
 import gameassets.Farmer;
 
@@ -30,7 +29,6 @@ public class CommandTaskEdit extends CommandChangeTask {
         }
         farmer.editTask(taskID, task);
         super.saveTaskandResetScreen(farmio);
-        Ui ui = farmio.getUi();
-        ui.showInfo("Successfully edited task!");
+        farmio.getFrontend().showInfo("Successfully edited task!");
     }
 }

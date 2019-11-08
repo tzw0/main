@@ -16,7 +16,7 @@ public class CommandCheckObjectives extends Command {
         Level.ObjectiveResult answer = farmio.getLevel().checkAnswer(farmio);
         List<String> feedback = farmio.getLevel().getFeedback(farmio, answer);
         for (String i : feedback) {
-            farmio.getUi().typeWriter(i,false);
+            farmio.getFrontend().typeWriter(i,false);
         }
 
         if (answer == Level.ObjectiveResult.NOT_DONE) {

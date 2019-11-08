@@ -25,7 +25,7 @@ public class CommandTaskDelete extends CommandChangeTask {
         try {
             String taskToString = farmio.getFarmer().deleteTask(taskID);
             super.saveTaskandResetScreen(farmio);
-            farmio.getUi().showInfo("You have deleted task: " + taskToString);
+            farmio.getFrontend().showInfo("You have deleted task: " + taskToString);
         } catch (Exception e) {
             throw new FarmioException("Error deleting task!");
         }

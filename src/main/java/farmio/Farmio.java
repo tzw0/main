@@ -7,9 +7,7 @@ import logic.commands.CommandWelcome;
 import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import frontend.AsciiColours;
-import frontend.Simulation;
-import frontend.Ui;
-import frontend.UiManager;
+import frontend.Frontend;
 import logic.Logic;
 import storage.Storage;
 import storage.StorageManager;
@@ -25,11 +23,10 @@ public class Farmio {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private Storage storage;
     private Farmer farmer;
-    private Simulation simulation;
-    private Ui ui;
     private Level level;
     private boolean isExit;
     private Stage stage;
+    private Frontend frontend;
 
     /**
      * Farmio constructor used to initiate an instance of Farmio.
@@ -37,8 +34,7 @@ public class Farmio {
     public Farmio() {
         storage = new StorageManager();
         farmer = new Farmer();
-        ui = new UiManager();
-        simulation = new Simulation(this);
+        frontend = new Frontend(this);
         stage = Stage.WELCOME;
         isExit = false;
     }
@@ -48,7 +44,7 @@ public class Farmio {
             setupLogger();
             LOGGER.log(java.util.logging.Level.INFO, "New game session started.");
             if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
-                ui.removeClearScreen();
+                frontend.removeClearScreen();
                 AsciiColours.inActivate();
             }
             Command command;
@@ -56,17 +52,17 @@ public class Farmio {
             try {
                 command.execute(this);
             } catch (FarmioException e) {
-                ui.showWarning(e.getMessage());
+                frontend.showWarning(e.getMessage());
             }
             while (!isExit) {
                 Logic.execute(stage, this);
             }
         } catch (FarmioFatalException e) {
-            ui.showError(e.getMessage());
-            ui.showInfo("Encounterd fatal error. Exiting program.");
+            frontend.showError(e.getMessage());
+            frontend.showInfo("Encounterd fatal error. Exiting program.");
         }
         storage.storeFarmerPartial(farmer);
-        ui.showExit();
+        frontend.showExit();
     }
 
     public static void main(String[] args) {
@@ -99,16 +95,12 @@ public class Farmio {
         return storage;
     }
 
-    public Ui getUi() {
-        return ui;
+    public Frontend getFrontend() {
+        return frontend;
     }
 
     public Farmer getFarmer() {
         return farmer;
-    }
-
-    public Simulation getSimulation() {
-        return simulation;
     }
 
     public Stage getStage() {
@@ -126,11 +118,7 @@ public class Farmio {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-
-    public void setUi(Ui dummyUi) {
-        ui = dummyUi;
-    }
-
+    
     public void setLevel(Level level) {
         this.level = level;
     }

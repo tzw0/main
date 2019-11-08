@@ -20,7 +20,7 @@ public class DoTask extends Task {
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException, FarmioException {
         {
-            action.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
+            action.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
         }
     }
 

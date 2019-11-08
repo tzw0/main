@@ -8,7 +8,7 @@ public class UiDummy implements Ui {
     /**
      * creates a Ui dummy for testing.
      */
-    public UiDummy() {
+    UiDummy() {
         uiTestString = "";
         input = "";
         output = "";
@@ -57,9 +57,5 @@ public class UiDummy implements Ui {
 
     public void typeWriter(String text, boolean hasPressEnter) {
         uiTestString += "typewriter";
-    }
-
-    public void showLevelBegin() {
-        uiTestString += "levelBegin";
     }
 }

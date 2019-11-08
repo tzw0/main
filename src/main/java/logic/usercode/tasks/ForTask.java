@@ -22,7 +22,7 @@ public class ForTask extends Task {
         {
             int repeatNumber = 0;
             for (int i = 0; i < repeatNumber; i++) {
-                action.execute(farmio.getUi(), farmio.getStorage(), farmio.getFarmer(), farmio.getSimulation());
+                action.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
             }
         }
     }

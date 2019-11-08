@@ -3,7 +3,7 @@ package logic.commands;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import farmio.exceptions.FarmioException;
-import frontend.Ui;
+import frontend.Frontend;
 
 
 public class CommandAddName extends Command {
@@ -21,27 +21,27 @@ public class CommandAddName extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
-        Ui ui = farmio.getUi();
-        farmio.getSimulation().simulate();
+        Frontend frontend = farmio.getFrontend();
+        farmio.getFrontend().simulate();
         if (name.equals("MENU")) {
-            ui.typeWriter("Keywords cannot be used as a character name.", false);
-            ui.typeWriter("Enter your name:", false);
+            frontend.typeWriter("Keywords cannot be used as a character name.", false);
+            frontend.typeWriter("Enter your name:", false);
         } else if (name.length() <= 15 && name.length() > 0 && (name.matches("[a-zA-Z0-9]+") || name.contains("_"))) {
             farmio.getFarmer().inputName(name);
-            ui.typeWriter("Welcome Farmer "
+            frontend.typeWriter("Welcome Farmer "
                     + name
                     + ", please press [ENTER] to begin the tutorial"
                     + " or enter [skip] to skip the story", false);
             farmio.setStage(Farmio.Stage.LEVEL_START);
         } else if (name.length() == 0) {
-            ui.typeWriter("Provide a name.", false);
-            ui.typeWriter("Enter a name:", false);
+            frontend.typeWriter("Provide a name.", false);
+            frontend.typeWriter("Enter a name:", false);
         } else if (name.length() > 15) {
-            ui.typeWriter("Your name can have a maximum of 15 characters.", false);
-            ui.typeWriter("Enter your name:", false);
+            frontend.typeWriter("Your name can have a maximum of 15 characters.", false);
+            frontend.typeWriter("Enter your name:", false);
         } else {
-            ui.typeWriter("Special Characters are not allowed", false);
-            ui.typeWriter("Enter your name:", false);
+            frontend.typeWriter("Special Characters are not allowed", false);
+            frontend.typeWriter("Enter your name:", false);
         }
     }
 }

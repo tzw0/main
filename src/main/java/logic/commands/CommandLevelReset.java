@@ -5,7 +5,7 @@ import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import gameassets.Farmer;
 import storage.Storage;
-import frontend.Ui;
+import frontend.Frontend;
 
 public class CommandLevelReset extends Command {
     /**
@@ -15,22 +15,22 @@ public class CommandLevelReset extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-        Ui ui = farmio.getUi();
+        Frontend frontend = farmio.getFrontend();
         Storage storage = farmio.getStorage();
         try {
             farmio.setFarmer(new Farmer(storage.loadFarmer()));
         } catch (FarmioException e) {
-            ui.showWarning(e.getMessage());
-            ui.showInfo("Attempting recovery process.");
+            frontend.showWarning(e.getMessage());
+            frontend.showInfo("Attempting recovery process.");
             try {
                 farmio.setFarmer(new Farmer(storage.loadFarmerBackup()));
             } catch (FarmioException ex) {
-                ui.showError("Recovery process failed!");
-                ui.showInfo("Game cannot continue. Exiting now.");
+                frontend.showError("Recovery process failed!");
+                frontend.showInfo("Game cannot continue. Exiting now.");
             }
-            ui.showInfo("Recovery successful.");
+            frontend.showInfo("Recovery successful.");
         }
-        farmio.getUi().typeWriter("Level reset successful! Press [ENTER] to continue", false);
+        farmio.getFrontend().typeWriter("Level reset successful! Press [ENTER] to continue", false);
         farmio.setStage(Farmio.Stage.LEVEL_START);
     }
 }
