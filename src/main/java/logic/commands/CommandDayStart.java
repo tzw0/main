@@ -5,6 +5,7 @@ import farmio.Farmio;
 import frontend.AsciiColours;
 import frontend.Frontend;
 import gameassets.Farmer;
+import gameassets.places.Farm;
 
 public class CommandDayStart extends Command {
     /**
@@ -15,7 +16,11 @@ public class CommandDayStart extends Command {
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
         //todo clearLog Details
-        Farmer.getLogTaskList().deleteAll();//deletes everything in the task list
+        /* todo Possibl initialising of Log
+        if(!Farmer.getLogTaskList().isEmpty()) { //if notempty
+            Farmer.getLogTaskList().deleteAll();//deletes everything in the log task list
+        }
+        */
 
         Frontend frontend = farmio.getFrontend();
         farmio.getFrontend().simulate("DayStart", 1, 5);

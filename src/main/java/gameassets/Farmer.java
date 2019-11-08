@@ -29,7 +29,7 @@ public class Farmer {
     private static final String JSON_KEY_TASK_CURRENT = "task_current";
     private static final String JSON_KEY_TASK_STATUS_FAIL = "task_status_fail";
     private static final String JSON_KEY_NAME = "name";
-    private static TaskList logTaskList;
+    protected Log logTaskList;
 
     private int gold;
     private double level;
@@ -60,6 +60,7 @@ public class Farmer {
         this.currentTask = -1;
         this.hasfailedCurrentTask = false;
         this.name = "name";
+        this.logTaskList = new Log();
     }
 
     /**
@@ -228,11 +229,12 @@ public class Farmer {
 
     //Todo - Log Tasklist
 
-    public static TaskList getLogTaskList(){
-        return logTaskList;
+    public Log getLogTaskList(){
+        return  logTaskList;
     }
 
-    //todo end- log tasklist
+
+    //
 
     public void addTask(Task task) throws FarmioException {
         tasks.addTask(task);

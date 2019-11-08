@@ -10,6 +10,8 @@ public class Log extends TaskList{
         logTasklist = new TaskList();
     }
 
+    //todo Manipulate the Log TaskList into appropriate format
+
 
 
 
