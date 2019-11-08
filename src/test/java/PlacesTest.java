@@ -1,9 +1,8 @@
-import exceptions.FarmioException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import places.WheatFarm;
-import places.ChickenFarm;
-import places.CowFarm;
+import gameassets.places.WheatFarm;
+import gameassets.places.ChickenFarm;
+import gameassets.places.CowFarm;
 
 public class PlacesTest {
     WheatFarm wheatFarm;

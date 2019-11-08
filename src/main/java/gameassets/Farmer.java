@@ -7,6 +7,7 @@ import frontend.GameConsole;
 import gameassets.places.ChickenFarm;
 import gameassets.places.CowFarm;
 import gameassets.places.WheatFarm;
+import logic.usercode.tasks.Task;
 import logic.usercode.tasks.TaskList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -85,28 +86,6 @@ public class Farmer {
             throw new FarmioException("Game save corrupted!");
         }
     }
-
-    /**
-     * Constructor for Farmer to intialize farmer objects.
-     * @param level as the current level of the game.
-     * @param gold as the amoount of gold the farmer has.
-     * @param wheatFarm as the current status of the wheatfarm.
-     * @param chickenFarm as the current status of the chickenfarm.
-     * @param cowFarm as the current status of the cowfarm.
-     * @param tasks as the tasks the farmer has to execute.
-     * @param name as the name of the farmer that was input by the user.
-     */
-    public Farmer(double level, int gold, WheatFarm wheatFarm, ChickenFarm chickenFarm,
-                  CowFarm cowFarm, TaskList tasks, String name) {
-        this.level = level;
-        this.gold = gold;
-        this.wheatFarm = wheatFarm;
-        this.chickenFarm = chickenFarm;
-        this.cowFarm = cowFarm;
-        this.tasks = tasks;
-        this.name = name;
-    }
-
 
     /**
      * Checks whether the name that was loaded from the save file is a valid name.
@@ -245,6 +224,38 @@ public class Farmer {
         return tasks;
     }
 
+    public void addTask(Task task) throws FarmioException {
+        tasks.addTask(task);
+    }
+
+    public void insertTask(int taskID, Task task) throws FarmioException {
+        tasks.insertTask(taskID, task);
+    }
+
+    public void editTask(int taskID, Task task) throws FarmioException {
+        tasks.editTask(taskID,task);
+    }
+
+    public ArrayList<String> toStringArray() {
+        return tasks.toStringArray();
+    }
+
+    public String deleteTask(int taskID) throws FarmioException {
+        return tasks.deleteTask(taskID);
+    }
+
+    public void deleteAll() {
+        tasks.deleteAll();
+    }
+
+
+    public void taskClear() {
+        tasks.clear();
+    }
+
+    public int taskSize() {
+        return tasks.size();
+    }
     /**
      * Checks if curent task has failed and resets current task.
      * @return true if current task has failed and false otherwise.
@@ -333,6 +344,52 @@ public class Farmer {
         wheatFarm.growSeedlings();
         day += 1;
     }
+
+    public boolean hasSeeds() {
+        return wheatFarm.hasSeeds();
+    }
+
+    public boolean hasWheat() {
+        return wheatFarm.hasWheat();
+    }
+
+    public boolean hasGrain() {
+        return wheatFarm.hasGrain();
+    }
+
+    public int getSeeds() {
+        return wheatFarm.getSeeds();
+    }
+
+    public int getSeedlings() {
+        return wheatFarm.getSeedlings();
+    }
+
+    public int getWheat() {
+        return wheatFarm.getWheat();
+    }
+
+    public int getGrain() {
+        return wheatFarm.getGrain();
+    }
+
+    public void buySeeds() {
+        wheatFarm.buySeeds();
+    }
+
+    public void harvestWheat() {
+        wheatFarm.harvestWheat();
+    }
+
+    public void plantSeeds() {
+        wheatFarm.plantSeeds();
+    }
+
+    public int sellGrain() {
+        return wheatFarm.sell();
+    }
+
+
 
 
     /**
