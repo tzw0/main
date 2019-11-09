@@ -55,7 +55,7 @@ public class SimulationTest {
             Level level = farmio.getLevel();
             farmio.getFrontend().showNarrative();
             assert ("inputsleepclearshowtypewriter".repeat(level.getNarratives().size())
-                    + "levelBegin").equals(UiDummy.uiTestString);
+                    + "show").equals(UiDummy.uiTestString);
             levelId = farmio.getFarmer().nextLevel();
         }
     }
@@ -68,7 +68,7 @@ public class SimulationTest {
             UiDummy.uiTestString = "";
             farmio.setLevel(new Level(farmio.getStorage().getLevel(levelId), "tester"));
             farmio.getFrontend().showNarrative();
-            assert ("inputsleepclearshowtypewriterlevelBegin").equals(UiDummy.uiTestString);
+            assert ("inputsleepclearshowtypewritershow").equals(UiDummy.uiTestString);
             levelId = farmio.getFarmer().nextLevel();
         }
     }

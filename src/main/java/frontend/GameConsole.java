@@ -266,4 +266,33 @@ public class GameConsole {
         previousAssetSet.putAll(assets);
         return formattedAssets;
     }
+
+    static ArrayList<String> formatFrame(ArrayList<String> unformattedFrame, int frameWidth, int frameHeight) {
+        ArrayList<String> frame = new ArrayList<>();
+        for (String line: unformattedFrame) {
+            if (line.length() <= frameWidth) {
+                line = String.format("%-" + frameWidth + "s", line);
+            } else {
+                line = String.format("%" + frameWidth + "s", "");
+            }
+            frame.add("|"
+                    + AsciiColours.BACKGROUND_WHITE
+                    + AsciiColours.BLACK
+                    + line
+                    + AsciiColours.SANE
+                    + "|"
+            );
+        }
+        if (frame.size() < frameHeight) {
+            for (int i = frame.size(); i < frameHeight; i++) {
+                frame.add("|"
+                        + AsciiColours.BACKGROUND_WHITE
+                        + AsciiColours.BLACK
+                        + String.format("%" + frameWidth + "s", "")
+                        + AsciiColours.SANE
+                        + "|");
+            }
+        }
+        return frame;
+    }
 }

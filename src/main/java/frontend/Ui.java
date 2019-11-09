@@ -1,6 +1,6 @@
 package frontend;
 
-interface Ui {
+public interface Ui {
     /**
      * Removes the clear screen string if the OS is windows.
      */
