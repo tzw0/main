@@ -1,10 +1,6 @@
 package gameassets;
 
-import farmio.exceptions.FarmioException;
-import logic.usercode.actions.*;
-import logic.usercode.conditions.Condition;
 import logic.usercode.tasks.Task;
-import logic.usercode.tasks.TaskList;
 import farmio.Farmio;
 
 import java.util.ArrayList;
