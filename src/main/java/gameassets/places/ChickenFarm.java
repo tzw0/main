@@ -88,7 +88,7 @@ public class ChickenFarm extends Farm {
 
 
     /**
-     * Increases number of seeds.
+     * Increases number of chicken.
      */
     public void buyChicken() {
         chicken += 1;
@@ -96,8 +96,8 @@ public class ChickenFarm extends Farm {
 
 
     /**
-     * Changes all seedlings to wheat if day is more than 1.
-     * Resets seedlings to 0.
+     * Changes all chicken to fullchicken if day is more than 1.
+     * Resets chicken to 0.
      */
     public void layEggs() {
         if (chicken > 0) {
