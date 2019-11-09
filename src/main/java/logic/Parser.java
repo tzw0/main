@@ -1,5 +1,6 @@
 package logic;
 
+import gameassets.Log;
 import logic.commands.*;
 
 
@@ -120,6 +121,7 @@ public class Parser {
             return editTask(userInput);
         }
         if (userInput.toLowerCase().equals("start")) {
+            //todo Figure out how to call the clearfunction here
             return new CommandDayStart();
         }
         if (userInput.toLowerCase().equals("log")) {

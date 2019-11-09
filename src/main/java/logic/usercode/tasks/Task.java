@@ -48,6 +48,17 @@ public abstract class Task {
         return condition.toString() + " do " + action.toString();
     }
 
+    public Action getAction() {
+        return action;
+    }
+
+    public Condition getCondition() {
+        return condition;
+    }
+
+    public Tasktype getType() {
+        return type;
+    }
 
     public abstract void execute(Farmio farmio) throws FarmioException, FarmioFatalException;
 

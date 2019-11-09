@@ -16,16 +16,8 @@ public class CommandDayStart extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-        //clears the log
-        /*
-        if(!farmio.getFarmer().getLogTaskList().isEmpty()) { //if notempty
-            farmio.getFarmer().getLogTaskList().deleteAll();//deletes everything in the log task list
-        }
-        */
+
         Log.clearLogList(farmio);
-
-
-
         Frontend frontend = farmio.getFrontend();
         farmio.getFrontend().simulate("DayStart", 1, 5);
         frontend.show(AsciiColours.MAGENTA + AsciiColours.UNDERLINE + "Day Started!" + AsciiColours.SANE);
