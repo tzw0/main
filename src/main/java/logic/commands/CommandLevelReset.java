@@ -19,12 +19,12 @@ public class CommandLevelReset extends Command {
         Frontend frontend = farmio.getFrontend();
         Storage storage = farmio.getStorage();
         try {
-            farmio.setFarmer(new Farmer(storage.loadFarmer()));
+            farmio.getFarmer().setJson(storage.loadFarmer());
         } catch (FarmioException e) {
             frontend.showWarning(e.getMessage());
             frontend.showInfo("Attempting recovery process.");
             try {
-                farmio.setFarmer(new Farmer(storage.loadFarmerBackup()));
+                farmio.getFarmer().setJson(storage.loadFarmerBackup());
             } catch (FarmioException ex) {
                 frontend.showError("Recovery process failed!");
                 frontend.showInfo("Game cannot continue. Exiting now.");

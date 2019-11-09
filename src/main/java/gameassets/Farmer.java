@@ -64,34 +64,6 @@ public class Farmer {
     }
 
     /**
-     * Constructor to initialize farmer object from saved JSON file.
-     * @param jsonObject load variables saved from save file.
-     * @throws FarmioException if level and name are not valid.
-     */
-    public Farmer(JSONObject jsonObject) throws FarmioException {
-        try {
-            this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
-            this.gold = (int) (long) jsonObject.get(JSON_KEY_GOLD);
-            this.day = (int) (long) jsonObject.get(JSON_KEY_DAY);
-            this.location = (String) jsonObject.get(JSON_KEY_LOCATION);
-            this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
-            this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
-            this.cowFarm = new CowFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_COW));
-            this.tasks = new TaskList((JSONArray) jsonObject.get(JSON_KEY_TASK_LIST));
-            this.currentTask = -1;
-            this.hasfailedCurrentTask = false;
-            String savedName = (String) jsonObject.get(JSON_KEY_NAME);
-            String loadName = savedName.toUpperCase();
-            isValidName(loadName);
-            isValidTaskList(this.tasks);
-            this.name = loadName;
-            this.logTaskList = new Log(); //todo include json file w previous list of actions
-        } catch (Exception e) {
-            throw new FarmioException("Game save corrupted!");
-        }
-    }
-
-    /**
      * Checks whether the name that was loaded from the save file is a valid name.
      * @param loadName as the name that is loaded from the save file.
      * @throws FarmioException if loadName does not meet the conditions of the name.
@@ -405,17 +377,44 @@ public class Farmer {
         return wheatFarm.sell();
     }
 
-
-
+    /**
+     * Change farmer variables with the data in argument JSONObject.
+     * @param jsonObject data representation of farmer.
+     * @return
+     * @throws FarmioException
+     */
+    public Farmer setJson(JSONObject jsonObject) throws FarmioException {
+        try {
+            this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
+            this.gold = (int) (long) jsonObject.get(JSON_KEY_GOLD);
+            this.day = (int) (long) jsonObject.get(JSON_KEY_DAY);
+            this.location = (String) jsonObject.get(JSON_KEY_LOCATION);
+            this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
+            this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
+            this.cowFarm = new CowFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_COW));
+            this.tasks = new TaskList((JSONArray) jsonObject.get(JSON_KEY_TASK_LIST));
+            this.currentTask = -1;
+            this.hasfailedCurrentTask = false;
+            String savedName = (String) jsonObject.get(JSON_KEY_NAME);
+            String loadName = savedName.toUpperCase();
+            isValidName(loadName);
+            isValidTaskList(this.tasks);
+            this.name = loadName;
+        } catch (Exception e) {
+            throw new FarmioException("Game save corrupted!");
+        }
+        return this;
+    }
 
     /**
-     * To add java docs.
-     * @return something
+     * Generates a json representation of farmer to be stored into a file.
+     * @return JSONOBject with farmer data.
      */
     public JSONObject toJson() {
         JSONObject obj = new JSONObject();
         obj.put(JSON_KEY_LEVEL, level);
         obj.put(JSON_KEY_GOLD, gold);
+
         obj.put(JSON_KEY_DAY, day);
         obj.put(JSON_KEY_LOCATION, location);
         obj.put(JSON_KEY_FARM_WHEAT, wheatFarm.toJson());
@@ -429,9 +428,9 @@ public class Farmer {
     }
 
     /**
-     * to do java docs.
-     * @param object something
-     * @return something
+     * Updates TaskList in argument json data to match TaskList in farmer.
+     * @param object Json data to be updated.
+     * @return Updated json data.
      */
     public JSONObject updateJson(JSONObject object) {
         object.replace(JSON_KEY_TASK_LIST, tasks.toJson());

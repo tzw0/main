@@ -19,7 +19,7 @@ public class CommandGameLoad extends Command {
         Frontend frontend = farmio.getFrontend();
         Storage storage = farmio.getStorage();
         try {
-            Farmer farmer = new Farmer(storage.loadFarmer());
+            Farmer farmer = new Farmer().setJson(storage.loadFarmer());
             farmio.setFarmer(farmer);
             Level level = new Level(storage.getLevel(farmer.getLevel()), farmer.getName());
             farmio.setLevel(level);
