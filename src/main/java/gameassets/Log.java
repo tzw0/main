@@ -24,17 +24,24 @@ public class Log extends TaskList{
         }
     }
 
-    //todo limit log printSize
+    /**
+     * Returns a string list for invalid log.
+     * @return String Array to be used by toStringSplitLogArray
+     */
     public ArrayList<String> invalidLog(){
         ArrayList<String> List = new ArrayList<String>();
-        List.add("----------------INVALID-LOG-------------------");
+        List.add("--------------------INVALID-LOG---------------------");
         List.add("Please enter a number greater than 0 ");
         return List;
     }
 
+    /**
+     * Returns a string list for empty log.
+     * @return String Array to be used by toStringSplitLogArray
+     */
     public ArrayList<String> emptyLog(){
         ArrayList<String> List = new ArrayList<String>();
-        List.add("----------------EMPTY-LOG-------------------");
+        List.add("----------------------EMPTY-LOG---------------------");
         List.add("Please populate the log");
         return List;
     }
@@ -96,7 +103,7 @@ public class Log extends TaskList{
         return list;
     }
     /**
-     * Converts the logList to a readable format with index number to be printed.
+     * Converts the logList into groups of 15 and to a readable format with index number to be printed.
      * @return String Array to be printed by the UI
      */
     public ArrayList<String> toStringSplitLogArray(int num) {
@@ -104,12 +111,12 @@ public class Log extends TaskList{
         ArrayList<String> splitList = new ArrayList<String>();
         int noEntries = this.size();
         int noAvailablePages = (int) Math.ceil((double)noEntries / 15);
-        if(num <= 0 || num > noAvailablePages){
+        if(num <= 0 ){
             splitList.addAll(invalidLog());
-        } else if(noEntries == 0){
+        } else if(noEntries == 0 || num > noAvailablePages){
             splitList.addAll(emptyLog());
         }  else {
-            splitList.add("----------------------LOG-------------------");
+            splitList.add("--------------------------LOG-----------------------");
             int lowerBound = (num-1) * 15;
             int upperBound;
             int arbNum = num*15;

@@ -8,7 +8,10 @@ import java.util.ArrayList;
 
 
 public class CommandLog extends Command {
-
+    int logPage;
+    public CommandLog(int logPage) {
+        this.logPage = logPage;
+    }
     /**
      * Shows the Users Log.
      * @param farmio the game which stage is set as LOG.
@@ -18,7 +21,7 @@ public class CommandLog extends Command {
     public void execute(Farmio farmio) throws FarmioFatalException {
         Farmer farmer = farmio.getFarmer();
         Log logTaskList = farmer.getLogTaskList();
-        ArrayList<String> output = logTaskList.toStringArray();
+        ArrayList<String> output = logTaskList.toStringSplitLogArray(logPage);
         farmio.getFrontend().simulate(output, false);
     }
 }
