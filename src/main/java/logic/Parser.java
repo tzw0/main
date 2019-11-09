@@ -51,7 +51,7 @@ public class Parser {
         }
         switch (stage) {
         case WELCOME:
-            return new CommandMenuStart();
+            return parseWelcome(userInput);
         case LEVEL_START:
             return new CommandLevelStart();
         case RUNNING_DAY:
@@ -77,6 +77,12 @@ public class Parser {
         }
     }
 
+    private static Command parseWelcome(String userInput) throws FarmioException {
+        if (userInput.equals("")) {
+            return new CommandMenuStart();
+        }
+        throw new FarmioException("Invalid Command!");
+    }
     /**
      * Used to parse the user input during the DAY_END stage. User can choose to either reset the level,
      * or proceed to the next day
