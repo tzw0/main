@@ -4,8 +4,7 @@ import farmio.Farmio;
 import farmio.exceptions.FarmioFatalException;
 import gameassets.Farmer;
 import gameassets.Log;
-
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class CommandLog extends Command {
@@ -19,15 +18,7 @@ public class CommandLog extends Command {
     public void execute(Farmio farmio) throws FarmioFatalException {
         Farmer farmer = farmio.getFarmer();
         Log logTaskList = farmer.getLogTaskList();
-        List<String> output = logTaskList.toStringArray();
-
-
-        for (String i : output) {
-            farmio.getFrontend().typeWriter(i,false); //test for log
-        }
-
-
-        //todo Implements the log frontEnd
-        //farmio.getFrontend().showMenu(farmio.getStorage().getSaveExist(), true);
+        ArrayList<String> output = logTaskList.toStringArray();
+        farmio.getFrontend().simulate(output, false);
     }
 }
