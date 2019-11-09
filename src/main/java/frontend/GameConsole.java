@@ -103,13 +103,15 @@ public class GameConsole {
 
     /**
      * Creates the virtual Game console with all game variable displayed.
-     * @param frame the ascii art picture in the center of the console.
+     * @param unformattedFrame the ascii art picture in the center of the console.
      * @param farmer The farmer who's statistics will be displayed on the console.
      * @param goalMap The list of Goals the farmer has to accomplish.
      * @param objective The mission of the level.
      * @return the virtual Game console as a String.
      */
-    static String fullconsole(ArrayList<String> frame, Farmer farmer, Map<String, Integer> goalMap, String objective) {
+    static String fullconsole(ArrayList<String> unformattedFrame, Farmer farmer, Map<String, Integer> goalMap,
+                              String objective, int frameWidth, int frameHeight) {
+        ArrayList<String> frame = formatFrame(unformattedFrame, frameWidth, frameHeight);
         StringBuilder output = new StringBuilder();
         String location = farmer.getLocation();
         double level = farmer.getLevel();
@@ -178,10 +180,11 @@ public class GameConsole {
 
     /**
      * Creates a blank console where the frame occupies the whole console.
-     * @param frame the ascii image.
+     * @param unformattedframe the ascii image.
      * @return The blank console.
      */
-    static String blankConsole(ArrayList<String> frame) {
+    static String blankConsole(ArrayList<String> unformattedframe, int frameWidth, int frameHeight) {
+        ArrayList<String> frame = formatFrame(unformattedframe, frameWidth, frameHeight);
         StringBuilder output = new StringBuilder();
         output.append(AsciiColours.SANE).append(TOP_BORDER);
         for (int i = 0; i < FULL_CONSOLE_HEIGHT; i++) {
@@ -267,7 +270,7 @@ public class GameConsole {
         return formattedAssets;
     }
 
-    static ArrayList<String> formatFrame(ArrayList<String> unformattedFrame, int frameWidth, int frameHeight) {
+    private static ArrayList<String> formatFrame(ArrayList<String> unformattedFrame, int frameWidth, int frameHeight) {
         ArrayList<String> frame = new ArrayList<>();
         for (String line: unformattedFrame) {
             if (line.length() <= frameWidth) {

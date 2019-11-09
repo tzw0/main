@@ -83,7 +83,7 @@ public class Frontend {
         simulation.simulate(framePath, startFrame, endFrame);
     }
 
-    public void simulate(ArrayList<String> frame, boolean isFullscreen) throws FarmioFatalException {
+    public void simulate(ArrayList<String> frame, boolean isFullscreen) {
         simulation.simulate(frame, isFullscreen);
     }
 
