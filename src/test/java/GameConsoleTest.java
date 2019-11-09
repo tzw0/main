@@ -43,9 +43,10 @@ public class GameConsoleTest {
 
     @Test
     void formatTest() throws FarmioFatalException {
-        UiDummy.output = "";
         farmio.getFrontend().simulate("Test", 0);
+        UiDummy.output = "";
+        farmio.getFrontend().simulate();
         String test = UiDummy.output.replaceAll("\\p{C}", "");
-//        assert test.equals(frame0Test);
+        assert test.equals(frame0Test);
     }
 }

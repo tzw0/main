@@ -8,6 +8,8 @@ import gameassets.Level;
 import logic.Parser;
 import storage.Storage;
 
+import java.util.ArrayList;
+
 class Simulation {
     private static final int SLEEP_TIME = 300;
     private Farmio farmio;
@@ -152,6 +154,22 @@ class Simulation {
         simulate(level.getPath(), lastFrameId);
         frontend.typeWriter(level.getNarratives().get(lastFrameId), false);
         showLevelBegin();
+    }
+
+    /**
+     * shows an array list of strings in the frame.
+     * @param frame the list of strings to be shown.
+     */
+    public void simulate(ArrayList<String> frame, boolean isFullscreen) {
+        refresh();
+        if (isFullscreen) {
+            frontend.show(GameConsole.blankConsole(GameConsole.formatFrame(frame, GameConsole.FULL_CONSOLE_WIDTH,
+                    GameConsole.FULL_CONSOLE_HEIGHT)));
+        } else {
+            frontend.show(GameConsole.fullconsole(GameConsole.formatFrame(frame, GameConsole.FRAME_SECTION_WIDTH,
+                    GameConsole.FRAME_SECTION_HEIGHT), farmer, farmio.getLevel().getGoals(),
+                    farmio.getLevel().getObjective()));
+        }
     }
 
     /**
