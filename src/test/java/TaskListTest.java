@@ -4,7 +4,7 @@ import logic.usercode.actions.BuySeedsAction;
 import logic.usercode.conditions.BooleanCondition;
 import logic.usercode.conditions.BooleanConditionType;
 import logic.usercode.tasks.DoTask;
-import logic.usercode.tasks.TaskList;
+import gameassets.TaskList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
