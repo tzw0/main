@@ -51,7 +51,7 @@ public class Parser {
         }
         switch (stage) {
         case WELCOME:
-            return new CommandMenuStart();
+            return parseWelcome(userInput);
         case LEVEL_START:
             return new CommandLevelStart();
         case RUNNING_DAY:
@@ -77,6 +77,20 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks user input at the welcome screen
+     *
+     * @param userInput input String from user
+     * @return Command for the start game menu
+     * @throws FarmioException if the user input is invalid
+     */
+    private static Command parseWelcome(String userInput) throws FarmioException {
+        if (userInput.equals("")) {
+            return new CommandMenuStart();
+        }
+        LOGGER.log(Level.INFO, "Detected invalid command " + userInput + " at Welcome");
+        throw new FarmioException("Invalid Command!");
+    }
     /**
      * Used to parse the user input during the DAY_END stage. User can choose to either reset the level,
      * or proceed to the next day

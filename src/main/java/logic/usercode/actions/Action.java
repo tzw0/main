@@ -85,7 +85,6 @@ public abstract class Action {
      *
      * @param frontend The user interface used to print messages of the action
      * @param farmer The farmer whose variables are displayed and changed
-     * @param frontend The user interface used to print messages of the action
      * @param criteriaFeedbackList The list of criterias and their respective feedback messages
      * @throws FarmioException if there is an error in executing the tasklist
      * @throws FarmioFatalException if file for simulation is missing

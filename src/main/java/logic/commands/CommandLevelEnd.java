@@ -17,7 +17,11 @@ public class CommandLevelEnd extends Command {
     public void execute(Farmio farmio) throws FarmioFatalException {
 
         farmio.getFrontend().typeWriter("",true);
-        farmio.getFrontend().getInput();
+        String userInput = farmio.getFrontend().getInput();
+        while (!userInput.equals("")) {
+            farmio.getFrontend().showWarning("Invalid Command!");
+            userInput = farmio.getFrontend().getInput();
+        }
         farmio.getFrontend().simulate("LevelEnd", 0,4);
         farmio.getFrontend().show(AsciiColours.GREEN + AsciiColours.UNDERLINE +  "Level Ended" + AsciiColours.SANE);
         farmio.getFrontend().typeWriter("Farmer " + farmio.getFarmer().getName()
