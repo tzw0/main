@@ -21,8 +21,9 @@ public class CommandLog extends Command {
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException, FarmioException {
         Farmer farmer = farmio.getFarmer();
+        double level = farmio.getFarmer().getLevel();
         Log logTaskList = farmer.getLogTaskList();
-        ArrayList<String> output = logTaskList.toStringSplitLogArray(logPage);
+        ArrayList<String> output = logTaskList.toStringSplitLogArray(logPage,level);
         farmio.getFrontend().simulate(output, false);
         farmio.getFrontend().typeWriter("Press [Enter] to go back",false);
     }
