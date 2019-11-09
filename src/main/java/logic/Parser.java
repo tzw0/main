@@ -1,15 +1,12 @@
 package logic;
 
-import gameassets.Log;
 import logic.commands.*;
 
 
 import farmio.Farmio;
 import logic.usercode.tasks.Task;
 import logic.usercode.tasks.IfTask;
-import logic.usercode.tasks.ForTask;
 import logic.usercode.tasks.DoTask;
-import logic.usercode.tasks.WhileTask;
 import farmio.exceptions.FarmioException;
 import logic.usercode.actions.Action;
 import logic.usercode.conditions.Condition;
@@ -18,8 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static gameassets.Log.clearLogList;
 
 /**
  * Parser class is responsible for parsing all user input and generating the corresponding Command.
@@ -131,10 +126,10 @@ public class Parser {
             return parseTaskDelete(userInput);
         }
         if (userInput.startsWith("insert")) {
-            return insertTask(userInput);
+            return parseTaskInsert(userInput);
         }
         if (userInput.startsWith("edit")) {
-            return editTask(userInput);
+            return parseTaskEdit(userInput);
         }
         if (userInput.toLowerCase().equals("start")) {
             return new CommandDayStart();
@@ -293,7 +288,7 @@ public class Parser {
      * @return Command that will edit the Task in the TaskList with the specified ID when executed
      * @throws FarmioException if the user's input is of wrong format or the task description is invalid
      */
-    private static Command editTask(String userInput) throws FarmioException {
+    private static Command parseTaskEdit(String userInput) throws FarmioException {
         Matcher matcher = Pattern.compile("^(?<key>edit)\\s+(?<index>-?\\d+)\\s(?<cmd>.+)$").matcher(userInput);
         if (matcher.find()) {
             int taskID = Integer.parseInt(matcher.group("index"));
@@ -311,7 +306,7 @@ public class Parser {
      * @return Command that inserts a Task at the specified position
      * @throws FarmioException if the user input is of invalid format, or the task description is invalid
      */
-    private static Command insertTask(String userInput) throws FarmioException {
+    private static Command parseTaskInsert(String userInput) throws FarmioException {
         Matcher matcher = Pattern.compile("^(?<key>insert)\\s+(?<id>-?\\d+)\\s+(?<task>.+)$").matcher(userInput);
         if (matcher.find()) {
             int taskID = Integer.parseInt(matcher.group("id"));
