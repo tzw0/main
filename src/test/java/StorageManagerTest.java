@@ -44,7 +44,7 @@ public class StorageManagerTest {
         try {
             JSONParser parser = new JSONParser();
             JSONObject object = (JSONObject) parser.parse(FARMER_JSON_1);
-            Farmer farmer = new Farmer(object);
+            Farmer farmer = new Farmer().setJson(object);
             storage.storeFarmer(farmer);
             String checksum = getChecksum("save.json");
             assertEquals(checksum_expect, checksum);
@@ -58,7 +58,7 @@ public class StorageManagerTest {
         try{
             JSONParser parser = new JSONParser();
             JSONObject objectStore = (JSONObject) parser.parse(FARMER_JSON_1);
-            Farmer farmer = new Farmer(objectStore);
+            Farmer farmer = new Farmer().setJson(objectStore);
             storage.storeFarmer(farmer);
             JSONObject objectLoad = storage.loadFarmer();
             assertEquals(objectStore.toString(), objectLoad.toString());
@@ -72,7 +72,7 @@ public class StorageManagerTest {
         try{
             JSONParser parser = new JSONParser();
             JSONObject objectStore = (JSONObject) parser.parse(FARMER_JSON_1);
-            Farmer farmer = new Farmer(objectStore);
+            Farmer farmer = new Farmer().setJson(objectStore);
             storage.storeFarmer(farmer);
             JSONObject objectLoad = storage.loadFarmerBackup();
             assertEquals(objectStore.toString(), objectLoad.toString());
@@ -86,9 +86,9 @@ public class StorageManagerTest {
         try{
             JSONParser parser = new JSONParser();
             JSONObject objectStore = (JSONObject) parser.parse(FARMER_JSON_1);
-            Farmer farmer = new Farmer(objectStore);
+            Farmer farmer = new Farmer().setJson(objectStore);
             storage.storeFarmer(farmer);
-            farmer = new Farmer((JSONObject) parser.parse(FARMER_JSON_2));
+            farmer = new Farmer().setJson((JSONObject) parser.parse(FARMER_JSON_2));
             storage.storeFarmerPartial(farmer);
             JSONObject objectLoad = storage.loadFarmerBackup();
             assertEquals(objectStore.toString(), objectLoad.toString());
