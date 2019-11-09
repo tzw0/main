@@ -1,3 +1,4 @@
+import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import gameassets.Level;
@@ -46,7 +47,7 @@ public class SimulationTest {
     }
 
     @Test
-    void narrativeSimulationContinueTest() throws FarmioFatalException {
+    void narrativeSimulationContinueTest() throws FarmioException, FarmioFatalException {
         UiDummy.input = "";
         double levelId = 1.1;
         while (levelId != 0) {
@@ -61,7 +62,7 @@ public class SimulationTest {
     }
 
     @Test
-    void narrativeSimulationSkipTest() throws FarmioFatalException {
+    void narrativeSimulationSkipTest() throws FarmioException, FarmioFatalException {
         UiDummy.input = "skip";
         double levelId = 1.1;
         while (levelId != 0) {
