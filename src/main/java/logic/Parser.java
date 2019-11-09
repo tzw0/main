@@ -139,8 +139,8 @@ public class Parser {
         if (userInput.toLowerCase().equals("start")) {
             return new CommandDayStart();
         }
-        if (userInput.toLowerCase().equals("log")) {
-            return new CommandLog();
+        if (userInput.startsWith("log")){
+            return parseTaskLog(userInput);
         }
         if (userInput.equals("conditions") || userInput.equals("condition")) {
             return new CommandShowList("ConditionList");
@@ -178,6 +178,22 @@ public class Parser {
         if (matcher.find()) {
             int taskID = Integer.parseInt(matcher.group("index"));
             return new CommandTaskDelete(taskID);
+        }
+        LOGGER.log(Level.INFO, "Deteched invalid command for command: " + userInput);
+        throw new FarmioException("Invalid argument.");
+    }
+    /**
+     * Used to parse the user's command if it is determined to be a log command.
+     *
+     * @param userInput user input String
+     * @return Command that displays a list of the logs
+     * @throws FarmioException if user input is invalid
+     */
+    private static Command parseTaskLog(String userInput) throws FarmioException {
+        Matcher matcher = Pattern.compile("^log\\s+(?<index>\\d+)$").matcher(userInput);
+        if (matcher.find()) {
+            int pageNumber = Integer.parseInt(matcher.group("index"));
+            return new CommandLog(pageNumber);
         }
         LOGGER.log(Level.INFO, "Deteched invalid command for command: " + userInput);
         throw new FarmioException("Invalid argument.");
