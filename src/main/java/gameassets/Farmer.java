@@ -29,8 +29,8 @@ public class Farmer {
     private static final String JSON_KEY_TASK_CURRENT = "task_current";
     private static final String JSON_KEY_TASK_STATUS_FAIL = "task_status_fail";
     private static final String JSON_KEY_NAME = "name";
-    protected Log logTaskList;
 
+    protected Log logTaskList;
     private int gold;
     private double level;
     private int day;
@@ -85,7 +85,7 @@ public class Farmer {
             isValidName(loadName);
             isValidTaskList(this.tasks);
             this.name = loadName;
-            this.logTaskList = new Log(); //todo include json file w previous list of actions
+            //this.logTaskList =  new Log(); //todo include json file w previous list of actions
         } catch (Exception e) {
             throw new FarmioException("Game save corrupted!");
         }

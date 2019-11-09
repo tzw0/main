@@ -16,6 +16,8 @@ public class Log extends TaskList{
         logTasklist = new TaskList();
     }
 
+    //todo limit log printSize
+
     //todo implement logSave via json object
 
     /**
@@ -27,8 +29,6 @@ public class Log extends TaskList{
            farmio.getFarmer().getLogTaskList().deleteAll();
         }
     }
-
-    //todo Manipulate the Log TaskList into appropriate format
 
     /**
      * Converts the logList to a readable format with index number to be printed.
