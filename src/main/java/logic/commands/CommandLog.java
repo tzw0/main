@@ -19,13 +19,12 @@ public class CommandLog extends Command {
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
         Farmer farmer = farmio.getFarmer();
-        Log logTaskList = farmer.getLogTaskList();//convert to List of Strings
-        //todo convertTaskList to String Format.
+        Log logTaskList = farmer.getLogTaskList();
         List<String> output = logTaskList.toStringArray();
 
-        //todo test output of log
+
         for (String i : output) {
-            farmio.getFrontend().typeWriter(i,false);
+            farmio.getFrontend().typeWriter(i,false); //test for log
         }
 
 

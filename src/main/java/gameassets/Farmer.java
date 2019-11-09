@@ -228,11 +228,13 @@ public class Farmer {
         return tasks;
     }
 
-    //Todo - Log Tasklist
+    /**
+     * Gets the log list
+     * @return
+     */
     public Log getLogTaskList(){
         return  logTaskList;
     }
-    //
 
     public void addTask(Task task) throws FarmioException {
         tasks.addTask(task);
