@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"command"},{"l":"process"},{"l":"task"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"farmio"},{"l":"farmio.exceptions"},{"l":"frontend"},{"l":"gameassets"},{"l":"gameassets.places"},{"l":"logic"},{"l":"logic.commands"},{"l":"logic.usercode.actions"},{"l":"logic.usercode.conditions"},{"l":"logic.usercode.tasks"},{"l":"storage"}]
