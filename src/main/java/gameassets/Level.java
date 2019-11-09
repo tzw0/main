@@ -232,18 +232,29 @@ public class Level {
      * @param userList List of the users answers
      * @return precision of the list
      */
-    public int compareLists(List<String> modelList, List<String> userList){
-        double ctr = 0;
-        for (int i = 0; i < modelList.size(); i++){
-           String modelTaskString[] = modelList.get(i).split(" ",2);
-           String userTaskString[] = userList.get(i).split(" ",2);
-           String modelTask = modelTaskString[0];
-           String userTask = userTaskString[0];
-           if (modelTask.equals(userTask)){
-              ctr += 1;
-           }
+    public int compareLists(List<String> modelList, List<String> userList) {
+        double sameTaskType = 0;
+        double sameActionType = 0;
+        for (int i = 0; i < modelList.size(); i++) {
+            String modelTaskString[] = modelList.get(i).split(" ", 2);
+            String userTaskString[] = userList.get(i).split(" ", 2);
+            String modelTask = modelTaskString[0];
+            String userTask = userTaskString[0];
+            String modelAction = modelTaskString[1];
+            String userAction = userTaskString[1];
+            if (modelTask.equals(userTask)) {
+                sameTaskType += 1;
+            }
+            if (modelAction.equals(userAction)) {
+                sameActionType += 1;
+            }
+            //return  (int)((sameTaskType * 100.0f) / modelList.size());
         }
-        return  (int)((ctr * 100.0f) / modelList.size());
+
+        double probTask = (sameTaskType * 100.0f) / modelList.size();
+        double probAction = (sameActionType * 100.0f) / modelList.size();
+        double precision = (probAction * probTask)/ 100;
+        return (int) precision;
     }
 
     /**
@@ -284,9 +295,9 @@ public class Level {
        if (modelAnswerSize == userAnswerSize) {
            return 100;
        }    else if (modelAnswerSize > userAnswerSize) {
-           return (userAnswerSize/ modelAnswerSize) * 100;
+           return (int)((userAnswerSize * 100.0f) / modelAnswerSize);
        }    else {
-           return (modelAnswerSize/userAnswerSize) * 100;
+           return (int)((modelAnswerSize * 100.0f) / userAnswerSize);
        }
     }
 
@@ -298,7 +309,7 @@ public class Level {
     public List<String> getDetailedFeedback(Farmio farmio) {
         List<String> output = new ArrayList<String>();
         double levelNumber = farmio.getFarmer().getLevel(); // unsure if this is needed rn
-        output.add(" The objective of this level was to " + objective);
+        output.add("The objective of this level was to " + objective);
         output.add("Unfortunately you were unable to complete within the allocated time of " + deadline + " days");
 
         output.add("Your actions :");

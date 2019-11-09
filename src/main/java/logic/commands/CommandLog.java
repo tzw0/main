@@ -1,6 +1,7 @@
 package logic.commands;
 
 import farmio.Farmio;
+import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import gameassets.Farmer;
 import gameassets.Log;
@@ -18,7 +19,7 @@ public class CommandLog extends Command {
      * @throws FarmioFatalException if simulation file is missing.
      */
     @Override
-    public void execute(Farmio farmio) throws FarmioFatalException {
+    public void execute(Farmio farmio) throws FarmioFatalException, FarmioException {
         Farmer farmer = farmio.getFarmer();
         Log logTaskList = farmer.getLogTaskList();
         ArrayList<String> output = logTaskList.toStringSplitLogArray(logPage);

@@ -1,5 +1,6 @@
 package gameassets;
 
+import farmio.exceptions.FarmioException;
 import logic.usercode.tasks.Task;
 import farmio.Farmio;
 
@@ -42,7 +43,7 @@ public class Log extends TaskList{
     public ArrayList<String> emptyLog(){
         ArrayList<String> List = new ArrayList<String>();
         List.add("----------------------EMPTY-LOG---------------------");
-        List.add("Please populate the log");
+        List.add("                  [Log Page is empty]               ");
         return List;
     }
 
@@ -106,17 +107,19 @@ public class Log extends TaskList{
      * Converts the logList into groups of 15 and to a readable format with index number to be printed.
      * @return String Array to be printed by the UI
      */
-    public ArrayList<String> toStringSplitLogArray(int num) {
+    public ArrayList<String> toStringSplitLogArray(int num) throws FarmioException {
 
         ArrayList<String> splitList = new ArrayList<String>();
         int noEntries = this.size();
         int noAvailablePages = (int) Math.ceil((double)noEntries / 15);
-        if(num <= 0 ){
-            splitList.addAll(invalidLog());
-        } else if(noEntries == 0 || num > noAvailablePages){
+        if(num <= 0 || num > noAvailablePages){
+            throw new FarmioException("Invalid LOG PAGE!");
+            //splitList.addAll(invalidLog());
+        } else if(noEntries == 0){
             splitList.addAll(emptyLog());
         }  else {
             splitList.add("--------------------------LOG-----------------------");
+            splitList.add("              [PAGE NO: "+ num + " /" + noAvailablePages + "]");
             int lowerBound = (num-1) * 15;
             int upperBound;
             int arbNum = num*15;
@@ -170,6 +173,7 @@ public class Log extends TaskList{
                 splitList.add(output);
             }
         }
+
         return splitList;
     }
 }

@@ -191,7 +191,7 @@ public class Parser {
             return new CommandLog(pageNumber);
         }
         LOGGER.log(Level.INFO, "Deteched invalid command for command: " + userInput);
-        throw new FarmioException("Invalid argument.");
+        throw new FarmioException("Invalid Log Page \nPlease enter log PAGE_NUMBER.");
     }
 
     /**
