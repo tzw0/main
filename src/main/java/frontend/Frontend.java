@@ -1,6 +1,7 @@
 package frontend;
 
 import farmio.Farmio;
+import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 
 public class Frontend {
@@ -81,7 +82,7 @@ public class Frontend {
         simulation.simulate(framePath, startFrame, endFrame);
     }
 
-    public void showNarrative() throws FarmioFatalException {
+    public void showNarrative() throws FarmioFatalException, FarmioException {
         simulation.showNarrative();
     }
 
