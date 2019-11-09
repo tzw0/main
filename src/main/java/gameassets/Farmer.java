@@ -8,7 +8,6 @@ import gameassets.places.ChickenFarm;
 import gameassets.places.CowFarm;
 import gameassets.places.WheatFarm;
 import logic.usercode.tasks.Task;
-import logic.usercode.tasks.TaskList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.util.ArrayList;

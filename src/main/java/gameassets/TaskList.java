@@ -1,7 +1,8 @@
-package logic.usercode.tasks;
+package gameassets;
 
 import farmio.exceptions.FarmioException;
 import frontend.GameConsole;
+import logic.usercode.tasks.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
