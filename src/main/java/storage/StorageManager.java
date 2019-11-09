@@ -111,7 +111,10 @@ public class StorageManager implements Storage {
         } catch (IOException e) {
             return null;
         }
-        return System.getProperty("user.dir").concat(GAME_FILENAME);
+        String path = System.getProperty("user.dir");
+        path = path.concat(System.getProperty("os.name").toLowerCase().startsWith("win")?"\\":"/");
+        path = path.concat(GAME_FILENAME);
+        return path;
     }
 
     @Override
