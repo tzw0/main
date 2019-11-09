@@ -56,7 +56,7 @@ public class Parser {
             return parseWelcome(userInput);
         case LEVEL_START:
             return new CommandLevelStart();
-        case RUNNING_DAY:
+        case DAY_RUNNING:
             return new CommandTaskRun();
         case CHECK_OBJECTIVES:
             return new CommandCheckObjectives();
