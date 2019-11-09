@@ -19,6 +19,6 @@
   "deadline" : 10,
   "file_path": "Level1.6",
   "objective": "Earn 30 gold by Day 10",
-  "modelAnswer" : "||",
+  "modelAnswer" : "|if gold >= 10 do buySeeds|do gotoWheatfarm|if hasSeeds do plantSeeds|if hasWheat do harvestWheat|do gotoMarket|if hasGrain do sellGrain|",
   "hint": "1.Enter [market] to calculate your profits from each seed.\n2.Enter [condition] to check how you can use gold as a condition for an action"
 }

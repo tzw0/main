@@ -32,6 +32,5 @@ public class LevelTest {
 
     public LevelTest() throws ParseException {
        Level level = new Level(json, "tester");
-
     }
 }
