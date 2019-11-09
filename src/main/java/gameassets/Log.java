@@ -18,8 +18,6 @@ public class Log extends TaskList{
 
     //todo limit log printSize
 
-    //todo implement logSave via json object
-
     /**
      * Empties the LogList.
      * @param farmio farmio current state
@@ -44,10 +42,9 @@ public class Log extends TaskList{
             String taskAction = task.getAction().toString();
 
             String output = "";
-            //output += "Task Type: " + tasktype  + " Task Condition:" + taskCondition + " Task Action :" + taskAction;
             output +=  ((i + 1) + ". " + "Farmer");
             if (tasktype.equals("IF")) {
-               output += " checks  " ;
+               output += " checks  ";
                if (taskCondition.equals("hasSeeds")) {
                    output += "if he has seeds in his assets";
                 } else if (taskCondition.equals("hasWheat")) {
