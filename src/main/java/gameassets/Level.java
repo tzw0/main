@@ -284,9 +284,9 @@ public class Level {
        if (modelAnswerSize == userAnswerSize) {
            return 100;
        }    else if (modelAnswerSize > userAnswerSize) {
-           return (userAnswerSize/ modelAnswerSize) * 100;
+           return (int)((userAnswerSize * 100.0f) / modelAnswerSize);
        }    else {
-           return (modelAnswerSize/userAnswerSize) * 100;
+           return (int)((modelAnswerSize * 100.0f) / userAnswerSize);
        }
     }
 
@@ -298,7 +298,7 @@ public class Level {
     public List<String> getDetailedFeedback(Farmio farmio) {
         List<String> output = new ArrayList<String>();
         double levelNumber = farmio.getFarmer().getLevel(); // unsure if this is needed rn
-        output.add(" The objective of this level was to " + objective);
+        output.add("The objective of this level was to " + objective);
         output.add("Unfortunately you were unable to complete within the allocated time of " + deadline + " days");
 
         output.add("Your actions :");
