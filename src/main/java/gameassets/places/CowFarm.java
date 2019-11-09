@@ -106,6 +106,23 @@ public class CowFarm extends Farm {
     }
 
     /**
+     * Changes all cow to fullcow if day is more than 2.
+     * Resets cow to 0.
+     */
+    public void growCow() {
+        if (cow > 0) {
+            dayToMilk++;
+        }
+        if (dayToMilk >= 1) {
+            dayToMilk++;
+        }
+        if(dayToMilk >= 2) {
+            fullCow += cow;
+            cow = 0;
+            dayToMilk = 0;
+        }
+    }
+    /**
      * Increase amount of money user has and reset cow to 0.
      * @return the amount of money earned.
      */
