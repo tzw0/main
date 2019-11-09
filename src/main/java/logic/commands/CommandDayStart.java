@@ -4,6 +4,9 @@ import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import frontend.AsciiColours;
 import frontend.Frontend;
+import gameassets.Farmer;
+import gameassets.Log;
+import gameassets.places.Farm;
 
 public class CommandDayStart extends Command {
     /**
@@ -13,6 +16,8 @@ public class CommandDayStart extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
+
+        Log.clearLogList(farmio);
         Frontend frontend = farmio.getFrontend();
         farmio.getFrontend().simulate("DayStart", 1, 5);
         frontend.show(AsciiColours.MAGENTA + AsciiColours.UNDERLINE + "Day Started!" + AsciiColours.SANE);

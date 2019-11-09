@@ -1,30 +1,9 @@
 package logic;
 
-import logic.commands.Command;
+import gameassets.Log;
+import logic.commands.*;
 
 
-import logic.commands.CommandAddName;
-import logic.commands.CommandCheckObjectives;
-import logic.commands.CommandDayEnd;
-import logic.commands.CommandDayStart;
-import logic.commands.CommandGameLoad;
-import logic.commands.CommandGameNew;
-import logic.commands.CommandGameQuit;
-import logic.commands.CommandGameSave;
-import logic.commands.CommandLevelEnd;
-import logic.commands.CommandLevelReset;
-import logic.commands.CommandLevelStart;
-import logic.commands.CommandMenuInGame;
-import logic.commands.CommandMenuStart;
-import logic.commands.CommandShowList;
-import logic.commands.CommandTaskAddReset;
-import logic.commands.CommandTaskCreate;
-import logic.commands.CommandTaskDelete;
-import logic.commands.CommandTaskDeleteAll;
-import logic.commands.CommandTaskEdit;
-import logic.commands.CommandTaskInsert;
-import logic.commands.CommandTaskHint;
-import logic.commands.CommandTaskRun;
 import farmio.Farmio;
 import logic.usercode.tasks.Task;
 import logic.usercode.tasks.IfTask;
@@ -142,7 +121,13 @@ public class Parser {
             return editTask(userInput);
         }
         if (userInput.toLowerCase().equals("start")) {
+            //todo Figure out how to call the clearfunction here
             return new CommandDayStart();
+        }
+        if (userInput.toLowerCase().equals("log")) {
+            //todo log function print
+            return new CommandLog();
+            //return new CommandDayStart(); //log 1 and log 2 later on
         }
         if (userInput.equals("conditions") || userInput.equals("condition")) {
             return new CommandShowList("ConditionList");
