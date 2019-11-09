@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static gameassets.Log.clearLogList;
+
 /**
  * Parser class is responsible for parsing all user input and generating the corresponding Command.
  */
@@ -135,13 +137,10 @@ public class Parser {
             return editTask(userInput);
         }
         if (userInput.toLowerCase().equals("start")) {
-            //todo Figure out how to call the clearfunction here
             return new CommandDayStart();
         }
         if (userInput.toLowerCase().equals("log")) {
-            //todo log function print
             return new CommandLog();
-            //return new CommandDayStart(); //log 1 and log 2 later on
         }
         if (userInput.equals("conditions") || userInput.equals("condition")) {
             return new CommandShowList("ConditionList");
