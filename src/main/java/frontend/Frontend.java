@@ -1,7 +1,10 @@
 package frontend;
 
 import farmio.Farmio;
+import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
+
+import java.util.ArrayList;
 
 public class Frontend {
     private Simulation simulation;
@@ -81,7 +84,11 @@ public class Frontend {
         simulation.simulate(framePath, startFrame, endFrame);
     }
 
-    public void showNarrative() throws FarmioFatalException {
+    public void simulate(ArrayList<String> frame, boolean isFullscreen) {
+        simulation.simulate(frame, isFullscreen);
+    }
+
+    public void showNarrative() throws FarmioFatalException, FarmioException {
         simulation.showNarrative();
     }
 

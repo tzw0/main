@@ -26,7 +26,7 @@ public class CommandAddName extends Command {
         if (name.equals("MENU")) {
             frontend.typeWriter("Keywords cannot be used as a character name.", false);
             frontend.typeWriter("Enter your name:", false);
-        } else if (name.length() <= 15 && name.length() > 0 && (name.matches("[a-zA-Z0-9]+") || name.contains("_"))) {
+        } else if (name.length() <= 15 && name.length() > 0 && (name.matches("[a-zA-Z0-9_]+"))) {
             farmio.getFarmer().inputName(name);
             frontend.typeWriter("Welcome Farmer "
                     + name
@@ -41,6 +41,7 @@ public class CommandAddName extends Command {
             frontend.typeWriter("Enter your name:", false);
         } else {
             frontend.typeWriter("Special Characters are not allowed", false);
+            frontend.typeWriter("Only alphanumeric and '_' characters are allowed", false);
             frontend.typeWriter("Enter your name:", false);
         }
     }

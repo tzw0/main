@@ -4,13 +4,14 @@ import farmio.Farmio;
 import farmio.exceptions.FarmioFatalException;
 import gameassets.Farmer;
 import gameassets.Log;
-import logic.usercode.tasks.TaskList;
-
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class CommandLog extends Command {
-
+    int logPage;
+    public CommandLog(int logPage) {
+        this.logPage = logPage;
+    }
     /**
      * Shows the Users Log.
      * @param farmio the game which stage is set as LOG.
@@ -20,15 +21,8 @@ public class CommandLog extends Command {
     public void execute(Farmio farmio) throws FarmioFatalException {
         Farmer farmer = farmio.getFarmer();
         Log logTaskList = farmer.getLogTaskList();
-        List<String> output = logTaskList.toStringArray();
-
-
-        for (String i : output) {
-            farmio.getFrontend().typeWriter(i,false); //test for log
-        }
-
-
-        //todo Implements the log frontEnd
-        //farmio.getFrontend().showMenu(farmio.getStorage().getSaveExist(), true);
+        ArrayList<String> output = logTaskList.toStringSplitLogArray(logPage);
+        farmio.getFrontend().simulate(output, false);
+        farmio.getFrontend().typeWriter("Press [Enter] to go back",false);
     }
 }

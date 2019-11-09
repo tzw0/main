@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Level {
     private ArrayList<String> narratives;
@@ -201,9 +203,11 @@ public class Level {
      * @return List of Strings
      */
     public List<String> convertStringToList(String modelAnswer) {
-
-        String[] taskItems = modelAnswer.split("|");
-        List<String> modelTaskList = new ArrayList<String>(Arrays.asList(taskItems));
+        String[] taskItems = modelAnswer.split("\\|");
+        List<String> modelTaskList = new ArrayList<>();
+        for(int i = 1; i < taskItems.length ; i++){
+            modelTaskList.add(taskItems[i]);
+        }
         return  modelTaskList;
     }
 
@@ -217,15 +221,29 @@ public class Level {
         List<String> splitTaskList = new ArrayList<String>();
         for (String taskListItems: taskList) {
             String removedNumbering = taskListItems.substring(taskListItems.indexOf(".") + 1);
-            removedNumbering.trim();// removed the numbering
-            String[] splitString = taskListItems.split("(?<!\\G\\w)\\s"); //splits on every second space
-            splitTaskList.add(splitString[0]);
-            if (splitString[1] != null && !splitString[1].isEmpty()) {
-                splitTaskList.add(splitString[1]);
-            }
-
+            splitTaskList.add(removedNumbering.trim());
         }
         return splitTaskList;
+    }
+
+    /**
+     * Compares the lists precision.
+     * @param modelList List of model answers
+     * @param userList List of the users answers
+     * @return precision of the list
+     */
+    public int compareLists(List<String> modelList, List<String> userList){
+        double ctr = 0;
+        for (int i = 0; i < modelList.size(); i++){
+           String modelTaskString[] = modelList.get(i).split(" ",2);
+           String userTaskString[] = userList.get(i).split(" ",2);
+           String modelTask = modelTaskString[0];
+           String userTask = userTaskString[0];
+           if (modelTask.equals(userTask)){
+              ctr += 1;
+           }
+        }
+        return  (int)((ctr * 100.0f) / modelList.size());
     }
 
     /**
@@ -240,12 +258,36 @@ public class Level {
         List<String> modelTaskList = convertStringToList(modelAnswer);
         List<String> modifieduserTaskList = convertTaskListFormat(userTaskList);
 
-        if (levelNumber == 1.5) {
-            output.add("for this level you need to check for presence of grain by using the if command before");
-            output.add("using the do command to sell your grain");
 
+        if(levelNumber >= 1.2) {
+            int sizeDifference = compareSizeDifference(modelTaskList, modifieduserTaskList);
+            output.add("Accuracy: " + sizeDifference + "%");
+
+            if(sizeDifference == 100){
+                int precision  = compareLists(modelTaskList, modifieduserTaskList);
+                output.add("Task Precision: " + precision + "%");
+            }
         }
+
         return output;
+    }
+
+    /**
+     * Returns the accuracy in the number of the task to the user.
+     * @param modelAnswer model answer list
+     * @param userAnswer  user answer list
+     * @return sizeDifference
+     */
+    public int compareSizeDifference(List<String> modelAnswer, List<String> userAnswer){
+       int modelAnswerSize = modelAnswer.size();
+       int userAnswerSize = userAnswer.size();
+       if (modelAnswerSize == userAnswerSize) {
+           return 100;
+       }    else if (modelAnswerSize > userAnswerSize) {
+           return (userAnswerSize/ modelAnswerSize) * 100;
+       }    else {
+           return (modelAnswerSize/userAnswerSize) * 100;
+       }
     }
 
     /**
@@ -257,9 +299,9 @@ public class Level {
         List<String> output = new ArrayList<String>();
         double levelNumber = farmio.getFarmer().getLevel(); // unsure if this is needed rn
         output.add(" The objective of this level was to " + objective);
-        output.add("\nUnfortunately you were unable to complete within the allocated time of " + deadline + " days");
+        output.add("Unfortunately you were unable to complete within the allocated time of " + deadline + " days");
 
-        output.add("\nYour actions ");
+        output.add("Your actions :");
         output.add(farmio.getFarmer().tasks.toString());
 
         output.addAll(getPermutationFeedback(farmio, levelNumber));
@@ -306,7 +348,7 @@ public class Level {
         } else if (currentLevelState == ObjectiveResult.FAILED) {
             String feedback = "Oh no! The objectives were not met by the deadline! Level failed ! \n";
             output.add(feedback);
-            if (detailedFeedbackProvided) { //todo -redo this code
+            if (detailedFeedbackProvided) {
                 output.addAll(getDetailedFeedback(farmio));
             }
             return output;

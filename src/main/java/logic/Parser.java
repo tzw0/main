@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static gameassets.Log.clearLogList;
+
 /**
  * Parser class is responsible for parsing all user input and generating the corresponding Command.
  */
@@ -51,10 +53,10 @@ public class Parser {
         }
         switch (stage) {
         case WELCOME:
-            return new CommandMenuStart();
+            return parseWelcome(userInput);
         case LEVEL_START:
             return new CommandLevelStart();
-        case RUNNING_DAY:
+        case DAY_RUNNING:
             return new CommandTaskRun();
         case CHECK_OBJECTIVES:
             return new CommandCheckObjectives();
@@ -77,6 +79,20 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks user input at the welcome screen
+     *
+     * @param userInput input String from user
+     * @return Command for the start game menu
+     * @throws FarmioException if the user input is invalid
+     */
+    private static Command parseWelcome(String userInput) throws FarmioException {
+        if (userInput.equals("")) {
+            return new CommandMenuStart();
+        }
+        LOGGER.log(Level.INFO, "Detected invalid command " + userInput + " at Welcome");
+        throw new FarmioException("Invalid Command!");
+    }
     /**
      * Used to parse the user input during the DAY_END stage. User can choose to either reset the level,
      * or proceed to the next day
@@ -121,13 +137,10 @@ public class Parser {
             return editTask(userInput);
         }
         if (userInput.toLowerCase().equals("start")) {
-            //todo Figure out how to call the clearfunction here
             return new CommandDayStart();
         }
-        if (userInput.toLowerCase().equals("log")) {
-            //todo log function print
-            return new CommandLog();
-            //return new CommandDayStart(); //log 1 and log 2 later on
+        if (userInput.startsWith("log")){
+            return parseTaskLog(userInput);
         }
         if (userInput.equals("conditions") || userInput.equals("condition")) {
             return new CommandShowList("ConditionList");
@@ -165,6 +178,22 @@ public class Parser {
         if (matcher.find()) {
             int taskID = Integer.parseInt(matcher.group("index"));
             return new CommandTaskDelete(taskID);
+        }
+        LOGGER.log(Level.INFO, "Deteched invalid command for command: " + userInput);
+        throw new FarmioException("Invalid argument.");
+    }
+    /**
+     * Used to parse the user's command if it is determined to be a log command.
+     *
+     * @param userInput user input String
+     * @return Command that displays a list of the logs
+     * @throws FarmioException if user input is invalid
+     */
+    private static Command parseTaskLog(String userInput) throws FarmioException {
+        Matcher matcher = Pattern.compile("^log\\s+(?<index>\\d+)$").matcher(userInput);
+        if (matcher.find()) {
+            int pageNumber = Integer.parseInt(matcher.group("index"));
+            return new CommandLog(pageNumber);
         }
         LOGGER.log(Level.INFO, "Deteched invalid command for command: " + userInput);
         throw new FarmioException("Invalid argument.");

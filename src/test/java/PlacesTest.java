@@ -9,11 +9,14 @@ public class PlacesTest {
     ChickenFarm chickenFarm;
     CowFarm cowFarm;
 
+
+
     public PlacesTest() {
         wheatFarm = new WheatFarm();
         chickenFarm = new ChickenFarm();
         cowFarm = new CowFarm();
     }
+
 
     @Test
     public void buySeeds() {
@@ -40,21 +43,21 @@ public class PlacesTest {
     }
 
     @Test
-    void plantSeeds() {
+    public void plantSeeds() {
         int seeds = wheatFarm.getSeeds();
         wheatFarm.plantSeeds();
         assertEquals(wheatFarm.getSeedlings(), seeds);
     }
 
     @Test
-    void growSeedlings() {
+    public void growSeedlings() {
         int seedlings = wheatFarm.getSeedlings();
         wheatFarm.growSeedlings();
         assertEquals(wheatFarm.getWheat(), seedlings);
     }
 
     @Test
-    void hasWheat() {
+    public void hasWheat() {
         wheatFarm.buySeeds();
         wheatFarm.plantSeeds();
         wheatFarm.growSeedlings();
@@ -62,35 +65,58 @@ public class PlacesTest {
     }
 
     @Test
-    void harvestWheat() {
+    public void harvestWheat() {
         int wheat = wheatFarm.getWheat();
         wheatFarm.harvestWheat();
         assertEquals(wheatFarm.getGrain(), wheat);
     }
 
     @Test
-    void buyChicken() {
+    public void buyChicken() {
         chickenFarm.buyChicken();
         assertEquals(chickenFarm.getChicken(), 1);
     }
 
     @Test
-    void hasChicken() {
+    public void hasChicken() {
         chickenFarm.buyChicken();
         assert chickenFarm.hasChicken();
     }
+    @Test
+    public void hasEgg() {
+        chickenFarm.buyChicken();
+        chickenFarm.layEggs();
+        chickenFarm.collectEgg();
+        assert chickenFarm.hasEgg();
+    }
 
     @Test
-    void sellEggs() {
+    public void hasFullChicken() {
+        chickenFarm.buyChicken();
+        chickenFarm.layEggs();
+        assert chickenFarm.hasFullChicken();
+    }
+
+
+    @Test
+    public void sellEggs() {
         chickenFarm.sell();
         assertEquals(chickenFarm.getEgg(), 0);
     }
 
     @Test
-    void layEggs() {
-        int fullChicken = chickenFarm.getFullChicken();
+    public void layEggs() {
+        int chicken = chickenFarm.getChicken();
         chickenFarm.layEggs();
+        assertEquals(chickenFarm.getFullChicken(), chicken);
+    }
+
+    @Test
+    public void collectEgg() {
+        int fullChicken = chickenFarm.getFullChicken();
+        chickenFarm.collectEgg();
         assertEquals(chickenFarm.getEgg(), fullChicken);
+        assertEquals(chickenFarm.getFullChicken(), 0);
     }
 
 }

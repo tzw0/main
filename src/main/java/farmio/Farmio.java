@@ -2,6 +2,7 @@ package farmio;
 
 import gameassets.Farmer;
 import gameassets.Level;
+import gameassets.Log;
 import logic.commands.Command;
 import logic.commands.CommandWelcome;
 import farmio.exceptions.FarmioException;
@@ -76,14 +77,14 @@ public class Farmio {
         LEVEL_START,
         MENU,
         TASK_ADD,
-        RUNNING_DAY,
+        DAY_RUNNING,
         CHECK_OBJECTIVES,
         DAY_END,
         DAY_START,
         LEVEL_END,
         LEVEL_FAILED;
         public static EnumSet<Stage> noInput = EnumSet.of(LEVEL_START,
-                RUNNING_DAY,
+                DAY_RUNNING,
                 CHECK_OBJECTIVES,
                 DAY_START,
                 LEVEL_END,
@@ -98,6 +99,7 @@ public class Farmio {
     public Frontend getFrontend() {
         return frontend;
     }
+
 
     public Farmer getFarmer() {
         return farmer;
