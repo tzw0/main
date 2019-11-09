@@ -23,5 +23,6 @@ public class CommandLog extends Command {
         Log logTaskList = farmer.getLogTaskList();
         ArrayList<String> output = logTaskList.toStringSplitLogArray(logPage);
         farmio.getFrontend().simulate(output, false);
+        farmio.getFrontend().typeWriter("Press [Enter] to go back",false);
     }
 }
