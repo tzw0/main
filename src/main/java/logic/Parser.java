@@ -77,10 +77,18 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks user input at the welcome screen
+     *
+     * @param userInput input String from user
+     * @return Command for the start game menu
+     * @throws FarmioException if the user input is invalid
+     */
     private static Command parseWelcome(String userInput) throws FarmioException {
         if (userInput.equals("")) {
             return new CommandMenuStart();
         }
+        LOGGER.log(Level.INFO, "Detected invalid command " + userInput + " at Welcome");
         throw new FarmioException("Invalid Command!");
     }
     /**

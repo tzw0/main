@@ -1,4 +1,11 @@
-unnamed package
-command
-process
-task
+farmio
+farmio.exceptions
+frontend
+gameassets
+gameassets.places
+logic
+logic.commands
+logic.usercode.actions
+logic.usercode.conditions
+logic.usercode.tasks
+storage
