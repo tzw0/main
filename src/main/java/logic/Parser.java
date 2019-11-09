@@ -276,19 +276,11 @@ public class Parser {
             throw new FarmioException("Invalid Action!");
         }
         Task task;
-        switch (taskType) {
-        case "if":
+        if (taskType.equals("if")) {
             task = new IfTask(Condition.toCondition(condition), Action.toAction(action));
-            break;
-        case "for":
-            task = new ForTask(Condition.toCondition(condition), Action.toAction(action));
-            break;
-        case "while":
-            task = new WhileTask(Condition.toCondition(condition), Action.toAction(action));
-            break;
-        default:
-            LOGGER.log(Level.SEVERE, "Impossible exception reached! command:" + userInput);
-            throw new FarmioException("Error Creating Task!");
+        } else {
+            LOGGER.log(Level.SEVERE, "Wrong tasktype specified in:" + userInput);
+            throw new FarmioException("While and For tasks will only come in version 2.0!");
         }
         return task;
     }
