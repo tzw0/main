@@ -42,7 +42,7 @@ class Simulation {
             frontend.show(GameConsole.blankConsole(unformattedFrame, GameConsole.FULL_CONSOLE_WIDTH,
                     GameConsole.FULL_CONSOLE_HEIGHT));
         } else {
-            frontend.show(GameConsole.fullconsole(unformattedFrame, farmer, farmio.getLevel().getGoals(),
+            frontend.show(GameConsole.fullConsole(unformattedFrame, farmer, farmio.getLevel().getGoals(),
                     farmio.getLevel().getObjective(), GameConsole.FRAME_SECTION_WIDTH,
                     GameConsole.FRAME_SECTION_HEIGHT));
         }
