@@ -1,10 +1,6 @@
 package gameassets;
 
-import farmio.exceptions.FarmioException;
-import logic.usercode.actions.*;
-import logic.usercode.conditions.Condition;
 import logic.usercode.tasks.Task;
-import logic.usercode.tasks.TaskList;
 import farmio.Farmio;
 
 import java.util.ArrayList;
@@ -15,6 +11,8 @@ public class Log extends TaskList{
     Log(){
         logTasklist = new TaskList();
     }
+
+    //todo limit log printSize
 
     //todo implement logSave via json object
 
@@ -27,8 +25,6 @@ public class Log extends TaskList{
            farmio.getFarmer().getLogTaskList().deleteAll();
         }
     }
-
-    //todo Manipulate the Log TaskList into appropriate format
 
     /**
      * Converts the logList to a readable format with index number to be printed.

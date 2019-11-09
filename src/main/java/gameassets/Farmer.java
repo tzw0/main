@@ -8,7 +8,6 @@ import gameassets.places.ChickenFarm;
 import gameassets.places.CowFarm;
 import gameassets.places.WheatFarm;
 import logic.usercode.tasks.Task;
-import logic.usercode.tasks.TaskList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
@@ -29,8 +28,8 @@ public class Farmer {
     private static final String JSON_KEY_TASK_CURRENT = "task_current";
     private static final String JSON_KEY_TASK_STATUS_FAIL = "task_status_fail";
     private static final String JSON_KEY_NAME = "name";
-    protected Log logTaskList;
 
+    protected Log logTaskList;
     private int gold;
     private double level;
     private int day;
@@ -61,6 +60,34 @@ public class Farmer {
         this.hasfailedCurrentTask = false;
         this.name = "name";
         this.logTaskList = new Log();
+    }
+
+    /**
+     * Constructor to initialize farmer object from saved JSON file.
+     * @param jsonObject load variables saved from save file.
+     * @throws FarmioException if level and name are not valid.
+     */
+    public Farmer(JSONObject jsonObject) throws FarmioException {
+        try {
+            this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
+            this.gold = (int) (long) jsonObject.get(JSON_KEY_GOLD);
+            this.day = (int) (long) jsonObject.get(JSON_KEY_DAY);
+            this.location = (String) jsonObject.get(JSON_KEY_LOCATION);
+            this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
+            this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
+            this.cowFarm = new CowFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_COW));
+            this.tasks = new TaskList((JSONArray) jsonObject.get(JSON_KEY_TASK_LIST));
+            this.currentTask = -1;
+            this.hasfailedCurrentTask = false;
+            String savedName = (String) jsonObject.get(JSON_KEY_NAME);
+            String loadName = savedName.toUpperCase();
+            isValidName(loadName);
+            isValidTaskList(this.tasks);
+            this.name = loadName;
+            this.logTaskList = new Log(); //todo include json file w previous list of actions
+        } catch (Exception e) {
+            throw new FarmioException("Game save corrupted!");
+        }
     }
 
     /**

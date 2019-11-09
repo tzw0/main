@@ -2,6 +2,7 @@ package farmio;
 
 import gameassets.Farmer;
 import gameassets.Level;
+import gameassets.Log;
 import logic.commands.Command;
 import logic.commands.CommandWelcome;
 import farmio.exceptions.FarmioException;
@@ -98,6 +99,7 @@ public class Farmio {
     public Frontend getFrontend() {
         return frontend;
     }
+
 
     public Farmer getFarmer() {
         return farmer;

@@ -8,6 +8,8 @@ import gameassets.Farmer;
 import gameassets.Log;
 import gameassets.places.Farm;
 
+import static farmio.Farmio.Stage.TASK_ADD;
+
 public class CommandDayStart extends Command {
     /**
      * Shows and sets the start of a new day.
@@ -17,7 +19,9 @@ public class CommandDayStart extends Command {
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
 
-        Log.clearLogList(farmio);
+        if(farmio.getStage() == TASK_ADD){
+            Log.clearLogList(farmio);
+        }
         Frontend frontend = farmio.getFrontend();
         farmio.getFrontend().simulate("DayStart", 1, 5);
         frontend.show(AsciiColours.MAGENTA + AsciiColours.UNDERLINE + "Day Started!" + AsciiColours.SANE);
