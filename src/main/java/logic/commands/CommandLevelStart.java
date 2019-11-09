@@ -1,5 +1,6 @@
 package logic.commands;
 
+import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import storage.Storage;
@@ -13,7 +14,7 @@ public class CommandLevelStart extends Command {
      * @throws FarmioFatalException if simulation file cannot be found.
      */
     @Override
-    public void execute(Farmio farmio) throws FarmioFatalException {
+    public void execute(Farmio farmio) throws FarmioFatalException, FarmioException {
         Storage storage = farmio.getStorage();
         farmio.getFarmer().resetTaskFailed();
         Farmer farmer = farmio.getFarmer();

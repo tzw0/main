@@ -1,9 +1,11 @@
 package frontend;
 
+import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
 import gameassets.Farmer;
 import gameassets.Level;
+import logic.Parser;
 import storage.Storage;
 
 import java.util.ArrayList;
@@ -33,6 +35,22 @@ class Simulation {
     }
 
     /**
+     * shows an array list of strings in the frame. Every other simulation method converges to this method.
+     * @param unformattedFrame the list of strings to be shown.
+     */
+    public void simulate(ArrayList<String> unformattedFrame, boolean isFullscreen) {
+        refresh();
+        if (isFullscreen) {
+            frontend.show(GameConsole.blankConsole(unformattedFrame, GameConsole.FULL_CONSOLE_WIDTH,
+                    GameConsole.FULL_CONSOLE_HEIGHT));
+        } else {
+            frontend.show(GameConsole.fullconsole(unformattedFrame, farmer, farmio.getLevel().getGoals(),
+                    farmio.getLevel().getObjective(), GameConsole.FRAME_SECTION_WIDTH,
+                    GameConsole.FRAME_SECTION_HEIGHT));
+        }
+    }
+
+    /**
      * Shows the ascii art of a file as a simulation.
      * @param framePath The directory of where the file is found.
      * @param frameId The frame number to be shown.
@@ -43,15 +61,7 @@ class Simulation {
         lastPath = framePath;
         lastFrameId = frameId;
         hadFullscreen = isFullscreen;
-        refresh();
-        if (isFullscreen) {
-            frontend.show(GameConsole.blankConsole(storage.loadFrame(framePath, frameId, GameConsole.FULL_CONSOLE_WIDTH,
-                    GameConsole.FULL_CONSOLE_HEIGHT)));
-        } else {
-            frontend.show(GameConsole.fullconsole(storage.loadFrame(framePath, frameId, GameConsole.FRAME_SECTION_WIDTH,
-                    GameConsole.FRAME_SECTION_HEIGHT), farmer, farmio.getLevel().getGoals(),
-                    farmio.getLevel().getObjective()));
-        }
+        simulate(storage.loadFrame(framePath, frameId), isFullscreen);
     }
 
     /**
@@ -118,8 +128,9 @@ class Simulation {
     /**
      * Prints the Narrative of a given level with a simulation instance.
      * @throws FarmioFatalException if simulation file is not found
+     * @throws FarmioException if error in parsing input
      */
-    void showNarrative() throws FarmioFatalException {
+    void showNarrative() throws FarmioFatalException, FarmioException {
         frontend = farmio.getFrontend();
         storage = farmio.getStorage();
         farmer = farmio.getFarmer();
@@ -129,13 +140,18 @@ class Simulation {
         for (String narrative: level.getNarratives()) {
             String userInput;
             userInput = frontend.getInput();
-            while (!userInput.equals("") && !userInput.toLowerCase().equals("skip")) {
+            while (!userInput.equals("") && !userInput.toLowerCase().equals("skip")
+                    && !userInput.toLowerCase().equals("exit") && !userInput.toLowerCase().equals("quit game")) {
                 simulate();
                 frontend.showWarning("Invalid Command for story mode!");
                 frontend.show("Story segment only accepts [skip] to skip the story or pressing [ENTER] to continue "
                         + "with the narrative.\nIf you wish to use other logic.commands, enter [skip] followed by "
                         + "entering the command of your choice.");
                 userInput = frontend.getInput();
+            }
+            if (userInput.toLowerCase().equals("exit") || userInput.toLowerCase().equals("quit game")) {
+                Parser.parse(userInput, Farmio.Stage.LEVEL_START).execute(farmio);
+                return;
             }
             if (userInput.toLowerCase().equals("skip") || frameId == lastFrameId) {
                 break;
@@ -146,22 +162,6 @@ class Simulation {
         simulate(level.getPath(), lastFrameId);
         frontend.typeWriter(level.getNarratives().get(lastFrameId), false);
         showLevelBegin();
-    }
-
-    /**
-     * shows an array list of strings in the frame.
-     * @param frame the list of strings to be shown.
-     */
-    public void simulate(ArrayList<String> frame, boolean isFullscreen) {
-        refresh();
-        if (isFullscreen) {
-            frontend.show(GameConsole.blankConsole(GameConsole.formatFrame(frame, GameConsole.FULL_CONSOLE_WIDTH,
-                    GameConsole.FULL_CONSOLE_HEIGHT)));
-        } else {
-            frontend.show(GameConsole.fullconsole(GameConsole.formatFrame(frame, GameConsole.FRAME_SECTION_WIDTH,
-                    GameConsole.FRAME_SECTION_HEIGHT), farmer, farmio.getLevel().getGoals(),
-                    farmio.getLevel().getObjective()));
-        }
     }
 
     /**

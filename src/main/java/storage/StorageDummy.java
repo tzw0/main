@@ -35,7 +35,7 @@ public class StorageDummy implements Storage {
     }
 
     @Override
-    public ArrayList<String> loadFrame(String path, int frameId, int frameWidth, int frameHeight)
+    public ArrayList<String> loadFrame(String path, int frameId)
             throws FarmioFatalException {
         return null;
     }

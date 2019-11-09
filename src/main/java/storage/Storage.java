@@ -46,12 +46,10 @@ public interface Storage {
      * Retirve frames from resource folder and formats frame into string array list.
      * @param path the path of the frames in resource folder.
      * @param frameId frame number to be read.
-     * @param frameWidth Width of the fame to be filled.
-     * @param frameHeight Height of the frame to be filled.
      * @return An string array list of a specified frame in path.
      * @throws FarmioFatalException In intolerable rror reading frame from path.
      */
-    ArrayList<String> loadFrame(String path, int frameId, int frameWidth, int frameHeight) throws FarmioFatalException;
+    ArrayList<String> loadFrame(String path, int frameId) throws FarmioFatalException;
 
     /**
      * Retrive level information from resource folder.
