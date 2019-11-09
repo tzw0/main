@@ -35,6 +35,22 @@ class Simulation {
     }
 
     /**
+     * shows an array list of strings in the frame. Every other simulation method converges to this method.
+     * @param unformattedFrame the list of strings to be shown.
+     */
+    public void simulate(ArrayList<String> unformattedFrame, boolean isFullscreen) {
+        refresh();
+        if (isFullscreen) {
+            frontend.show(GameConsole.blankConsole(unformattedFrame, GameConsole.FULL_CONSOLE_WIDTH,
+                    GameConsole.FULL_CONSOLE_HEIGHT));
+        } else {
+            frontend.show(GameConsole.fullconsole(unformattedFrame, farmer, farmio.getLevel().getGoals(),
+                    farmio.getLevel().getObjective(), GameConsole.FRAME_SECTION_WIDTH,
+                    GameConsole.FRAME_SECTION_HEIGHT));
+        }
+    }
+
+    /**
      * Shows the ascii art of a file as a simulation.
      * @param framePath The directory of where the file is found.
      * @param frameId The frame number to be shown.
@@ -45,15 +61,7 @@ class Simulation {
         lastPath = framePath;
         lastFrameId = frameId;
         hadFullscreen = isFullscreen;
-        refresh();
-        if (isFullscreen) {
-            frontend.show(GameConsole.blankConsole(storage.loadFrame(framePath, frameId, GameConsole.FULL_CONSOLE_WIDTH,
-                    GameConsole.FULL_CONSOLE_HEIGHT)));
-        } else {
-            frontend.show(GameConsole.fullconsole(storage.loadFrame(framePath, frameId, GameConsole.FRAME_SECTION_WIDTH,
-                    GameConsole.FRAME_SECTION_HEIGHT), farmer, farmio.getLevel().getGoals(),
-                    farmio.getLevel().getObjective()));
-        }
+        simulate(storage.loadFrame(framePath, frameId), isFullscreen);
     }
 
     /**
@@ -154,22 +162,6 @@ class Simulation {
         simulate(level.getPath(), lastFrameId);
         frontend.typeWriter(level.getNarratives().get(lastFrameId), false);
         showLevelBegin();
-    }
-
-    /**
-     * shows an array list of strings in the frame.
-     * @param frame the list of strings to be shown.
-     */
-    public void simulate(ArrayList<String> frame, boolean isFullscreen) {
-        refresh();
-        if (isFullscreen) {
-            frontend.show(GameConsole.blankConsole(GameConsole.formatFrame(frame, GameConsole.FULL_CONSOLE_WIDTH,
-                    GameConsole.FULL_CONSOLE_HEIGHT)));
-        } else {
-            frontend.show(GameConsole.fullconsole(GameConsole.formatFrame(frame, GameConsole.FRAME_SECTION_WIDTH,
-                    GameConsole.FRAME_SECTION_HEIGHT), farmer, farmio.getLevel().getGoals(),
-                    farmio.getLevel().getObjective()));
-        }
     }
 
     /**

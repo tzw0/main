@@ -115,7 +115,7 @@ public class StorageManager implements Storage {
     }
 
     @Override
-    public ArrayList<String> loadFrame(String path, int frameId, int frameWidth, int frameHeight)
+    public ArrayList<String> loadFrame(String path, int frameId)
             throws FarmioFatalException {
         path = "asciiArt/" + path + "/frame" + frameId + ".txt";
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getResourceStream(path)));
@@ -130,28 +130,7 @@ public class StorageManager implements Storage {
                 LOGGER.log(Level.WARNING, e.toString());
                 throw new FarmioFatalException(formatFatalMessage(path));
             }
-            if (line.length() <= frameWidth) {
-                line = String.format("%-" + frameWidth + "s", line);
-            } else {
-                line = String.format("%" + frameWidth + "s", "");
-            }
-            frame.add("|"
-                    + AsciiColours.BACKGROUND_WHITE
-                    + AsciiColours.BLACK
-                    + line
-                    + AsciiColours.SANE
-                    + "|"
-            );
-        }
-        if (frame.size() < frameHeight) {
-            for (int i = frame.size(); i < frameHeight; i++) {
-                frame.add("|"
-                        + AsciiColours.BACKGROUND_WHITE
-                        + AsciiColours.BLACK
-                        + String.format("%" + frameWidth + "s", "")
-                        + AsciiColours.SANE
-                        + "|");
-            }
+            frame.add(line);
         }
         return frame;
     }
