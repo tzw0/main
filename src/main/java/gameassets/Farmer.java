@@ -84,7 +84,7 @@ public class Farmer {
             isValidName(loadName);
             isValidTaskList(this.tasks);
             this.name = loadName;
-            this.logTaskList = new Log(); //todo include json file w previous list of actions
+            this.logTaskList = new Log();
         } catch (Exception e) {
             throw new FarmioException("Game save corrupted!");
         }
