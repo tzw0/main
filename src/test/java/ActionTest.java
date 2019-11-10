@@ -23,7 +23,7 @@ public class ActionTest {
     private Action sellGrainAction;
     private Farmio farmio;
     public ActionTest() throws FarmioFatalException {
-        farmio = new Farmio();
+        farmio = new Farmio(false);
         farmio.getFrontend().setDummy();
         farmio.setLevel(new Level(farmio.getStorage().getLevel(1.1), "tester"));
         gotoMarketAction = new GotoMarketAction();

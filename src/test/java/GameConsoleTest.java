@@ -36,7 +36,7 @@ public class GameConsoleTest {
             + "___________________________|_______________________________||[44m[1m[4m [exit] to exit      [menu] "
             + "for full instruction list or settings          [hint] for hint on <CODE>   [0m|[0m";
     GameConsoleTest() throws FarmioFatalException {
-        farmio = new Farmio();
+        farmio = new Farmio(false);
         farmio.getFrontend().setDummy();
         farmio.setLevel(new Level(farmio.getStorage().getLevel(1.1), "tester"));
     }

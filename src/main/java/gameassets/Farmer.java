@@ -10,6 +10,7 @@ import gameassets.places.WheatFarm;
 import logic.usercode.tasks.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class Farmer {
     protected TaskList tasks;
     private int currentTask;
     private boolean hasfailedCurrentTask;
-    private ArrayList<Double> levelList = new ArrayList<Double>(Arrays.asList(1.1,1.2,1.3,1.4,1.5,1.6,2.1));
+    private ArrayList<Double> levelList = new ArrayList<Double>(Arrays.asList(1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 2.1));
 
 
     /**
@@ -64,6 +65,7 @@ public class Farmer {
 
     /**
      * Constructor to initialize farmer object from saved JSON file.
+     *
      * @param jsonObject load variables saved from save file.
      * @throws FarmioException if level and name are not valid.
      */
@@ -92,6 +94,7 @@ public class Farmer {
 
     /**
      * Checks whether the name that was loaded from the save file is a valid name.
+     *
      * @param loadName as the name that is loaded from the save file.
      * @throws FarmioException if loadName does not meet the conditions of the name.
      */
@@ -115,6 +118,7 @@ public class Farmer {
 
     /**
      * Adds the user's name.
+     *
      * @param username as the name the user inputs.
      */
     public void inputName(String username) {
@@ -123,6 +127,7 @@ public class Farmer {
 
     /**
      * Gets user's name.
+     *
      * @return the user's name.
      */
     public String getName() {
@@ -131,6 +136,7 @@ public class Farmer {
 
     /**
      * Gets the amount of gold the farmer has.
+     *
      * @return the amount of gold.
      */
     public int getGold() {
@@ -142,15 +148,17 @@ public class Farmer {
     }
 
     /**
-    * Gets user level.
-    * @return the user level.
-    */
+     * Gets user level.
+     *
+     * @return the user level.
+     */
     public double getLevel() {
         return level;
     }
 
     /**
      * Gets the day the farmer is at.
+     *
      * @return the day.
      */
     public int getDay() {
@@ -159,6 +167,7 @@ public class Farmer {
 
     /**
      * Gets user location.
+     *
      * @return the user location.
      */
     public String getLocation() {
@@ -167,6 +176,7 @@ public class Farmer {
 
     /**
      * Gets user input.
+     *
      * @param newLocation as the new location of the user.
      */
     public void changeLocation(String newLocation) {
@@ -197,14 +207,16 @@ public class Farmer {
 
     /**
      * Gets user wheatfarm.
+     *
      * @return the user wheatfarm.
      */
     public WheatFarm getWheatFarm() {
-        return  wheatFarm;
+        return wheatFarm;
     }
 
     /**
      * Gets user chickenfarm.
+     *
      * @return the user chickenfarm.
      */
     public ChickenFarm getChickenFarm() {
@@ -213,6 +225,7 @@ public class Farmer {
 
     /**
      * Gets user cowfarm.
+     *
      * @return the user cowfarm.
      */
     public CowFarm getCowFarm() {
@@ -221,6 +234,7 @@ public class Farmer {
 
     /**
      * Gets user tasks to be executed.
+     *
      * @return the user tasks.
      */
     public TaskList getTasks() {
@@ -228,11 +242,12 @@ public class Farmer {
     }
 
     /**
-     * Gets the log list
-     * @return
+     * Gets the log of tasks.
+     *
+     * @return log containing a list of tasks.
      */
-    public Log getLogTaskList(){
-        return  logTaskList;
+    public Log getLogTaskList() {
+        return logTaskList;
     }
 
     public void addTask(Task task) throws FarmioException {
@@ -244,7 +259,7 @@ public class Farmer {
     }
 
     public void editTask(int taskID, Task task) throws FarmioException {
-        tasks.editTask(taskID,task);
+        tasks.editTask(taskID, task);
     }
 
     public ArrayList<String> toStringArray() {
@@ -267,8 +282,9 @@ public class Farmer {
     public int taskSize() {
         return tasks.size();
     }
+
     /**
-     * Checks if current task has failed and resets current task.
+     * Checks if curent task has failed and resets current task.
      * @return true if current task has failed and false otherwise.
      */
     public boolean isHasfailedCurrentTask() {
@@ -295,6 +311,7 @@ public class Farmer {
 
     /**
      * Decrements gold after buying an item.
+     *
      * @param cost as the buying price of the item.
      */
     public void spendGold(int cost) {
@@ -303,6 +320,7 @@ public class Farmer {
 
     /**
      * Increments gold after selling an item.
+     *
      * @param profit as the selling price of the item.
      */
     public void earnGold(int profit) {
@@ -311,6 +329,7 @@ public class Farmer {
 
     /**
      * Gets the index of the current task in execution.
+     *
      * @return the index of the current task.
      */
     public int getCurrentTask() {
@@ -319,6 +338,7 @@ public class Farmer {
 
     /**
      * Increases the level.
+     *
      * @return the next level number. 0 if current level is not registered or game has ended
      */
     public double nextLevel() {
@@ -331,6 +351,7 @@ public class Farmer {
 
     /**
      * Takes care of TaskList execution and handles task failure.
+     *
      * @param farmio The game where the day should be started.
      * @throws FarmioFatalException if file from action's simulation cannot be found.
      */
@@ -357,15 +378,15 @@ public class Farmer {
      * Allows cow to grow into fullcow and increment day number.
      */
     public void nextDay() {
-        if(level > 1) {
+        if (level > 1) {
             wheatFarm.growSeedlings();
             day += 1;
         }
-        if(level > 2) {
+        if (level > 2) {
             chickenFarm.layEggs();
             day += 1;
         }
-        if(level > 3) {
+        if (level > 3) {
             cowFarm.growCow();
             day += 1;
         }
@@ -373,6 +394,7 @@ public class Farmer {
 
     /**
      * Checks whether the wheatfarm currently has seeds.
+     *
      * @return true if wheatfarm has seeds, false if wheatfarm has no seeds.
      */
     public boolean hasSeeds() {
@@ -381,6 +403,7 @@ public class Farmer {
 
     /**
      * Checks whether the wheatfarm currently has wheat.
+     *
      * @return true if wheatfarm has wheat, false if wheatfarm has no wheat.
      */
     public boolean hasWheat() {
@@ -389,6 +412,7 @@ public class Farmer {
 
     /**
      * Checks whether the wheatfarm currently has grain.
+     *
      * @return true if wheatfarm has grain, false if wheatfarm has no grain.
      */
     public boolean hasGrain() {
@@ -397,6 +421,7 @@ public class Farmer {
 
     /**
      * Gets number of seeds.
+     *
      * @return seeds as the amount of seeds in the wheatfarm.
      */
     public int getSeeds() {
@@ -405,6 +430,7 @@ public class Farmer {
 
     /**
      * Gets number of seedlings.
+     *
      * @return seedlings as the amount of seedlings in the wheatfarm.
      */
     public int getSeedlings() {
@@ -413,6 +439,7 @@ public class Farmer {
 
     /**
      * Gets number of wheat.
+     *
      * @return wheat as the amount of wheat in the wheatfarm.
      */
     public int getWheat() {
@@ -421,6 +448,7 @@ public class Farmer {
 
     /**
      * Gets number of grains.
+     *
      * @return seeds as the amount of grain in the wheatfarm.
      */
     public int getGrain() {
@@ -452,6 +480,7 @@ public class Farmer {
 
     /**
      * Increases the amount of money user has.
+     *
      * @return the amount of money earned.
      */
     public int sellGrain() {
@@ -460,6 +489,7 @@ public class Farmer {
 
     /**
      * Checks whether the chickenfarm currently has eggs.
+     *
      * @return true if chickenfarm has eggs, false if chickenfarm has no eggs.
      */
     public boolean hasEgg() {
@@ -468,6 +498,7 @@ public class Farmer {
 
     /**
      * Checks whether the chickenfarm currently has chickens.
+     *
      * @return true if chickenfarm has chicken, false if chickenfarm has no chicken.
      */
     public boolean hasChicken() {
@@ -476,6 +507,7 @@ public class Farmer {
 
     /**
      * Checks whether the chickenfarm currently has fullChicken.
+     *
      * @return true if chickenfarm has fullChicken, false if chickenfarm has no fullChicken.
      */
     public boolean hasFullChicken() {
@@ -484,6 +516,7 @@ public class Farmer {
 
     /**
      * Gets number of chicken.
+     *
      * @return chicken as the amount of chickens in the chickenfarm.
      */
     public int getChicken() {
@@ -492,6 +525,7 @@ public class Farmer {
 
     /**
      * Gets number of eggs.
+     *
      * @return eggs as the amount of eggs in the chickenfarm.
      */
     public int getEgg() {
@@ -500,6 +534,7 @@ public class Farmer {
 
     /**
      * Gets number of fullChicken.
+     *
      * @return fullChicken as the amount of fullChicken in the chickenfarm.
      */
     public int getFullChicken() {
@@ -523,6 +558,7 @@ public class Farmer {
 
     /**
      * Increases the amount of money user has.
+     *
      * @return the amount of money earned.
      */
     public int sellEgg() {
@@ -531,6 +567,7 @@ public class Farmer {
 
     /**
      * Checks whether the cowfarm currently has Milk.
+     *
      * @return true if milkfarm has milk, false if milkfarm has no milk.
      */
     public boolean hasMilk() {
@@ -539,6 +576,7 @@ public class Farmer {
 
     /**
      * Checks whether the cowfarm currently has cow.
+     *
      * @return true if cowfarm has cow, false if cowfarm has no cow.
      */
     public boolean hasCow() {
@@ -547,6 +585,7 @@ public class Farmer {
 
     /**
      * Checks whether the cowfarm currently has fullCow.
+     *
      * @return true if cowfarm has fullCow, false if cowfarm has no fullCow.
      */
     public boolean hasFullCow() {
@@ -555,6 +594,7 @@ public class Farmer {
 
     /**
      * Gets number of cows.
+     *
      * @return cow as the amount of cows in the cowfarm.
      */
     public int getCow() {
@@ -563,6 +603,7 @@ public class Farmer {
 
     /**
      * Gets number units of milk.
+     *
      * @return milk as the amount of milk in the cowfarm.
      */
     public int getMilk() {
@@ -571,6 +612,7 @@ public class Farmer {
 
     /**
      * Gets number of fullCow.
+     *
      * @return fullCow as the amount of fullCow in the cowfarm.
      */
     public int getFullCow() {
@@ -587,8 +629,10 @@ public class Farmer {
     public void milkCow() {
         cowFarm.milkCow();
     }
+
     /**
      * Increase amount of money user has and reset cow to 0.
+     *
      * @return the amount of money earned.
      */
     public int sellCow() {
@@ -597,6 +641,7 @@ public class Farmer {
 
     /**
      * Increases the amount of money user has and reset milk to 0.
+     *
      * @return the amount of money earned.
      */
     public int sellMilk() {
@@ -604,15 +649,12 @@ public class Farmer {
     }
 
 
-
-
-
-
     /**
      * Change farmer variables with the data in argument JSONObject.
+     *
      * @param jsonObject data representation of farmer.
-     * @return
-     * @throws FarmioException
+     * @return this instance of Farmer.
+     * @throws FarmioException error parsing json to farmer object.
      */
     public Farmer setJson(JSONObject jsonObject) throws FarmioException {
         try {
@@ -639,6 +681,7 @@ public class Farmer {
 
     /**
      * Generates a json representation of farmer to be stored into a file.
+     *
      * @return JSONOBject with farmer data.
      */
     public JSONObject toJson() {
@@ -660,6 +703,7 @@ public class Farmer {
 
     /**
      * Updates TaskList in argument json data to match TaskList in farmer.
+     *
      * @param object Json data to be updated.
      * @return Updated json data.
      */
