@@ -17,6 +17,17 @@ public class PlacesTest {
         cowFarm = new CowFarm();
     }
 
+    @Test
+    public void getSeeds() {
+        wheatFarm.buySeeds();
+        assertEquals(wheatFarm.getSeeds(),1);
+    }
+
+    public void getSeedlings() {
+        wheatFarm.buySeeds();
+
+        assertEquals(wheatFarm.getSeedlings(), 1);
+    }
 
     @Test
     public void buySeeds() {
@@ -65,6 +76,23 @@ public class PlacesTest {
     }
 
     @Test
+    public void getWheat() {
+        wheatFarm.buySeeds();
+        wheatFarm.plantSeeds();
+        wheatFarm.growSeedlings();
+        assertEquals(wheatFarm.getWheat(), 1);
+    }
+
+    @Test
+    public void getGrain() {
+        wheatFarm.buySeeds();
+        wheatFarm.plantSeeds();
+        wheatFarm.growSeedlings();
+        wheatFarm.harvestWheat();
+        assertEquals(wheatFarm.getGrain(), 1);
+    }
+
+    @Test
     public void harvestWheat() {
         int wheat = wheatFarm.getWheat();
         wheatFarm.harvestWheat();
@@ -82,6 +110,7 @@ public class PlacesTest {
         chickenFarm.buyChicken();
         assert chickenFarm.hasChicken();
     }
+
     @Test
     public void hasEgg() {
         chickenFarm.buyChicken();
@@ -96,7 +125,6 @@ public class PlacesTest {
         chickenFarm.layEggs();
         assert chickenFarm.hasFullChicken();
     }
-
 
     @Test
     public void sellEggs() {
@@ -117,6 +145,59 @@ public class PlacesTest {
         chickenFarm.collectEgg();
         assertEquals(chickenFarm.getEgg(), fullChicken);
         assertEquals(chickenFarm.getFullChicken(), 0);
+    }
+
+    @Test
+    public void hasCow() {
+        cowFarm.buyCow();
+        assertEquals(cowFarm.getCow(), 1);
+    }
+
+    @Test
+    public void hasfullCow() {
+        cowFarm.buyCow();
+        cowFarm.growCow();
+        assertEquals(cowFarm.getFullCow(), 1);
+    }
+
+    @Test
+    public void hasMilk() {
+        cowFarm.buyCow();
+        cowFarm.growCow();
+        cowFarm.milkCow();
+        assertEquals(cowFarm.getMilk(), 1);
+    }
+
+    @Test
+    public void buyCow() {
+        cowFarm.buyCow();
+        assertEquals(cowFarm.getCow(), 1);
+    }
+
+    @Test
+    public void milkCow() {
+        int fullCow = cowFarm.getFullCow();
+        cowFarm.milkCow();
+        assertEquals(fullCow, cowFarm.getMilk());
+    }
+
+    @Test
+    public void growCow() {
+        int cow = cowFarm.getCow();
+        cowFarm.growCow();
+        assertEquals(cowFarm.getFullCow(), cow);
+    }
+
+    @Test
+    public void sellCow() {
+        cowFarm.sellCow();
+        assertEquals(cowFarm.getCow(), 0);
+    }
+
+    @Test
+    public void sellMilk() {
+        cowFarm.sell();
+        assertEquals(cowFarm.getMilk(), 0);
     }
 
 }
