@@ -5,11 +5,7 @@ import gameassets.Farmer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Arrays;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -205,7 +201,7 @@ public class Level {
     public List<String> convertStringToList(String modelAnswer) {
         String[] taskItems = modelAnswer.split("\\|");
         List<String> modelTaskList = new ArrayList<>();
-        for(int i = 1; i < taskItems.length ; i++){
+        for (int i = 1; i < taskItems.length; i++) {
             modelTaskList.add(taskItems[i]);
         }
         return  modelTaskList;
@@ -227,6 +223,60 @@ public class Level {
     }
 
     /**
+     * Check whether the user has all the necessary task.
+     * @param modelList model answer list
+     * @param userList user task list
+     * @return whether the tasks are equal
+     */
+    public boolean checkCorrectTasks(List<String> modelList, List<String> userList) {
+        if (modelList == null && userList == null) {
+            return true;
+        }
+
+        if ((modelList == null && userList != null) || modelList != null && userList == null
+                || modelList.size() != userList.size()) {
+            return false;
+        }
+
+        modelList = new ArrayList<String>(modelList);
+        userList = new ArrayList<String>(userList);
+
+        Collections.sort(userList);
+        Collections.sort(modelList);
+
+        return userList.equals(modelList);
+    }
+
+    /**
+     * Checks the percentage of tasks that are correct.
+     * @param modelList model task List
+     * @param userList user task list
+     * @return percentage of correct tasks
+     */
+    public int checkPercentageCorrectTasks(List<String> modelList, List<String> userList) {
+        if (modelList == null && userList == null) {
+            return 0;
+        }
+
+        modelList = new ArrayList<String>(modelList);
+        userList = new ArrayList<String>(userList);
+
+        Collections.sort(userList);
+        Collections.sort(modelList);
+
+        int ctr = 0;
+        for (int i = 0; i < modelList.size(); i++) {
+            String userTask = userList.get(i);
+            String modeltask = modelList.get(i);
+            if (userTask.equals(modeltask)) {
+                ctr += 1;
+            }
+        }
+        double percentage = (ctr * 100.0f) / modelList.size();
+        return (int) percentage;
+    }
+
+    /**
      * Compares the lists precision.
      * @param modelList List of model answers
      * @param userList List of the users answers
@@ -235,26 +285,33 @@ public class Level {
     public int compareLists(List<String> modelList, List<String> userList) {
         double sameTaskType = 0;
         double sameActionType = 0;
-        for (int i = 0; i < modelList.size(); i++) {
-            String modelTaskString[] = modelList.get(i).split(" ", 2);
-            String userTaskString[] = userList.get(i).split(" ", 2);
-            String modelTask = modelTaskString[0];
-            String userTask = userTaskString[0];
-            String modelAction = modelTaskString[1];
-            String userAction = userTaskString[1];
-            if (modelTask.equals(userTask)) {
-                sameTaskType += 1;
+        if (checkCorrectTasks(modelList,userList)) {
+            int percentageCorrect = checkPercentageCorrectTasks(modelList, userList);
+            return percentageCorrect;
+        } else {
+            for (int i = 0; i < modelList.size(); i++) {
+                String[] modelTaskString = modelList.get(i).split(" ", 2);
+                String[] userTaskString = userList.get(i).split(" ", 2);
+                String modelTask = modelTaskString[0];
+                String userTask = userTaskString[0];
+                String modelAction = modelTaskString[1];
+                String userAction = userTaskString[1];
+                if (modelTask.equals(userTask)) {
+                    sameTaskType += 1;
+                }
+                if (modelAction.equals(userAction)) {
+                    sameActionType += 1;
+                }
+
             }
-            if (modelAction.equals(userAction)) {
-                sameActionType += 1;
-            }
-            //return  (int)((sameTaskType * 100.0f) / modelList.size());
+
+            double probTask = (sameTaskType * 100.0f) / modelList.size();
+            double probAction = (sameActionType * 100.0f) / modelList.size();
+            double precision = (probAction * probTask) / 100;
+            return (int) precision;
+
         }
 
-        double probTask = (sameTaskType * 100.0f) / modelList.size();
-        double probAction = (sameActionType * 100.0f) / modelList.size();
-        double precision = (probAction * probTask)/ 100;
-        return (int) precision;
     }
 
     /**
@@ -270,13 +327,17 @@ public class Level {
         List<String> modifieduserTaskList = convertTaskListFormat(userTaskList);
 
 
-        if(levelNumber >= 1.2) {
+        if (levelNumber >= 1.2) {
             int sizeDifference = compareSizeDifference(modelTaskList, modifieduserTaskList);
-            output.add("Accuracy: " + sizeDifference + "%");
+            output.add("Correct number of Tasks: " + sizeDifference + "%");
 
-            if(sizeDifference == 100){
-                int precision  = compareLists(modelTaskList, modifieduserTaskList);
-                output.add("Task Precision: " + precision + "%");
+            if (sizeDifference == 100) {
+                if (checkCorrectTasks(modelTaskList,modifieduserTaskList)) {
+                    output.add("You have the correct number and types of tasks required, "
+                            + "Please check the order of your tasks");
+                }
+                int correctTaskPercentage  = compareLists(modelTaskList, modifieduserTaskList);
+                output.add(" % of correct Tasks: " + correctTaskPercentage + "%");
             }
         }
 
@@ -289,16 +350,16 @@ public class Level {
      * @param userAnswer  user answer list
      * @return sizeDifference
      */
-    public int compareSizeDifference(List<String> modelAnswer, List<String> userAnswer){
-       int modelAnswerSize = modelAnswer.size();
-       int userAnswerSize = userAnswer.size();
-       if (modelAnswerSize == userAnswerSize) {
-           return 100;
-       }    else if (modelAnswerSize > userAnswerSize) {
-           return (int)((userAnswerSize * 100.0f) / modelAnswerSize);
-       }    else {
-           return (int)((modelAnswerSize * 100.0f) / userAnswerSize);
-       }
+    public int compareSizeDifference(List<String> modelAnswer, List<String> userAnswer) {
+        int modelAnswerSize = modelAnswer.size();
+        int userAnswerSize = userAnswer.size();
+        if (modelAnswerSize == userAnswerSize) {
+            return 100;
+        }    else if (modelAnswerSize > userAnswerSize) {
+            return (int)((userAnswerSize * 100.0f) / modelAnswerSize);
+        }    else {
+            return (int)((modelAnswerSize * 100.0f) / userAnswerSize);
+        }
     }
 
     /**
@@ -308,7 +369,7 @@ public class Level {
      */
     public List<String> getDetailedFeedback(Farmio farmio) {
         List<String> output = new ArrayList<String>();
-        double levelNumber = farmio.getFarmer().getLevel(); // unsure if this is needed rn
+        double levelNumber = farmio.getFarmer().getLevel();
         output.add("The objective of this level was to " + objective);
         output.add("Unfortunately you were unable to complete within the allocated time of " + deadline + " days");
 
@@ -340,8 +401,8 @@ public class Level {
      */
 
     public List<String> getFeedback(Farmio farmio, ObjectiveResult currentLevelState) {
-        Farmer farmer = farmio.getFarmer();
 
+        Farmer farmer = farmio.getFarmer();
         List<String> output = new ArrayList<String>();
         if (currentLevelState == ObjectiveResult.DONE) {
             output.addAll(getSuccessfulFeedback());

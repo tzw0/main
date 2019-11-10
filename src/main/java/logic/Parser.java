@@ -208,10 +208,9 @@ public class Parser {
 
     /**
      * Used to parse the user's command if it is determined to be a log command.
-     *
      * @param userInput user input String
      * @return Command that displays a list of the logs
-     * @throws FarmioException if user input is invalid
+     * @throws FarmioException if the user input is invalid
      */
     private static Command parseTaskLog(String userInput) throws FarmioException {
         Matcher matcher = Pattern.compile("^log\\s+(?<index>\\d+)$").matcher(userInput);
