@@ -24,9 +24,8 @@ public class GotoFarmAction extends Action {
             frontend.typeWriter("You are already at the WheatFarm", false);
         } else {
             farmer.changeLocation("Traveling");
-            frontend.simulate("GotoWheatFarmSimulation", 1, 11);
+            frontend.simulate("GotoWheatFarmSimulation", 1, 12);
             farmer.changeLocation("WheatFarm");
-            frontend.simulate("GotoWheatFarmSimulation", 12);
             frontend.typeWriter("You have arrived at the WheatFarm", false);
         }
         frontend.sleep(200);

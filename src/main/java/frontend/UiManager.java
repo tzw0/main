@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class UiManager implements Ui {
     private Scanner scanner;
     private String clearScreen = "\033c" + "\033[2J";
+    private boolean isFastMode = false;
 
 
     /**
@@ -19,6 +20,14 @@ public class UiManager implements Ui {
      */
     public void removeClearScreen() {
         this.clearScreen = "";
+    }
+
+    /**
+     * Sets fastmode for simulations.
+     */
+    @Override
+    public void setFastMode() {
+        isFastMode = true;
     }
 
     /**
@@ -95,6 +104,9 @@ public class UiManager implements Ui {
      * @param delay time in milliseconds.
      */
     public void sleep(int delay) {
+        if (isFastMode && delay >= 200) {
+            delay = 50;
+        }
         try {
             Thread.sleep(delay);
         } catch (InterruptedException ex) {

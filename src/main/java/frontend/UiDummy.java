@@ -17,6 +17,10 @@ public class UiDummy implements Ui {
     public void removeClearScreen() {
     }
 
+    @Override
+    public void setFastMode() {
+    }
+
     public void show(String message) {
         uiTestString += "show";
         output += message;

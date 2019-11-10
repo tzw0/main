@@ -25,6 +25,7 @@ public class PlantSeedsAction extends Action {
                 "Error! you have attempted to plant seeds despite not being at the Wheatfarm"));
         checkActionCriteria(frontend, farmer, criteriaFeedbackList);
         frontend.simulate("PlantSeedSimulation", 0, 11);
+        frontend.typeWriter("Planting Seeds!", false);
         farmer.plantSeeds();
         frontend.simulate();
         frontend.sleep(200);

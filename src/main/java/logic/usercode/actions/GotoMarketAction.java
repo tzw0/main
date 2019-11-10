@@ -20,7 +20,6 @@ public class GotoMarketAction extends Action {
             farmer.changeLocation("Traveling");
             frontend.simulate("GotoMarketSimulation", 12, 1);
             farmer.changeLocation("Market");
-            frontend.simulate("GotoMarketSimulation", 1);
             frontend.typeWriter("You have arrived at the market", false);
         }
         frontend.sleep(200);

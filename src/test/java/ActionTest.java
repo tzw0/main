@@ -1,10 +1,12 @@
 import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
+import frontend.Frontend;
 import gameassets.Level;
-import frontend.UiDummy;
+import gameassets.Farmer;
 import org.junit.jupiter.api.Test;
 import logic.usercode.actions.*;
+import storage.Storage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,10 +24,8 @@ public class ActionTest {
     private Action harvestWheatAction;
     private Action sellGrainAction;
     private Farmio farmio;
-    public ActionTest() throws FarmioFatalException {
+    public ActionTest() {
         farmio = new Farmio(false);
-        farmio.getFrontend().setDummy();
-        farmio.setLevel(new Level(farmio.getStorage().getLevel(1.1), "tester"));
         gotoMarketAction = new GotoMarketAction();
         buySeedsAction = new BuySeedsAction();
         gotoWheatFarmAction = new GotoFarmAction();
@@ -97,18 +97,6 @@ public class ActionTest {
     }
 
     @Test
-    void actionSequenceOfGameTest() throws FarmioException, FarmioFatalException {
-        gotoMarketAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
-        buySeedsAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
-        gotoWheatFarmAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
-        plantSeedsAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
-        farmio.getFarmer().nextDay();
-        harvestWheatAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
-        gotoMarketAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
-        sellGrainAction.execute(farmio.getFrontend(), farmio.getStorage(), farmio.getFarmer());
-    }
-
-    @Test
     void actionToStringTest() {
         assert gotoMarketAction.toString().equals("gotoMarket");
         assert gotoWheatFarmAction.toString().equals("gotoWheatFarm");
@@ -116,5 +104,23 @@ public class ActionTest {
         assert plantSeedsAction.toString().equals("plantSeeds");
         assert harvestWheatAction.toString().equals("harvestWheat");
         assert sellGrainAction.toString().equals("sellGrain");
+    }
+
+    @Test
+    void actionSequenceOfGameTest() throws FarmioException, FarmioFatalException {
+        Farmio farmioRealStorage = new Farmio(true);
+        farmioRealStorage.getFrontend().setDummyUi();
+        Frontend frontendDummy = farmioRealStorage.getFrontend();
+        Storage storageActual = farmioRealStorage.getStorage();
+        Farmer farmer = farmioRealStorage.getFarmer();
+        farmioRealStorage.setLevel(new Level(storageActual.getLevel(1.1), "tester"));
+        gotoMarketAction.execute(frontendDummy, storageActual, farmer);
+        buySeedsAction.execute(frontendDummy, storageActual, farmer);
+        gotoWheatFarmAction.execute(frontendDummy, storageActual, farmer);
+        plantSeedsAction.execute(frontendDummy, storageActual, farmer);
+        farmer.nextDay();
+        harvestWheatAction.execute(frontendDummy, storageActual, farmer);
+        gotoMarketAction.execute(frontendDummy, storageActual, farmer);
+        sellGrainAction.execute(frontendDummy, storageActual, farmer);
     }
 }

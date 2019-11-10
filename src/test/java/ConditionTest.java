@@ -9,7 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConditionTest {
 
-    public ConditionTest() {}
+    public ConditionTest() {
+
+    }
 
     @Test
     public void isBooleanConditionTest() {

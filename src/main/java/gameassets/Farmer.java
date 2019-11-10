@@ -288,10 +288,7 @@ public class Farmer {
      * @return true if current task has failed and false otherwise.
      */
     public boolean isHasfailedCurrentTask() {
-        if (hasfailedCurrentTask) {
-            return true;
-        }
-        return false;
+        return hasfailedCurrentTask;
     }
 
     /**
@@ -361,7 +358,6 @@ public class Farmer {
                 this.currentTask = i;
 
                 logTaskList.add(tasks.get(i));
-
                 tasks.get(i).execute(farmio);
             }
         } catch (FarmioException e) {

@@ -1,9 +1,34 @@
 package logic;
 
-import logic.commands.*;
+;
 
 
 import farmio.Farmio;
+import logic.commands.Command;
+import logic.commands.CommandAddName;
+import logic.commands.CommandCheckObjectives;
+import logic.commands.CommandDayEnd;
+import logic.commands.CommandDayStart;
+import logic.commands.CommandGameLoad;
+import logic.commands.CommandGameNew;
+import logic.commands.CommandGameQuit;
+import logic.commands.CommandGameSave;
+import logic.commands.CommandLevelEnd;
+import logic.commands.CommandLevelReset;
+import logic.commands.CommandLevelStart;
+import logic.commands.CommandLog;
+import logic.commands.CommandMenuInGame;
+import logic.commands.CommandMenuStart;
+import logic.commands.CommandSetFastMode;
+import logic.commands.CommandShowList;
+import logic.commands.CommandTaskAddReset;
+import logic.commands.CommandTaskCreate;
+import logic.commands.CommandTaskDelete;
+import logic.commands.CommandTaskDeleteAll;
+import logic.commands.CommandTaskEdit;
+import logic.commands.CommandTaskHint;
+import logic.commands.CommandTaskInsert;
+import logic.commands.CommandTaskRun;
 import logic.usercode.tasks.Task;
 import logic.usercode.tasks.IfTask;
 import logic.usercode.tasks.DoTask;
@@ -45,6 +70,9 @@ public class Parser {
         }
         if (userInput.equals("new game")) {
             return new CommandGameNew();
+        }
+        if (userInput.equals("fastmode")) {
+            return new CommandSetFastMode();
         }
         switch (stage) {
         case WELCOME:
@@ -88,9 +116,10 @@ public class Parser {
         LOGGER.log(Level.INFO, "Detected invalid command " + userInput + " at Welcome");
         throw new FarmioException("Invalid Command!");
     }
+
     /**
      * Used to parse the user input during the DAY_END stage. User can choose to either reset the level,
-     * or proceed to the next day
+     * or proceed to the next day.
      *
      * @param userInput user input String
      * @return Command that either resets the level, or lets the user proceed to the next day
@@ -149,8 +178,7 @@ public class Parser {
         if (userInput.equals("task logic.commands") || userInput.equals("task command")) {
             return new CommandShowList("TaskCommands");
         }
-        if (userInput.startsWith("do") || userInput.startsWith("if")
-                || userInput.startsWith("for") || userInput.startsWith("while")) {
+        if (userInput.startsWith("do") || userInput.startsWith("if")) {
             return new CommandTaskCreate(parseTask(userInput));
         } else if (userInput.equals("hint")) {
             return new CommandTaskHint();
@@ -258,7 +286,7 @@ public class Parser {
             LOGGER.log(Level.WARNING, e.toString());
             throw new FarmioException("Invalid command format!");
         }
-        if (!taskType.equals("if")  && !taskType.equals("for") && !taskType.equals("while")) {
+        if (!taskType.equals("if")) {
             LOGGER.log(Level.INFO, "Deteched invalid task type for command: " + userInput);
             throw new FarmioException("Invalid task type!");
         }
@@ -270,14 +298,7 @@ public class Parser {
             LOGGER.log(Level.INFO, "Deteched invalid action for command: " + userInput);
             throw new FarmioException("Invalid Action!");
         }
-        Task task;
-        if (taskType.equals("if")) {
-            task = new IfTask(Condition.toCondition(condition), Action.toAction(action));
-        } else {
-            LOGGER.log(Level.SEVERE, "Wrong tasktype specified in:" + userInput);
-            throw new FarmioException("While and For tasks will only come in version 2.0!");
-        }
-        return task;
+        return new IfTask(Condition.toCondition(condition), Action.toAction(action));
     }
 
     /**

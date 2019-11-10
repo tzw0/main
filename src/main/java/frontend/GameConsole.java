@@ -109,7 +109,7 @@ public class GameConsole {
      * @param objective The mission of the level.
      * @return the virtual Game console as a String.
      */
-    static String fullconsole(ArrayList<String> unformattedFrame, Farmer farmer, Map<String, Integer> goalMap,
+    static String fullConsole(ArrayList<String> unformattedFrame, Farmer farmer, Map<String, Integer> goalMap,
                               String objective, int frameWidth, int frameHeight) {
         ArrayList<String> frame = formatFrame(unformattedFrame, frameWidth, frameHeight);
         StringBuilder output = new StringBuilder();
