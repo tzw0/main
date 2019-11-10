@@ -11,12 +11,13 @@ public class Frontend {
     private Ui ui;
 
     public Frontend(Farmio farmio) {
-        simulation = new Simulation(farmio);
         ui = new UiManager();
+        simulation = new Simulation(farmio, ui);
     }
 
-    public void setDummy() {
+    public void setDummyUi() {
         ui = new UiDummy();
+        simulation.setUi(ui);
     }
 
     public void removeClearScreen() {

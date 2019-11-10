@@ -100,9 +100,9 @@ public abstract class Action {
                 if (!hasError) {
                     farmer.setTaskFailed();
                     frontend.simulate("ErrorInExecution", 1, 9);
-                    frontend.show(criteriaFeedback.getValue());
                     hasError = true;
                 }
+                frontend.show(criteriaFeedback.getValue());
             }
         }
         if (hasError) {

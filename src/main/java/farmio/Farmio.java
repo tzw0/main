@@ -2,7 +2,6 @@ package farmio;
 
 import gameassets.Farmer;
 import gameassets.Level;
-import gameassets.Log;
 import logic.commands.Command;
 import logic.commands.CommandWelcome;
 import farmio.exceptions.FarmioException;
@@ -42,7 +41,7 @@ public class Farmio {
             storage = new StorageDummy();
             farmer = new Farmer();
             frontend = new Frontend(this);
-            frontend.setDummy();
+            frontend.setDummyUi();
         }
 
         stage = Stage.WELCOME;
