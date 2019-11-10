@@ -15,10 +15,10 @@ class Menu {
             throws FarmioFatalException {
         if (canResume && hasSave) {
             frontend.simulate("Menu", 2, false);
-            frontend.typeWriter("Enter the option of your choice\nPress [Enter] to canResume game", false);
+            frontend.typeWriter("Enter the option of your choice\nPress [Enter] to Resume game", false);
         } else if (canResume) {
             frontend.simulate("Menu", 4, false);
-            frontend.typeWriter("Enter the option of your choice\nPress [Enter] to canResume game", false);
+            frontend.typeWriter("Enter the option of your choice\nPress [Enter] to Resume game", false);
 
         } else if (hasSave) {
             frontend.simulate("Menu", 3, true);

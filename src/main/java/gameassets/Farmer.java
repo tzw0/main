@@ -84,7 +84,7 @@ public class Farmer {
             isValidName(loadName);
             isValidTaskList(this.tasks);
             this.name = loadName;
-            this.logTaskList = new Log(); //todo include json file w previous list of actions
+            this.logTaskList = new Log();
         } catch (Exception e) {
             throw new FarmioException("Game save corrupted!");
         }
@@ -350,55 +350,260 @@ public class Farmer {
     /**
      * Proceeds to the next day.
      * Allows seeds to grow into wheat and increment day number.
+     * Allows chickens to grow into fullchicken and increment day number.
+     * Allows cow to grow into fullcow and increment day number.
      */
     public void nextDay() {
-        wheatFarm.growSeedlings();
-        day += 1;
+        if(level > 1) {
+            wheatFarm.growSeedlings();
+            day += 1;
+        }
+        if(level > 2) {
+            chickenFarm.layEggs();
+            day += 1;
+        }
+        if(level > 3) {
+            cowFarm.growCow();
+            day += 1;
+        }
     }
 
+    /**
+     * Checks whether the wheatfarm currently has seeds.
+     * @return true if wheatfarm has seeds, false if wheatfarm has no seeds.
+     */
     public boolean hasSeeds() {
         return wheatFarm.hasSeeds();
     }
 
+    /**
+     * Checks whether the wheatfarm currently has wheat.
+     * @return true if wheatfarm has wheat, false if wheatfarm has no wheat.
+     */
     public boolean hasWheat() {
         return wheatFarm.hasWheat();
     }
 
+    /**
+     * Checks whether the wheatfarm currently has grain.
+     * @return true if wheatfarm has grain, false if wheatfarm has no grain.
+     */
     public boolean hasGrain() {
         return wheatFarm.hasGrain();
     }
 
+    /**
+     * Gets number of seeds.
+     * @return seeds as the amount of seeds in the wheatfarm.
+     */
     public int getSeeds() {
         return wheatFarm.getSeeds();
     }
 
+    /**
+     * Gets number of seedlings.
+     * @return seedlings as the amount of seedlings in the wheatfarm.
+     */
     public int getSeedlings() {
         return wheatFarm.getSeedlings();
     }
 
+    /**
+     * Gets number of wheat.
+     * @return wheat as the amount of wheat in the wheatfarm.
+     */
     public int getWheat() {
         return wheatFarm.getWheat();
     }
 
+    /**
+     * Gets number of grains.
+     * @return seeds as the amount of grain in the wheatfarm.
+     */
     public int getGrain() {
         return wheatFarm.getGrain();
     }
 
+    /**
+     * Increases number of seeds.
+     */
     public void buySeeds() {
         wheatFarm.buySeeds();
     }
 
+    /**
+     * Changes all wheat to grains.
+     * Resets wheat to 0.
+     */
     public void harvestWheat() {
         wheatFarm.harvestWheat();
     }
 
+    /**
+     * Changes all seeds to seedlings.
+     * Resets seeds to 0.
+     */
     public void plantSeeds() {
         wheatFarm.plantSeeds();
     }
 
+    /**
+     * Increases the amount of money user has.
+     * @return the amount of money earned.
+     */
     public int sellGrain() {
         return wheatFarm.sell();
     }
+
+    /**
+     * Checks whether the chickenfarm currently has eggs.
+     * @return true if chickenfarm has eggs, false if chickenfarm has no eggs.
+     */
+    public boolean hasEgg() {
+        return chickenFarm.hasEgg();
+    }
+
+    /**
+     * Checks whether the chickenfarm currently has chickens.
+     * @return true if chickenfarm has chicken, false if chickenfarm has no chicken.
+     */
+    public boolean hasChicken() {
+        return chickenFarm.hasChicken();
+    }
+
+    /**
+     * Checks whether the chickenfarm currently has fullChicken.
+     * @return true if chickenfarm has fullChicken, false if chickenfarm has no fullChicken.
+     */
+    public boolean hasFullChicken() {
+        return chickenFarm.hasFullChicken();
+    }
+
+    /**
+     * Gets number of chicken.
+     * @return chicken as the amount of chickens in the chickenfarm.
+     */
+    public int getChicken() {
+        return chickenFarm.getChicken();
+    }
+
+    /**
+     * Gets number of eggs.
+     * @return eggs as the amount of eggs in the chickenfarm.
+     */
+    public int getEgg() {
+        return chickenFarm.getEgg();
+    }
+
+    /**
+     * Gets number of fullChicken.
+     * @return fullChicken as the amount of fullChicken in the chickenfarm.
+     */
+    public int getFullChicken() {
+        return chickenFarm.getFullChicken();
+    }
+
+    /**
+     * Increases number of chickens.
+     */
+    public void buyChicken() {
+        chickenFarm.buyChicken();
+    }
+
+    /**
+     * Changes all fullchicken to egg.
+     * Resets wheat to 0.
+     */
+    public void collectEgg() {
+        chickenFarm.collectEgg();
+    }
+
+    /**
+     * Increases the amount of money user has.
+     * @return the amount of money earned.
+     */
+    public int sellEgg() {
+        return chickenFarm.sell();
+    }
+
+    /**
+     * Checks whether the cowfarm currently has Milk.
+     * @return true if milkfarm has milk, false if milkfarm has no milk.
+     */
+    public boolean hasMilk() {
+        return cowFarm.hasMilk();
+    }
+
+    /**
+     * Checks whether the cowfarm currently has cow.
+     * @return true if cowfarm has cow, false if cowfarm has no cow.
+     */
+    public boolean hasCow() {
+        return cowFarm.hasCow();
+    }
+
+    /**
+     * Checks whether the cowfarm currently has fullCow.
+     * @return true if cowfarm has fullCow, false if cowfarm has no fullCow.
+     */
+    public boolean hasFullCow() {
+        return cowFarm.hasFullCow();
+    }
+
+    /**
+     * Gets number of cows.
+     * @return cow as the amount of cows in the cowfarm.
+     */
+    public int getCow() {
+        return cowFarm.getCow();
+    }
+
+    /**
+     * Gets number units of milk.
+     * @return milk as the amount of milk in the cowfarm.
+     */
+    public int getMilk() {
+        return cowFarm.getMilk();
+    }
+
+    /**
+     * Gets number of fullCow.
+     * @return fullCow as the amount of fullCow in the cowfarm.
+     */
+    public int getFullCow() {
+        return cowFarm.getFullCow();
+    }
+
+    /**
+     * Increases number of cows.
+     */
+    public void buyCow() {
+        cowFarm.buyCow();
+    }
+
+    public void milkCow() {
+        cowFarm.milkCow();
+    }
+    /**
+     * Increase amount of money user has and reset cow to 0.
+     * @return the amount of money earned.
+     */
+    public int sellCow() {
+        return cowFarm.sellCow();
+    }
+
+    /**
+     * Increases the amount of money user has and reset milk to 0.
+     * @return the amount of money earned.
+     */
+    public int sellMilk() {
+        return cowFarm.sell();
+    }
+
+
+
+
+
 
     /**
      * Change farmer variables with the data in argument JSONObject.

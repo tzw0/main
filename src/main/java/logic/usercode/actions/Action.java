@@ -107,7 +107,11 @@ public abstract class Action {
         }
         if (hasError) {
             frontend.typeWriter("",true);
-            frontend.getInput();
+            String userInput = frontend.getInput();
+            while (!userInput.equals("")) {
+                frontend.showWarning("Invalid Command!");
+                userInput = frontend.getInput();
+            }
             throw new FarmioException("Task Error!");
         }
     }
