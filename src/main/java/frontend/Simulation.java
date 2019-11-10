@@ -48,7 +48,7 @@ class Simulation {
      * Sets simulations to be run in fast mode.
      */
     public static void setFastMode() {
-        isFastMode = true;
+        isFastMode = !isFastMode;
     }
 
     /**
