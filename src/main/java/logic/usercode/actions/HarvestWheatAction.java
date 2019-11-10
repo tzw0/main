@@ -27,6 +27,6 @@ public class HarvestWheatAction extends Action {
         frontend.simulate("HarvestWheatSimulation", 0, 9);
         farmer.harvestWheat();
         frontend.simulate();
-        frontend.sleep(700);
+        frontend.sleep(200);
     }
 }

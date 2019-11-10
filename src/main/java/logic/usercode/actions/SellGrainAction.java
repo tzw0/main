@@ -26,9 +26,9 @@ public class SellGrainAction extends Action {
         checkActionCriteria(frontend, farmer, criteriaFeedbackList);
         frontend.simulate("SellWheatSimulation", 0, 9);
         frontend.typeWriter("Selling grain!", false);
-        frontend.sleep(700);
+        frontend.sleep(200);
         farmer.earnGold(farmer.sellGrain());
         frontend.simulate();
-        frontend.sleep(700);
+        frontend.sleep(200);
     }
 }
