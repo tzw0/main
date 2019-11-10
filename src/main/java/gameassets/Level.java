@@ -308,7 +308,7 @@ public class Level {
      */
     public List<String> getDetailedFeedback(Farmio farmio) {
         List<String> output = new ArrayList<String>();
-        double levelNumber = farmio.getFarmer().getLevel(); // unsure if this is needed rn
+        double levelNumber = farmio.getFarmer().getLevel();
         output.add("The objective of this level was to " + objective);
         output.add("Unfortunately you were unable to complete within the allocated time of " + deadline + " days");
 
@@ -340,8 +340,8 @@ public class Level {
      */
 
     public List<String> getFeedback(Farmio farmio, ObjectiveResult currentLevelState) {
-        Farmer farmer = farmio.getFarmer();
 
+        Farmer farmer = farmio.getFarmer();
         List<String> output = new ArrayList<String>();
         if (currentLevelState == ObjectiveResult.DONE) {
             output.addAll(getSuccessfulFeedback());

@@ -268,7 +268,7 @@ public class Farmer {
         return tasks.size();
     }
     /**
-     * Checks if curent task has failed and resets current task.
+     * Checks if current task has failed and resets current task.
      * @return true if current task has failed and false otherwise.
      */
     public boolean isHasfailedCurrentTask() {
@@ -339,8 +339,7 @@ public class Farmer {
             for (int i = 0; i < tasks.size(); i++) {
                 this.currentTask = i;
 
-                //todo add the log to the logList
-                logTaskList.add(tasks.get(i)); //adds tasks to logTaskList
+                logTaskList.add(tasks.get(i));
 
                 tasks.get(i).execute(farmio);
             }
