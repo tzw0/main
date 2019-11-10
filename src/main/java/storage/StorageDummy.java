@@ -17,7 +17,10 @@ public class StorageDummy implements Storage {
     ArrayList<String> frame;
     JSONObject level;
 
-    public StorageDummy(){
+    /**
+     * Constructor to initialise StorageDummy object.
+     */
+    public StorageDummy() {
         hasSaveExist = false;
         isFarmerStored = false;
         farmer = null;
@@ -63,31 +66,27 @@ public class StorageDummy implements Storage {
         return this.level;
     }
 
-    public void setHasSaveExist(boolean hasSaveExist) {
-        this.hasSaveExist = hasSaveExist;
-    }
-
-    public void setFarmerStored(boolean farmerStored) {
-        isFarmerStored = farmerStored;
-    }
-
+    /**
+     * Set farmer variable to be retrived using loadFarmer in test cases.
+     * @param farmer farmer to be set and retrived.
+     */
     public void setFarmer(JSONObject farmer) {
         this.farmer = farmer;
     }
 
-    public void setFarmerBackup(JSONObject farmerBackup) {
-        this.farmerBackup = farmerBackup;
-    }
-
-    public void setFarmerLocation(String farmerLocation) {
-        this.farmerLocation = farmerLocation;
-    }
-
+    /**
+     * Set frame variable to be retrived using loadFrame in test cases.
+     * @param frame frame to be set and retrived.
+     */
     public void setFrame(ArrayList<String> frame) {
         this.frame = frame;
     }
 
-    public  void setLevel(JSONObject jsonObject){
-        level = jsonObject;
+    /**
+     * Set level variable to be retrived using LoadLevel in test cases.
+     * @param level level to be set and retrived.
+     */
+    public void setLevel(JSONObject level) {
+        this.level = level;
     }
 }

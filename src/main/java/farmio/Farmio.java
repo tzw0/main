@@ -34,11 +34,11 @@ public class Farmio {
      * Farmio constructor used to initiate an instance of Farmio.
      */
     public Farmio(boolean isActual) {
-        if(isActual){
+        if (isActual) {
             storage = new StorageManager();
             farmer = new Farmer();
             frontend = new Frontend(this);
-        }else {
+        } else {
             storage = new StorageDummy();
             farmer = new Farmer();
             frontend = new Frontend(this);
@@ -129,7 +129,7 @@ public class Farmio {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    
+
     public void setLevel(Level level) {
         this.level = level;
     }
