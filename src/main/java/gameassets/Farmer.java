@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class Farmer {
 
+    private static final String[] LOCATIONS = {"WheatFarm", "Market"};
     private static final String JSON_KEY_GOLD = "gold";
     private static final String JSON_KEY_LEVEL = "level";
     private static final String JSON_KEY_DAY = "day";
@@ -644,7 +645,6 @@ public class Farmer {
         return cowFarm.sell();
     }
 
-
     /**
      * Change farmer variables with the data in argument JSONObject.
      *
@@ -655,8 +655,8 @@ public class Farmer {
     public Farmer setJson(JSONObject jsonObject) throws FarmioException {
         try {
             this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
-            this.gold = (int) (long) jsonObject.get(JSON_KEY_GOLD);
-            this.day = (int) (long) jsonObject.get(JSON_KEY_DAY);
+            this.gold = Math.max((int) (long) jsonObject.get(JSON_KEY_GOLD), 0);
+            this.day = Math.max((int) (long) jsonObject.get(JSON_KEY_DAY), 0);
             this.location = (String) jsonObject.get(JSON_KEY_LOCATION);
             this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
             this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
@@ -706,5 +706,14 @@ public class Farmer {
     public JSONObject updateJson(JSONObject object) {
         object.replace(JSON_KEY_TASK_LIST, tasks.toJson());
         return object;
+    }
+
+    private String validateLoaction(String jsonLocation) throws FarmioException {
+        for (String location: LOCATIONS) {
+            if(jsonLocation.equalsIgnoreCase(location)){
+                return location;
+            }
+        }
+        throw new FarmioException("Game save is corrupted.");
     }
 }
