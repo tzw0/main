@@ -24,6 +24,11 @@ public class Frontend {
         ui.removeClearScreen();
     }
 
+    public void setFastMode() {
+        Simulation.setFastMode();
+        ui.setFastMode();
+    }
+
     public void show(String message) {
         ui.show(message);
     }

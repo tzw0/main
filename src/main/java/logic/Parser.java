@@ -19,6 +19,7 @@ import logic.commands.CommandLevelStart;
 import logic.commands.CommandLog;
 import logic.commands.CommandMenuInGame;
 import logic.commands.CommandMenuStart;
+import logic.commands.CommandSetFastMode;
 import logic.commands.CommandShowList;
 import logic.commands.CommandTaskAddReset;
 import logic.commands.CommandTaskCreate;
@@ -69,6 +70,9 @@ public class Parser {
         }
         if (userInput.equals("new game")) {
             return new CommandGameNew();
+        }
+        if (userInput.equals("fastmode")) {
+            return new CommandSetFastMode();
         }
         switch (stage) {
         case WELCOME:
