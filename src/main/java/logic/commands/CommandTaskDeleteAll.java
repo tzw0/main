@@ -2,8 +2,9 @@ package logic.commands;
 
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
+import frontend.Frontend;
 
-public class CommandTaskDeleteAll extends CommandChangeTask {
+public class CommandTaskDeleteAll extends Command {
 
     /**
      * Delete all tasks in the tasklist.
@@ -12,8 +13,9 @@ public class CommandTaskDeleteAll extends CommandChangeTask {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
+        Frontend frontend = farmio.getFrontend();
         farmio.getFarmer().deleteAll();
-        super.saveTaskandResetScreen(farmio);
-        farmio.getFrontend().showInfo("You have deleted all tasks!");
+        frontend.simulate(farmio.getLevel().getPath(), farmio.getLevel().getNarratives().size() - 1);
+        frontend.showInfo("You have deleted all tasks!");
     }
 }
