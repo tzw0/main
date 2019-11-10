@@ -36,6 +36,7 @@ public class CommandGameLoad extends Command {
                 farmio.setStage(Farmio.Stage.NAME_ADD);
                 return;
             } else {
+                farmio.getFrontend().simulate();
                 frontend.showWarning(e.getMessage());
                 frontend.typeWriter("Load game failed! Resume to previous session.", true);
             }

@@ -45,10 +45,6 @@ public class Frontend {
         ui.showWarning(message);
     }
 
-    public void clearScreen() {
-        ui.clearScreen();
-    }
-
     public void showInfo(String message) {
         ui.showInfo(message);
     }
