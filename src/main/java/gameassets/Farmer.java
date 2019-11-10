@@ -85,6 +85,8 @@ public class Farmer {
             String loadName = savedName.toUpperCase();
             isValidName(loadName);
             isValidTaskList(this.tasks);
+            isValidLocation(this.location);
+            isValidAssets(this);
             this.name = loadName;
             this.logTaskList = new Log();
         } catch (Exception e) {
@@ -668,11 +670,38 @@ public class Farmer {
             String loadName = savedName.toUpperCase();
             isValidName(loadName);
             isValidTaskList(this.tasks);
+            isValidLocation(this.location);
+            isValidAssets(this);
             this.name = loadName;
         } catch (Exception e) {
             throw new FarmioException("Game save corrupted!");
         }
         return this;
+    }
+
+    /**
+     * Checks if the number of assets are valid
+     *
+     * @param farmer the farmer to be validated
+     * @throws FarmioException if assets are not valid
+     */
+    private void isValidAssets(Farmer farmer) throws FarmioException {
+        if (farmer.getGold() < 0 || farmer.getSeeds() < 0 || farmer.getWheat() < 0 || farmer.getSeedlings() < 0
+            || farmer.getGrain() < 0) {
+            throw new FarmioException("Negative assets");
+        }
+    }
+
+    /**
+     * Checks if the location from the save file is valid.
+     *
+     * @param location to be validated
+     * @throws FarmioException if location is invalid
+     */
+    private void isValidLocation(String location) throws FarmioException {
+        if (!location.equals("Market") && !location.equals("WheatFarm")) {
+            throw new FarmioException("invalid location");
+        }
     }
 
     /**
