@@ -75,7 +75,7 @@ public class Parser {
     }
 
     /**
-     * Checks user input at the welcome screen
+     * Checks user input at the welcome screen.
      *
      * @param userInput input String from user
      * @return Command for the start game menu
@@ -134,7 +134,7 @@ public class Parser {
         if (userInput.toLowerCase().equals("start")) {
             return new CommandDayStart();
         }
-        if (userInput.startsWith("log")){
+        if (userInput.startsWith("log")) {
             return parseTaskLog(userInput);
         }
         if (userInput.equals("conditions") || userInput.equals("condition")) {
@@ -177,12 +177,12 @@ public class Parser {
         LOGGER.log(Level.INFO, "Deteched invalid command for command: " + userInput);
         throw new FarmioException("Invalid argument.");
     }
+
     /**
      * Used to parse the user's command if it is determined to be a log command.
-     *
      * @param userInput user input String
      * @return Command that displays a list of the logs
-     * @throws FarmioException if user input is invalid
+     * @throws FarmioException if the user input is invalid
      */
     private static Command parseTaskLog(String userInput) throws FarmioException {
         Matcher matcher = Pattern.compile("^log\\s+(?<index>\\d+)$").matcher(userInput);

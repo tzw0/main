@@ -5,11 +5,7 @@ import gameassets.Farmer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Arrays;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -226,6 +222,25 @@ public class Level {
         return splitTaskList;
     }
 
+    public boolean checkCorrectTasks(List<String> modelList, List<String> userList){
+        if (modelList == null && userList == null) {
+            return true;
+        }
+
+        if ((modelList == null && userList != null) || modelList != null && userList == null
+                || modelList.size() != userList.size()) {
+            return false;
+        }
+
+        modelList = new ArrayList<String>(modelList);
+        userList = new ArrayList<String>(userList);
+
+        Collections.sort(userList);
+        Collections.sort(modelList);
+        return userList.equals(modelList);
+    }
+
+
     /**
      * Compares the lists precision.
      * @param modelList List of model answers
@@ -235,6 +250,12 @@ public class Level {
     public int compareLists(List<String> modelList, List<String> userList) {
         double sameTaskType = 0;
         double sameActionType = 0;
+
+        //compare whether the tasks are inside are inside
+        if(checkCorrectTasks(modelList,userList)){
+
+        }
+
         for (int i = 0; i < modelList.size(); i++) {
             String[] modelTaskString = modelList.get(i).split(" ", 2);
             String[] userTaskString = userList.get(i).split(" ", 2);
@@ -272,11 +293,12 @@ public class Level {
 
         if (levelNumber >= 1.2) {
             int sizeDifference = compareSizeDifference(modelTaskList, modifieduserTaskList);
-            output.add("Accuracy: " + sizeDifference + "%");
+            output.add("Correct no of Tasks: " + sizeDifference + "%");
 
             if (sizeDifference == 100) {
-                int precision  = compareLists(modelTaskList, modifieduserTaskList);
-                output.add("Task Precision: " + precision + "%");
+                int correctTaskPercentage  = compareLists(modelTaskList, modifieduserTaskList);
+                
+                output.add(" % of correct Tasks: " + correctTaskPercentage + "%");
             }
         }
 

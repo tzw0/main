@@ -66,16 +66,16 @@ public class Log extends TaskList {
 
             String output = "";
             output +=  ((i + 1) + ". " + "Farmer");
-              if (tasktype.equals("IF")) {
+            if (tasktype.equals("IF")) {
                 output += " checks  ";
                 if (taskCondition.equals("hasSeeds")) {
                     output += "if he has seeds in his assets";
                 } else if (taskCondition.equals("hasWheat")) {
-                   output += "if there is any wheat which can be harvested";
+                    output += "if there is any wheat which can be harvested";
                 } else if (taskCondition.equals("hasGrain")) {
-                   output += "if there's any grain which he can sell";
+                    output += "if there's any grain which he can sell";
                 } else {
-                   output += "if " + taskCondition;
+                    output += "if " + taskCondition;
                 }
                 output += " then he";
             }
@@ -84,15 +84,15 @@ public class Log extends TaskList {
             } else if (taskAction.equals("harvestWheat")) {
                 output += " harvest the wheat";
             } else if (taskAction.equals("plantSeeds")) {
-               output += " plants his seedling";
+                output += " plants his seedling";
             } else if (taskAction.equals("sellGrain")) {
-               output += " sells his grain";
+                output += " sells his grain";
             } else if (taskAction.equals("gotoMarket")) {
-               output += " travels to the Market";
+                output += " travels to the Market";
             } else if (taskAction.equals("gotoWheatFarm")) {
-               output += " travels to the Wheat Farm";
+                output += " travels to the Wheat Farm";
             } else {
-               output += "";
+                output += "";
             }
             list.add(output);
         }
@@ -103,14 +103,13 @@ public class Log extends TaskList {
      * Converts the logList into groups of 15 and to a readable format with index number to be printed.
      * @return String Array to be printed by the UI
      */
-    public ArrayList<String> toStringSplitLogArray(int num,double level) throws FarmioException {
 
+    public ArrayList<String> toStringSplitLogArray(int num,double level) throws FarmioException {
 
         ArrayList<String> splitList = new ArrayList<String>();
         if (level > 1.6) {
             splitList.add("------- LOG FEATURE FOR THIS LEVEL COMING SOON -------");
-        }
-        else {
+        } else {
             int noEntries = this.size();
             int noAvailablePages = (int) Math.ceil((double) noEntries / 15);
             if (num <= 0 || num > noAvailablePages) {
