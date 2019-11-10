@@ -29,6 +29,6 @@ public class BuySeedsAction extends Action {
         farmer.buySeeds();
         farmer.spendGold(Market.PRICE_OF_SEED);
         frontend.simulate();
-        frontend.sleep(700);
+        frontend.sleep(200);
     }
 }

@@ -27,6 +27,6 @@ public class PlantSeedsAction extends Action {
         frontend.simulate("PlantSeedSimulation", 0, 11);
         farmer.plantSeeds();
         frontend.simulate();
-        frontend.sleep(700);
+        frontend.sleep(200);
     }
 }
