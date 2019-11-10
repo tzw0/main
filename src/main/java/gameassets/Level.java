@@ -228,7 +228,7 @@ public class Level {
      * @param userList user task list
      * @return whether the tasks are equal
      */
-    public boolean checkCorrectTasks(List<String> modelList, List<String> userList){
+    public boolean checkCorrectTasks(List<String> modelList, List<String> userList) {
         if (modelList == null && userList == null) {
             return true;
         }
@@ -253,7 +253,7 @@ public class Level {
      * @param userList user task list
      * @return percentage of correct tasks
      */
-    public int checkPercentageCorrectTasks(List<String> modelList, List<String> userList){
+    public int checkPercentageCorrectTasks(List<String> modelList, List<String> userList) {
         if (modelList == null && userList == null) {
             return 0;
         }
@@ -265,7 +265,7 @@ public class Level {
         Collections.sort(modelList);
 
         int ctr = 0;
-        for(int i = 0; i < modelList.size(); i++) {
+        for (int i = 0; i < modelList.size(); i++) {
             String userTask = userList.get(i);
             String modeltask = modelList.get(i);
             if (userTask.equals(modeltask)) {
@@ -285,11 +285,10 @@ public class Level {
     public int compareLists(List<String> modelList, List<String> userList) {
         double sameTaskType = 0;
         double sameActionType = 0;
-        if(checkCorrectTasks(modelList,userList)){
+        if (checkCorrectTasks(modelList,userList)) {
             int percentageCorrect = checkPercentageCorrectTasks(modelList, userList);
             return percentageCorrect;
-        }
-        else{
+        } else {
             for (int i = 0; i < modelList.size(); i++) {
                 String[] modelTaskString = modelList.get(i).split(" ", 2);
                 String[] userTaskString = userList.get(i).split(" ", 2);
@@ -333,9 +332,9 @@ public class Level {
             output.add("Correct number of Tasks: " + sizeDifference + "%");
 
             if (sizeDifference == 100) {
-                if(checkCorrectTasks(modelTaskList,modifieduserTaskList)){
-                    output.add("You have the correct number and types of tasks required, " +
-                            "Please check the order of your tasks");
+                if (checkCorrectTasks(modelTaskList,modifieduserTaskList)) {
+                    output.add("You have the correct number and types of tasks required, "
+                            + "Please check the order of your tasks");
                 }
                 int correctTaskPercentage  = compareLists(modelTaskList, modifieduserTaskList);
                 output.add(" % of correct Tasks: " + correctTaskPercentage + "%");
