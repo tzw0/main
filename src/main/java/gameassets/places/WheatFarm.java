@@ -18,6 +18,7 @@ public class WheatFarm extends Farm {
 
     /**
      * Checks whether the wheatfarm currently has seeds.
+     *
      * @return true if wheatfarm has seeds, false if wheatfarm has no seeds.
      */
     public boolean hasSeeds() {
@@ -26,6 +27,7 @@ public class WheatFarm extends Farm {
 
     /**
      * Checks whether the wheatfarm currently has wheat.
+     *
      * @return true if wheatfarm has wheat, false if wheatfarm has no wheat.
      */
     public boolean hasWheat() {
@@ -34,6 +36,7 @@ public class WheatFarm extends Farm {
 
     /**
      * Checks whether the wheatfarm currently has grain.
+     *
      * @return true if wheatfarm has grain, false if wheatfarm has no grain.
      */
     public boolean hasGrain() {
@@ -52,15 +55,16 @@ public class WheatFarm extends Farm {
 
     /**
      * Constructor for wheatfarm when it is loaded from a save file.
+     *
      * @param obj the Json Objects from the load file.
      * @throws FarmioException if there are errors in the input.
      */
     public WheatFarm(JSONObject obj) throws FarmioException {
         try {
-            this.seeds = (int) (long) obj.get(JSON_KEY_SEED);
-            this.seedlings = (int) (long) obj.get(JSON_KEY_SEEDLING);
-            this.wheat = (int) (long) obj.get(JSON_KEY_WHEAT);
-            this.grain = (int) (long) obj.get(JSON_KEY_GRAIN);
+            this.seeds = Math.max((int) (long) obj.get(JSON_KEY_SEED), 0);
+            this.seedlings = Math.max((int) (long) obj.get(JSON_KEY_SEEDLING), 0);
+            this.wheat = Math.max((int) (long) obj.get(JSON_KEY_WHEAT), 0);
+            this.grain = Math.max((int) (long) obj.get(JSON_KEY_GRAIN), 0);
         } catch (Exception e) {
             throw new FarmioException("Game save corrupted!");
         }
@@ -68,6 +72,7 @@ public class WheatFarm extends Farm {
 
     /**
      * Gets number of seeds.
+     *
      * @return seeds as the amount of seeds in the wheatfarm.
      */
     public int getSeeds() {
@@ -76,6 +81,7 @@ public class WheatFarm extends Farm {
 
     /**
      * Gets number of seedlings.
+     *
      * @return seedlings as the amount of seedlings in the wheatfarm.
      */
     public int getSeedlings() {
@@ -84,6 +90,7 @@ public class WheatFarm extends Farm {
 
     /**
      * Gets number of wheat.
+     *
      * @return wheat as the amount of wheat in the wheatfarm.
      */
     public int getWheat() {
@@ -92,6 +99,7 @@ public class WheatFarm extends Farm {
 
     /**
      * Gets number of grains.
+     *
      * @return seeds as the amount of grain in the wheatfarm.
      */
     public int getGrain() {
@@ -141,6 +149,7 @@ public class WheatFarm extends Farm {
 
     /**
      * Increases the amount of money user has.
+     *
      * @return the amount of money earned.
      */
     @Override

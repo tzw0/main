@@ -73,9 +73,9 @@ public class Farmer {
     public Farmer(JSONObject jsonObject) throws FarmioException {
         try {
             this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
-            this.gold = (int) (long) jsonObject.get(JSON_KEY_GOLD);
-            this.day = (int) (long) jsonObject.get(JSON_KEY_DAY);
-            this.location = (String) jsonObject.get(JSON_KEY_LOCATION);
+            this.gold = Math.max((int) (long) jsonObject.get(JSON_KEY_GOLD), 0);
+            this.day = Math.max((int) (long) jsonObject.get(JSON_KEY_DAY), 0);
+            this.location = validateLoaction((String) jsonObject.get(JSON_KEY_LOCATION));
             this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
             this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
             this.cowFarm = new CowFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_COW));
@@ -286,6 +286,7 @@ public class Farmer {
 
     /**
      * Checks if curent task has failed and resets current task.
+     *
      * @return true if current task has failed and false otherwise.
      */
     public boolean isHasfailedCurrentTask() {
@@ -657,7 +658,7 @@ public class Farmer {
             this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
             this.gold = Math.max((int) (long) jsonObject.get(JSON_KEY_GOLD), 0);
             this.day = Math.max((int) (long) jsonObject.get(JSON_KEY_DAY), 0);
-            this.location = (String) jsonObject.get(JSON_KEY_LOCATION);
+            this.location = validateLoaction((String) jsonObject.get(JSON_KEY_LOCATION));
             this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
             this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
             this.cowFarm = new CowFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_COW));
@@ -708,9 +709,16 @@ public class Farmer {
         return object;
     }
 
+    /**
+     * Validates and format input location.
+     *
+     * @param jsonLocation string to be validated and formatted.
+     * @return formatted string location.
+     * @throws FarmioException invalid location.
+     */
     private String validateLoaction(String jsonLocation) throws FarmioException {
-        for (String location: LOCATIONS) {
-            if(jsonLocation.equalsIgnoreCase(location)){
+        for (String location : LOCATIONS) {
+            if (jsonLocation.equalsIgnoreCase(location)) {
                 return location;
             }
         }
