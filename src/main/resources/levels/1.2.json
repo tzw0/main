@@ -5,7 +5,7 @@
     "Enter [Task] [Action] to buy seeds from the market."
   ],
   "feedback": [
-    "You have succesfully bought seeds using the gold you have",
+    "You have succesfully bought seeds using the gold you have, by using the [do] command",
     "Note that a symbol '->'  will appear whenever there is a change in your assets, "
   ],
   "gold": 0,
