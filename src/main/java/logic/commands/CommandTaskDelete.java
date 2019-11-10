@@ -3,8 +3,9 @@ package logic.commands;
 import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
+import frontend.Frontend;
 
-public class CommandTaskDelete extends CommandChangeTask {
+public class CommandTaskDelete extends Command {
     int taskID;
 
     public CommandTaskDelete(int taskID) {
@@ -19,13 +20,14 @@ public class CommandTaskDelete extends CommandChangeTask {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
+        Frontend frontend = farmio.getFrontend();
         if (taskID < 1 || taskID > farmio.getFarmer().taskSize()) {
             throw new FarmioException("Invalid TaskID!");
         }
         try {
             String taskToString = farmio.getFarmer().deleteTask(taskID);
-            super.saveTaskandResetScreen(farmio);
-            farmio.getFrontend().showInfo("You have deleted task: " + taskToString);
+            frontend.simulate(farmio.getLevel().getPath(), farmio.getLevel().getNarratives().size() - 1);
+            frontend.showInfo("You have deleted task: " + taskToString);
         } catch (Exception e) {
             throw new FarmioException("Error deleting task!");
         }

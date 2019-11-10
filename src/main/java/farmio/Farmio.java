@@ -50,7 +50,7 @@ public class Farmio {
 
     private void run() {
         try {
-            setupLogger();
+            setupLogger(java.util.logging.Level.INFO);
             LOGGER.log(java.util.logging.Level.INFO, "New game session started.");
             if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
                 frontend.removeClearScreen();
@@ -137,14 +137,14 @@ public class Farmio {
         this.isExit = true;
     }
 
-    private void setupLogger() throws FarmioFatalException {
+    private void setupLogger(java.util.logging.Level level) throws FarmioFatalException {
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
         Logger rootLogger = Logger.getLogger("");
         Handler[] handlers = rootLogger.getHandlers();
         for (Handler handler : handlers) {
             rootLogger.removeHandler(handler);
         }
-        logger.setLevel(java.util.logging.Level.INFO);
+        logger.setLevel(level);
         FileHandler handler;
         try {
             handler = new FileHandler("farmio.log");

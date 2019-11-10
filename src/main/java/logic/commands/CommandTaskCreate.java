@@ -7,7 +7,7 @@ import gameassets.Farmer;
 import farmio.exceptions.FarmioException;
 import logic.usercode.tasks.Task;
 
-public class CommandTaskCreate extends CommandChangeTask {
+public class CommandTaskCreate extends Command {
     private Task task;
 
     public CommandTaskCreate(Task task) {
@@ -25,7 +25,7 @@ public class CommandTaskCreate extends CommandChangeTask {
         Frontend frontend = farmio.getFrontend();
         Farmer farmer = farmio.getFarmer();
         farmer.addTask(task);
-        super.saveTaskandResetScreen(farmio);
+        frontend.simulate(farmio.getLevel().getPath(), farmio.getLevel().getNarratives().size() - 1);
         frontend.showInfo("Task [" + task.toString() + "] added! \nYou now have "
                 + farmer.getTasks().size() + " tasks!");
     }

@@ -15,7 +15,6 @@ public class CommandLevelEnd extends Command {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
-
         farmio.getFrontend().typeWriter("",true);
         String userInput = farmio.getFrontend().getInput();
         while (!userInput.equals("")) {
@@ -30,7 +29,6 @@ public class CommandLevelEnd extends Command {
         Storage storage = farmio.getStorage();
         Farmer farmer = farmio.getFarmer();
         Level level = new Level(storage.getLevel(farmer.nextLevel()),farmer.getName());
-        storage.storeFarmer(farmer);
         farmio.setLevel(level);
         farmio.getFarmer().taskClear();
         farmio.setStage(Farmio.Stage.LEVEL_START);

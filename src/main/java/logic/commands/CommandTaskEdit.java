@@ -3,10 +3,11 @@ package logic.commands;
 import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
+import frontend.Frontend;
 import logic.usercode.tasks.Task;
 import gameassets.Farmer;
 
-public class CommandTaskEdit extends CommandChangeTask {
+public class CommandTaskEdit extends Command {
     private Task task;
     private int taskID;
 
@@ -24,11 +25,12 @@ public class CommandTaskEdit extends CommandChangeTask {
     @Override
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
         Farmer farmer = farmio.getFarmer();
+        Frontend frontend = farmio.getFrontend();
         if (taskID < 1 || taskID > farmer.taskSize()) {
             throw new FarmioException("Invalid Task ID!");
         }
         farmer.editTask(taskID, task);
-        super.saveTaskandResetScreen(farmio);
-        farmio.getFrontend().showInfo("Successfully edited task!");
+        frontend.simulate(farmio.getLevel().getPath(), farmio.getLevel().getNarratives().size() - 1);
+        frontend.showInfo("Successfully edited task!");
     }
 }

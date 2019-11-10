@@ -19,6 +19,7 @@ public class CommandDayStart extends Command {
     @Override
     public void execute(Farmio farmio) throws FarmioFatalException {
         if (farmio.getStage() == TASK_ADD) {
+            farmio.getStorage().storeFarmer(farmio.getFarmer());
             Log.clearLogList(farmio);
         }
         Frontend frontend = farmio.getFrontend();

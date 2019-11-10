@@ -3,9 +3,10 @@ package logic.commands;
 import farmio.exceptions.FarmioException;
 import farmio.exceptions.FarmioFatalException;
 import farmio.Farmio;
+import frontend.Frontend;
 import logic.usercode.tasks.Task;
 
-public class CommandTaskInsert extends CommandChangeTask {
+public class CommandTaskInsert extends Command {
     private Task task;
     private int taskID;
 
@@ -23,8 +24,9 @@ public class CommandTaskInsert extends CommandChangeTask {
      */
     @Override
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
+        Frontend frontend = farmio.getFrontend();
         farmio.getFarmer().insertTask(taskID, task);
-        super.saveTaskandResetScreen(farmio);
-        farmio.getFrontend().showInfo("You have added a new task: " + task.toString() + " at position " + taskID);
+        frontend.simulate(farmio.getLevel().getPath(), farmio.getLevel().getNarratives().size() - 1);
+        frontend.showInfo("You have added a new task: " + task.toString() + " at position " + taskID);
     }
 }
