@@ -109,7 +109,8 @@ public abstract class Action {
             frontend.typeWriter("",true);
             String userInput = frontend.getInput();
             while (!userInput.equals("")) {
-                frontend.showWarning("Invalid Command!");
+                frontend.simulate();
+                frontend.showWarning("Invalid Command! Press [ENTER] to continue.");
                 userInput = frontend.getInput();
             }
             throw new FarmioException("Task Error!");
