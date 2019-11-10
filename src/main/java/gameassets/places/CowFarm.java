@@ -15,6 +15,7 @@ public class CowFarm extends Farm {
 
     /**
      * Checks whether the cowfarm currently has Milk.
+     *
      * @return true if milkfarm has milk, false if milkfarm has no milk.
      */
     public boolean hasMilk() {
@@ -23,6 +24,7 @@ public class CowFarm extends Farm {
 
     /**
      * Checks whether the cowfarm currently has cow.
+     *
      * @return true if cowfarm has cow, false if cowfarm has no cow.
      */
     public boolean hasCow() {
@@ -31,6 +33,7 @@ public class CowFarm extends Farm {
 
     /**
      * Checks whether the cowfarm currently has fullCow.
+     *
      * @return true if cowfarm has fullCow, false if cowfarm has no fullCow.
      */
     public boolean hasFullCow() {
@@ -48,14 +51,15 @@ public class CowFarm extends Farm {
 
     /**
      * Constructor for cowfarm when it is loaded from a save file.
+     *
      * @param obj the Json Objects from the load file.
      * @throws FarmioException if there are errors in the input.
      */
     public CowFarm(JSONObject obj) throws FarmioException {
         try {
-            this.cow = (int) (long) obj.get(JSON_KEY_COW);
-            this.milk = (int) (long) obj.get(JSON_KEY_MILK);
-            this.fullCow = (int) (long) obj.get(JSON_KEY_FULLCOW);
+            this.cow = Math.max((int) (long) obj.get(JSON_KEY_COW), 0);
+            this.milk = Math.max((int) (long) obj.get(JSON_KEY_MILK), 0);
+            this.fullCow = Math.max((int) (long) obj.get(JSON_KEY_FULLCOW), 0);
 
         } catch (Exception e) {
             throw new FarmioException("Game save corrupted!");
@@ -64,6 +68,7 @@ public class CowFarm extends Farm {
 
     /**
      * Gets number of cows.
+     *
      * @return cow as the amount of cows in the cowfarm.
      */
     public int getCow() {
@@ -72,6 +77,7 @@ public class CowFarm extends Farm {
 
     /**
      * Gets number units of milk.
+     *
      * @return milk as the amount of milk in the cowfarm.
      */
     public int getMilk() {
@@ -80,6 +86,7 @@ public class CowFarm extends Farm {
 
     /**
      * Gets number of fullCow.
+     *
      * @return fullCow as the amount of fullCow in the cowfarm.
      */
     public int getFullCow() {
@@ -116,14 +123,16 @@ public class CowFarm extends Farm {
         if (dayToMilk >= 1) {
             dayToMilk++;
         }
-        if(dayToMilk >= 2) {
+        if (dayToMilk >= 2) {
             fullCow += cow;
             cow = 0;
             dayToMilk = 0;
         }
     }
+
     /**
      * Increase amount of money user has and reset cow to 0.
+     *
      * @return the amount of money earned.
      */
     public int sellCow() {
@@ -135,6 +144,7 @@ public class CowFarm extends Farm {
 
     /**
      * Increases the amount of money user has and reset milk to 0.
+     *
      * @return the amount of money earned.
      */
     @Override

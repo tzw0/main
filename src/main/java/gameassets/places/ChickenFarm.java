@@ -16,6 +16,7 @@ public class ChickenFarm extends Farm {
 
     /**
      * Checks whether the chickenfarm currently has eggs.
+     *
      * @return true if chickenfarm has eggs, false if chickenfarm has no eggs.
      */
     public boolean hasEgg() {
@@ -24,6 +25,7 @@ public class ChickenFarm extends Farm {
 
     /**
      * Checks whether the chickenfarm currently has chickens.
+     *
      * @return true if chickenfarm has chicken, false if chickenfarm has no chicken.
      */
     public boolean hasChicken() {
@@ -32,6 +34,7 @@ public class ChickenFarm extends Farm {
 
     /**
      * Checks whether the chickenfarm currently has fullChicken.
+     *
      * @return true if chickenfarm has fullChicken, false if chickenfarm has no fullChicken.
      */
     public boolean hasFullChicken() {
@@ -49,14 +52,15 @@ public class ChickenFarm extends Farm {
 
     /**
      * Constructor for chickenfarm when it is loaded from a save file.
+     *
      * @param obj the Json Objects from the load file.
      * @throws FarmioException if there are errors in the input.
      */
     public ChickenFarm(JSONObject obj) throws FarmioException {
         try {
-            this.chicken = (int) (long) obj.get(JSON_KEY_CHICKEN);
-            this.egg = (int) (long) obj.get(JSON_KEY_EGG);
-            this.fullChicken = (int) (long) obj.get(JSON_KEY_FULLCHICKEN);
+            this.chicken = Math.max((int) (long) obj.get(JSON_KEY_CHICKEN), 0);
+            this.egg = Math.max((int) (long) obj.get(JSON_KEY_EGG), 0);
+            this.fullChicken = Math.max((int) (long) obj.get(JSON_KEY_FULLCHICKEN), 0);
         } catch (Exception e) {
             throw new FarmioException("Game save corrupted!");
         }
@@ -64,6 +68,7 @@ public class ChickenFarm extends Farm {
 
     /**
      * Gets number of chicken.
+     *
      * @return chicken as the amount of chickens in the chickenfarm.
      */
     public int getChicken() {
@@ -72,6 +77,7 @@ public class ChickenFarm extends Farm {
 
     /**
      * Gets number of eggs.
+     *
      * @return eggs as the amount of eggs in the chickenfarm.
      */
     public int getEgg() {
@@ -80,6 +86,7 @@ public class ChickenFarm extends Farm {
 
     /**
      * Gets number of fullChicken.
+     *
      * @return fullChicken as the amount of fullChicken in the chickenfarm.
      */
     public int getFullChicken() {
@@ -121,6 +128,7 @@ public class ChickenFarm extends Farm {
 
     /**
      * Increases the amount of money user has.
+     *
      * @return the amount of money earned.
      */
     @Override
