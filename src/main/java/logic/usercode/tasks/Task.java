@@ -11,10 +11,7 @@ public abstract class Task {
 
     public enum Tasktype {
         DO,
-        IF,
-        IF_ELSE,
-        FOR,
-        WHILE
+        IF
     }
 
     public static final String JSON_KEY_CONDITION = "condition";
@@ -78,13 +75,6 @@ public abstract class Task {
                 return new DoTask(condition, action);
             case IF:
                 return new IfTask(condition, action);
-            case IF_ELSE:
-                Action actionElse = Action.toAction((String) object.get(IfElseTask.JSON_KEY_ACTION_ELSE));
-                return new IfElseTask(condition, action, actionElse);
-            case FOR:
-                return new ForTask(condition, action);
-            case WHILE:
-                return new WhileTask(condition, action);
             default:
                 throw new FarmioException("Game save is corrupted.");
             }

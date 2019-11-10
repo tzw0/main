@@ -149,8 +149,7 @@ public class Parser {
         if (userInput.equals("task logic.commands") || userInput.equals("task command")) {
             return new CommandShowList("TaskCommands");
         }
-        if (userInput.startsWith("do") || userInput.startsWith("if")
-                || userInput.startsWith("for") || userInput.startsWith("while")) {
+        if (userInput.startsWith("do") || userInput.startsWith("if")) {
             return new CommandTaskCreate(parseTask(userInput));
         } else if (userInput.equals("hint")) {
             return new CommandTaskHint();
@@ -258,7 +257,7 @@ public class Parser {
             LOGGER.log(Level.WARNING, e.toString());
             throw new FarmioException("Invalid command format!");
         }
-        if (!taskType.equals("if")  && !taskType.equals("for") && !taskType.equals("while")) {
+        if (!taskType.equals("if")) {
             LOGGER.log(Level.INFO, "Deteched invalid task type for command: " + userInput);
             throw new FarmioException("Invalid task type!");
         }
@@ -270,14 +269,7 @@ public class Parser {
             LOGGER.log(Level.INFO, "Deteched invalid action for command: " + userInput);
             throw new FarmioException("Invalid Action!");
         }
-        Task task;
-        if (taskType.equals("if")) {
-            task = new IfTask(Condition.toCondition(condition), Action.toAction(action));
-        } else {
-            LOGGER.log(Level.SEVERE, "Wrong tasktype specified in:" + userInput);
-            throw new FarmioException("While and For tasks will only come in version 2.0!");
-        }
-        return task;
+        return new IfTask(Condition.toCondition(condition), Action.toAction(action));
     }
 
     /**
