@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class Farmer {
 
+    private static final String[] LOCATIONS = {"WheatFarm", "Market"};
     private static final String JSON_KEY_GOLD = "gold";
     private static final String JSON_KEY_LEVEL = "level";
     private static final String JSON_KEY_DAY = "day";
@@ -72,9 +73,9 @@ public class Farmer {
     public Farmer(JSONObject jsonObject) throws FarmioException {
         try {
             this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
-            this.gold = (int) (long) jsonObject.get(JSON_KEY_GOLD);
-            this.day = (int) (long) jsonObject.get(JSON_KEY_DAY);
-            this.location = (String) jsonObject.get(JSON_KEY_LOCATION);
+            this.gold = Math.max((int) (long) jsonObject.get(JSON_KEY_GOLD), 0);
+            this.day = Math.max((int) (long) jsonObject.get(JSON_KEY_DAY), 0);
+            this.location = validateLoaction((String) jsonObject.get(JSON_KEY_LOCATION));
             this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
             this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
             this.cowFarm = new CowFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_COW));
@@ -285,6 +286,7 @@ public class Farmer {
 
     /**
      * Checks if curent task has failed and resets current task.
+     *
      * @return true if current task has failed and false otherwise.
      */
     public boolean isHasfailedCurrentTask() {
@@ -644,7 +646,6 @@ public class Farmer {
         return cowFarm.sell();
     }
 
-
     /**
      * Change farmer variables with the data in argument JSONObject.
      *
@@ -655,9 +656,9 @@ public class Farmer {
     public Farmer setJson(JSONObject jsonObject) throws FarmioException {
         try {
             this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
-            this.gold = (int) (long) jsonObject.get(JSON_KEY_GOLD);
-            this.day = (int) (long) jsonObject.get(JSON_KEY_DAY);
-            this.location = (String) jsonObject.get(JSON_KEY_LOCATION);
+            this.gold = Math.max((int) (long) jsonObject.get(JSON_KEY_GOLD), 0);
+            this.day = Math.max((int) (long) jsonObject.get(JSON_KEY_DAY), 0);
+            this.location = validateLoaction((String) jsonObject.get(JSON_KEY_LOCATION));
             this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
             this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
             this.cowFarm = new CowFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_COW));
@@ -706,5 +707,21 @@ public class Farmer {
     public JSONObject updateJson(JSONObject object) {
         object.replace(JSON_KEY_TASK_LIST, tasks.toJson());
         return object;
+    }
+
+    /**
+     * Validates and format input location.
+     *
+     * @param jsonLocation string to be validated and formatted.
+     * @return formatted string location.
+     * @throws FarmioException invalid location.
+     */
+    private String validateLoaction(String jsonLocation) throws FarmioException {
+        for (String location : LOCATIONS) {
+            if (jsonLocation.equalsIgnoreCase(location)) {
+                return location;
+            }
+        }
+        throw new FarmioException("Game save is corrupted.");
     }
 }
