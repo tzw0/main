@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ParserTest {
     @Test
-    public void doTest(){
+    public void doTest() {
         try {
             Parser.parse("do", Farmio.Stage.TASK_ADD);
             assert false;

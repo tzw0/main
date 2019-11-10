@@ -105,10 +105,10 @@ public class TaskListTest {
     @Test
     public void testTaskDelete() throws FarmioException {
         try {
-            DoTask t1 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
-            DoTask t2 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
             tasks.deleteAll();
             assertEquals(tasks.size(), 0);
+            DoTask t1 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
+            DoTask t2 = new DoTask(new BooleanCondition(BooleanConditionType.TRUE), new BuySeedsAction());
             tasks.addTask(t1);
             tasks.addTask(t2);
             tasks.addTask(t1);
@@ -123,7 +123,7 @@ public class TaskListTest {
         } catch (FarmioException e) {
             assert true;
         }
-        try{
+        try {
             tasks.deleteTask(5);
             assert false;
         } catch (FarmioException e) {
