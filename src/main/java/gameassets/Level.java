@@ -222,6 +222,12 @@ public class Level {
         return splitTaskList;
     }
 
+    /**
+     * Check whether the user has all the necessary task.
+     * @param modelList model answer list
+     * @param userList user task list
+     * @return whether the tasks are equal
+     */
     public boolean checkCorrectTasks(List<String> modelList, List<String> userList){
         if (modelList == null && userList == null) {
             return true;
@@ -237,9 +243,38 @@ public class Level {
 
         Collections.sort(userList);
         Collections.sort(modelList);
+
         return userList.equals(modelList);
     }
 
+    /**
+     * Checks the percentage of tasks that are correct.
+     * @param modelList model task List
+     * @param userList user task list
+     * @return percentage of correct tasks
+     */
+    public int checkPercentageCorrectTasks(List<String> modelList, List<String> userList){
+        if (modelList == null && userList == null) {
+            return 0;
+        }
+
+        modelList = new ArrayList<String>(modelList);
+        userList = new ArrayList<String>(userList);
+
+        Collections.sort(userList);
+        Collections.sort(modelList);
+
+        int ctr = 0;
+        for(int i = 0; i < modelList.size(); i++) {
+            String userTask = userList.get(i);
+            String modeltask = modelList.get(i);
+            if (userTask.equals(modeltask)) {
+                ctr += 1;
+            }
+        }
+        double percentage = (ctr * 100.0f) / modelList.size();
+        return (int) percentage;
+    }
 
     /**
      * Compares the lists precision.
@@ -250,32 +285,34 @@ public class Level {
     public int compareLists(List<String> modelList, List<String> userList) {
         double sameTaskType = 0;
         double sameActionType = 0;
-
-        //compare whether the tasks are inside are inside
         if(checkCorrectTasks(modelList,userList)){
+            int percentageCorrect = checkPercentageCorrectTasks(modelList, userList);
+            return percentageCorrect;
+        }
+        else{
+            for (int i = 0; i < modelList.size(); i++) {
+                String[] modelTaskString = modelList.get(i).split(" ", 2);
+                String[] userTaskString = userList.get(i).split(" ", 2);
+                String modelTask = modelTaskString[0];
+                String userTask = userTaskString[0];
+                String modelAction = modelTaskString[1];
+                String userAction = userTaskString[1];
+                if (modelTask.equals(userTask)) {
+                    sameTaskType += 1;
+                }
+                if (modelAction.equals(userAction)) {
+                    sameActionType += 1;
+                }
+
+            }
+
+            double probTask = (sameTaskType * 100.0f) / modelList.size();
+            double probAction = (sameActionType * 100.0f) / modelList.size();
+            double precision = (probAction * probTask) / 100;
+            return (int) precision;
 
         }
 
-        for (int i = 0; i < modelList.size(); i++) {
-            String[] modelTaskString = modelList.get(i).split(" ", 2);
-            String[] userTaskString = userList.get(i).split(" ", 2);
-            String modelTask = modelTaskString[0];
-            String userTask = userTaskString[0];
-            String modelAction = modelTaskString[1];
-            String userAction = userTaskString[1];
-            if (modelTask.equals(userTask)) {
-                sameTaskType += 1;
-            }
-            if (modelAction.equals(userAction)) {
-                sameActionType += 1;
-            }
-            //return  (int)((sameTaskType * 100.0f) / modelList.size());
-        }
-
-        double probTask = (sameTaskType * 100.0f) / modelList.size();
-        double probAction = (sameActionType * 100.0f) / modelList.size();
-        double precision = (probAction * probTask) / 100;
-        return (int) precision;
     }
 
     /**
@@ -293,11 +330,14 @@ public class Level {
 
         if (levelNumber >= 1.2) {
             int sizeDifference = compareSizeDifference(modelTaskList, modifieduserTaskList);
-            output.add("Correct no of Tasks: " + sizeDifference + "%");
+            output.add("Correct number of Tasks: " + sizeDifference + "%");
 
             if (sizeDifference == 100) {
+                if(checkCorrectTasks(modelTaskList,modifieduserTaskList)){
+                    output.add("You have the correct number and types of tasks required, " +
+                            "Please check the order of your tasks");
+                }
                 int correctTaskPercentage  = compareLists(modelTaskList, modifieduserTaskList);
-                
                 output.add(" % of correct Tasks: " + correctTaskPercentage + "%");
             }
         }
