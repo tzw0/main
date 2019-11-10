@@ -112,7 +112,7 @@ public class StorageManager implements Storage {
             return null;
         }
         String path = System.getProperty("user.dir");
-        path = path.concat(System.getProperty("os.name").toLowerCase().startsWith("win")?"\\":"/");
+        path = path.concat(System.getProperty("os.name").toLowerCase().startsWith("win") ? "\\" : "/");
         path = path.concat(GAME_FILENAME);
         return path;
     }

@@ -12,8 +12,8 @@ public class SimulationTest {
     Farmio farmio;
 
     public SimulationTest() throws FarmioFatalException{
-        farmio = new Farmio();
-        farmio.getFrontend().setDummy();
+        farmio = new Farmio(true);
+        farmio.getFrontend().setDummyUi();
         farmio.setLevel(new Level(farmio.getStorage().getLevel(1.1), "tester"));
     }
     @Test

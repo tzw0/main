@@ -2,7 +2,6 @@ package farmio;
 
 import gameassets.Farmer;
 import gameassets.Level;
-import gameassets.Log;
 import logic.commands.Command;
 import logic.commands.CommandWelcome;
 import farmio.exceptions.FarmioException;
@@ -11,6 +10,7 @@ import frontend.AsciiColours;
 import frontend.Frontend;
 import logic.Logic;
 import storage.Storage;
+import storage.StorageDummy;
 import storage.StorageManager;
 
 import java.io.IOException;
@@ -32,10 +32,18 @@ public class Farmio {
     /**
      * Farmio constructor used to initiate an instance of Farmio.
      */
-    public Farmio() {
-        storage = new StorageManager();
-        farmer = new Farmer();
-        frontend = new Frontend(this);
+    public Farmio(boolean isActual) {
+        if (isActual) {
+            storage = new StorageManager();
+            farmer = new Farmer();
+            frontend = new Frontend(this);
+        } else {
+            storage = new StorageDummy();
+            farmer = new Farmer();
+            frontend = new Frontend(this);
+            frontend.setDummyUi();
+        }
+
         stage = Stage.WELCOME;
         isExit = false;
     }
@@ -67,7 +75,7 @@ public class Farmio {
     }
 
     public static void main(String[] args) {
-        new Farmio().run();
+        new Farmio(true).run();
     }
 
     public enum Stage {
@@ -120,7 +128,7 @@ public class Farmio {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    
+
     public void setLevel(Level level) {
         this.level = level;
     }

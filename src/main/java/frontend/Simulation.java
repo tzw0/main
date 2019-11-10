@@ -14,7 +14,7 @@ class Simulation {
     private static final int SLEEP_TIME = 300;
     private Farmio farmio;
     private Storage storage;
-    private Frontend frontend;
+    private Ui ui;
     private Farmer farmer;
     private static String lastPath;
     private static int lastFrameId;
@@ -24,14 +24,22 @@ class Simulation {
      * Creates a Simulation for the game, farmio.
      * @param farmio the game that is being simulated.
      */
-    Simulation(Farmio farmio) {
+    Simulation(Farmio farmio, Ui ui) {
         this.farmio = farmio;
+        this.ui = ui;
         storage = farmio.getStorage();
-        frontend = farmio.getFrontend();
         farmer = farmio.getFarmer();
         lastPath = "Welcome";
         lastFrameId = 1;
         hadFullscreen = true;
+    }
+
+    /**
+     * Changes the ui used for simulation
+     * @param ui the new ui to be used
+     */
+    void setUi(Ui ui) {
+        this.ui = ui;
     }
 
     /**
@@ -41,10 +49,10 @@ class Simulation {
     public void simulate(ArrayList<String> unformattedFrame, boolean isFullscreen) {
         refresh();
         if (isFullscreen) {
-            frontend.show(GameConsole.blankConsole(unformattedFrame, GameConsole.FULL_CONSOLE_WIDTH,
+            ui.show(GameConsole.blankConsole(unformattedFrame, GameConsole.FULL_CONSOLE_WIDTH,
                     GameConsole.FULL_CONSOLE_HEIGHT));
         } else {
-            frontend.show(GameConsole.fullConsole(unformattedFrame, farmer, farmio.getLevel().getGoals(),
+            ui.show(GameConsole.fullConsole(unformattedFrame, farmer, farmio.getLevel().getGoals(),
                     farmio.getLevel().getObjective(), GameConsole.FRAME_SECTION_WIDTH,
                     GameConsole.FRAME_SECTION_HEIGHT));
         }
@@ -119,10 +127,9 @@ class Simulation {
      */
     private void refresh() {
         storage = farmio.getStorage();
-        frontend = farmio.getFrontend();
         farmer = farmio.getFarmer();
-        frontend.sleep(SLEEP_TIME);
-        frontend.clearScreen();
+        ui.sleep(SLEEP_TIME);
+        ui.clearScreen();
     }
 
     /**
@@ -131,7 +138,6 @@ class Simulation {
      * @throws FarmioException if error in parsing input
      */
     void showNarrative() throws FarmioFatalException, FarmioException {
-        frontend = farmio.getFrontend();
         storage = farmio.getStorage();
         farmer = farmio.getFarmer();
         Level level = farmio.getLevel();
@@ -139,15 +145,15 @@ class Simulation {
         int lastFrameId = level.getNarratives().size() - 1;
         for (String narrative: level.getNarratives()) {
             String userInput;
-            userInput = frontend.getInput();
+            userInput = ui.getInput();
             while (!userInput.equals("") && !userInput.toLowerCase().equals("skip")
                     && !userInput.toLowerCase().equals("exit") && !userInput.toLowerCase().equals("quit game")) {
                 simulate();
-                frontend.showWarning("Invalid Command for story mode!");
-                frontend.show("Story segment only accepts [skip] to skip the story or pressing [ENTER] to continue "
+                ui.showWarning("Invalid Command for story mode!");
+                ui.show("Story segment only accepts [skip] to skip the story or pressing [ENTER] to continue "
                         + "with the narrative.\nIf you wish to use other logic.commands, enter [skip] followed by "
                         + "entering the command of your choice.");
-                userInput = frontend.getInput();
+                userInput = ui.getInput();
             }
             if (userInput.toLowerCase().equals("exit") || userInput.toLowerCase().equals("quit game")) {
                 Parser.parse(userInput, Farmio.Stage.LEVEL_START).execute(farmio);
@@ -157,10 +163,10 @@ class Simulation {
                 break;
             }
             simulate(level.getPath(), frameId++);
-            frontend.typeWriter(narrative, true);
+            ui.typeWriter(narrative, true);
         }
         simulate(level.getPath(), lastFrameId);
-        frontend.typeWriter(level.getNarratives().get(lastFrameId), false);
+        ui.typeWriter(level.getNarratives().get(lastFrameId), false);
         showLevelBegin();
     }
 
@@ -168,7 +174,7 @@ class Simulation {
      * Shows the level begin String.
      */
     private void showLevelBegin() {
-        frontend.show("\n"
+        ui.show("\n"
                 + " ".repeat(GameConsole.FULL_CONSOLE_WIDTH / 2 - 8)
                 + AsciiColours.GREEN
                 + AsciiColours.UNDERLINE
