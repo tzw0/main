@@ -6,10 +6,11 @@ import farmio.Farmio;
 
 import java.util.ArrayList;
 
-public class Log extends TaskList{
+public class Log extends TaskList {
 
     protected TaskList logTasklist;
-    Log(){
+
+    Log() {
         logTasklist = new TaskList();
     }
 
@@ -19,7 +20,7 @@ public class Log extends TaskList{
      * Empties the LogList.
      * @param farmio farmio current state
      */
-    public static void clearLogList(Farmio farmio){
+    public static void clearLogList(Farmio farmio) {
         if (!farmio.getFarmer().getLogTaskList().isEmpty()) {
             farmio.getFarmer().getLogTaskList().deleteAll();
         }
@@ -29,22 +30,22 @@ public class Log extends TaskList{
      * Returns a string list for invalid log.
      * @return String Array to be used by toStringSplitLogArray
      */
-    public ArrayList<String> invalidLog(){
-        ArrayList<String> List = new ArrayList<String>();
-        List.add("--------------------INVALID-LOG---------------------");
-        List.add("Please enter a number greater than 0 ");
-        return List;
+    public ArrayList<String> invalidLog() {
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("--------------------INVALID-LOG---------------------");
+        list.add("Please enter a number greater than 0 ");
+        return list;
     }
 
     /**
      * Returns a string list for empty log.
      * @return String Array to be used by toStringSplitLogArray
      */
-    public ArrayList<String> emptyLog(){
-        ArrayList<String> List = new ArrayList<String>();
-        List.add("----------------------EMPTY-LOG---------------------");
-        List.add("                  [Log Page is empty]               ");
-        return List;
+    public ArrayList<String> emptyLog() {
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("----------------------EMPTY-LOG---------------------");
+        list.add("                  [Log Page is empty]               ");
+        return list;
     }
 
 
@@ -65,10 +66,10 @@ public class Log extends TaskList{
 
             String output = "";
             output +=  ((i + 1) + ". " + "Farmer");
-            if (tasktype.equals("IF")) {
-               output += " checks  ";
-               if (taskCondition.equals("hasSeeds")) {
-                   output += "if he has seeds in his assets";
+              if (tasktype.equals("IF")) {
+                output += " checks  ";
+                if (taskCondition.equals("hasSeeds")) {
+                    output += "if he has seeds in his assets";
                 } else if (taskCondition.equals("hasWheat")) {
                    output += "if there is any wheat which can be harvested";
                 } else if (taskCondition.equals("hasGrain")) {
@@ -79,23 +80,18 @@ public class Log extends TaskList{
                 output += " then he";
             }
             if (taskAction.equals("buySeeds")) {
-               output += " buys some seeds";
+                output += " buys some seeds";
             } else if (taskAction.equals("harvestWheat")) {
-               output += " harvest the wheat";
-            }
-            else if (taskAction.equals("plantSeeds")) {
+                output += " harvest the wheat";
+            } else if (taskAction.equals("plantSeeds")) {
                output += " plants his seedling";
-            }
-            else if (taskAction.equals("sellGrain")) {
+            } else if (taskAction.equals("sellGrain")) {
                output += " sells his grain";
-            }
-            else if (taskAction.equals("gotoMarket")) {
+            } else if (taskAction.equals("gotoMarket")) {
                output += " travels to the Market";
-            }
-            else if (taskAction.equals("gotoWheatFarm")) {
+            } else if (taskAction.equals("gotoWheatFarm")) {
                output += " travels to the Wheat Farm";
-            }
-            else {
+            } else {
                output += "";
             }
             list.add(output);

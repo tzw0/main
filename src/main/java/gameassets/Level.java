@@ -205,7 +205,7 @@ public class Level {
     public List<String> convertStringToList(String modelAnswer) {
         String[] taskItems = modelAnswer.split("\\|");
         List<String> modelTaskList = new ArrayList<>();
-        for(int i = 1; i < taskItems.length ; i++){
+        for (int i = 1; i < taskItems.length; i++) {
             modelTaskList.add(taskItems[i]);
         }
         return  modelTaskList;
@@ -236,8 +236,8 @@ public class Level {
         double sameTaskType = 0;
         double sameActionType = 0;
         for (int i = 0; i < modelList.size(); i++) {
-            String modelTaskString[] = modelList.get(i).split(" ", 2);
-            String userTaskString[] = userList.get(i).split(" ", 2);
+            String[] modelTaskString = modelList.get(i).split(" ", 2);
+            String[] userTaskString = userList.get(i).split(" ", 2);
             String modelTask = modelTaskString[0];
             String userTask = userTaskString[0];
             String modelAction = modelTaskString[1];
@@ -253,7 +253,7 @@ public class Level {
 
         double probTask = (sameTaskType * 100.0f) / modelList.size();
         double probAction = (sameActionType * 100.0f) / modelList.size();
-        double precision = (probAction * probTask)/ 100;
+        double precision = (probAction * probTask) / 100;
         return (int) precision;
     }
 
@@ -270,11 +270,11 @@ public class Level {
         List<String> modifieduserTaskList = convertTaskListFormat(userTaskList);
 
 
-        if(levelNumber >= 1.2) {
+        if (levelNumber >= 1.2) {
             int sizeDifference = compareSizeDifference(modelTaskList, modifieduserTaskList);
             output.add("Accuracy: " + sizeDifference + "%");
 
-            if(sizeDifference == 100){
+            if (sizeDifference == 100) {
                 int precision  = compareLists(modelTaskList, modifieduserTaskList);
                 output.add("Task Precision: " + precision + "%");
             }
@@ -289,16 +289,16 @@ public class Level {
      * @param userAnswer  user answer list
      * @return sizeDifference
      */
-    public int compareSizeDifference(List<String> modelAnswer, List<String> userAnswer){
-       int modelAnswerSize = modelAnswer.size();
-       int userAnswerSize = userAnswer.size();
-       if (modelAnswerSize == userAnswerSize) {
-           return 100;
-       }    else if (modelAnswerSize > userAnswerSize) {
-           return (int)((userAnswerSize * 100.0f) / modelAnswerSize);
-       }    else {
-           return (int)((modelAnswerSize * 100.0f) / userAnswerSize);
-       }
+    public int compareSizeDifference(List<String> modelAnswer, List<String> userAnswer) {
+        int modelAnswerSize = modelAnswer.size();
+        int userAnswerSize = userAnswer.size();
+        if (modelAnswerSize == userAnswerSize) {
+            return 100;
+        }    else if (modelAnswerSize > userAnswerSize) {
+            return (int)((userAnswerSize * 100.0f) / modelAnswerSize);
+        }    else {
+            return (int)((modelAnswerSize * 100.0f) / userAnswerSize);
+        }
     }
 
     /**
