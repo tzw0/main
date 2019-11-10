@@ -7,6 +7,11 @@ public interface Ui {
     void removeClearScreen();
 
     /**
+     * Sets simulations to run faster.
+     */
+    void setFastMode();
+
+    /**
      * Prints the message in the terminal.
      * @param message to be printed.
      */

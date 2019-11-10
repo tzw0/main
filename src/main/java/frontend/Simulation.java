@@ -19,6 +19,7 @@ class Simulation {
     private static String lastPath;
     private static int lastFrameId;
     private static boolean hadFullscreen;
+    private static boolean isFastMode;
 
     /**
      * Creates a Simulation for the game, farmio.
@@ -32,14 +33,22 @@ class Simulation {
         lastPath = "Welcome";
         lastFrameId = 1;
         hadFullscreen = true;
+        isFastMode = false;
     }
 
     /**
-     * Changes the ui used for simulation
+     * Changes the ui used for simulation.
      * @param ui the new ui to be used
      */
     void setUi(Ui ui) {
         this.ui = ui;
+    }
+
+    /**
+     * Sets simulations to be run in fast mode.
+     */
+    public static void setFastMode() {
+        isFastMode = true;
     }
 
     /**
@@ -119,6 +128,10 @@ class Simulation {
      * @throws FarmioFatalException if any file cannot be found.
      */
     void simulate(String framePath, int startFrame, int endFrame) throws FarmioFatalException {
+        if (isFastMode) {
+            simulate();
+            return;
+        }
         simulate(framePath, startFrame, endFrame, false);
     }
 
