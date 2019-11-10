@@ -27,7 +27,7 @@ public class UiManager implements Ui {
      */
     @Override
     public void setFastMode() {
-        isFastMode = true;
+        isFastMode = !isFastMode;
     }
 
     /**

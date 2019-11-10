@@ -7,9 +7,9 @@ import farmio.exceptions.FarmioFatalException;
 public class CommandSetFastMode extends Command {
     @Override
     public void execute(Farmio farmio) throws FarmioException, FarmioFatalException {
+        farmio.getFrontend().typeWriter("Fastmode has been toggled", false);
+        farmio.getFrontend().sleep(300);
         farmio.getFrontend().setFastMode();
-        farmio.getFrontend().typeWriter("Simulations set to run at fast mode", false);
-        farmio.getFrontend().sleep(50);
         farmio.getFrontend().simulate();
     }
 }
