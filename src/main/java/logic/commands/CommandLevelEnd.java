@@ -18,7 +18,8 @@ public class CommandLevelEnd extends Command {
         farmio.getFrontend().typeWriter("",true);
         String userInput = farmio.getFrontend().getInput();
         while (!userInput.equals("")) {
-            farmio.getFrontend().showWarning("Invalid Command!");
+            farmio.getFrontend().simulate();
+            farmio.getFrontend().showWarning("Invalid Command! Press [ENTER] to continue.");
             userInput = farmio.getFrontend().getInput();
         }
         farmio.getFrontend().simulate("LevelEnd", 0,4);

@@ -125,7 +125,7 @@ public class UiManager implements Ui {
                 + "Hint:"
                 + AsciiColours.SANE);
         show(text);
-        show("~.Enter [Start] when you are ready to complete the objective");
+        show("~.Enter [start] when you are ready to complete the objective");
     }
 
 
