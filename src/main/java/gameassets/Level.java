@@ -457,4 +457,50 @@ public class Level {
         return objective;
     }
 
+    /**
+     * Get the number of seeds required to complete the level.
+     * @return number of seeds required
+     */
+    public int getEndSeeds(){ return endSeeds;}
+
+
+    /**
+     * Get the number of seedslings required to complete the level.
+     * @return number of seedlings required
+     */
+    public int getEndSeedlings(){return endSeedlings;}
+
+    /**
+     * Get the number of wheat required to complete the level.
+     * @return number of wheat required
+     */
+    public int getEndWheat(){return endWheat;}
+
+    /**
+     * Get the number of grain required to complete the level.
+     * @return number of grain required
+     */
+     public int getEndGrain(){return endGrain;}
+
+    /**
+     * Get the number of gold required to complete the level.
+     * @return number of gold required
+     */
+    public int getEndGold(){return endGold;}
+
+    /**
+     * Get the deadline for the level.
+     * @return deadline for the level
+     */
+    public int getDeadline(){return deadline;}
+
+    /**
+     * Get model answer for the level.
+     * @return model answer for the level
+     */
+     public String getModelAnswer(){return modelAnswer;}
+
+
+
+
 }
