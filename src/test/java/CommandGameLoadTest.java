@@ -48,7 +48,7 @@ public class CommandGameLoadTest {
             JSONParser parser = new JSONParser();
             JSONObject jsonFarmer = (JSONObject) parser.parse(FARMER_JSON);
             JSONObject jsonLevel = (JSONObject) parser.parse(LEVEL_JSON);
-            Farmer farmer = new Farmer(jsonFarmer);
+            Farmer farmer = new Farmer().setJson(jsonFarmer);
             Level level = new Level(jsonLevel, farmer.getName());
             Farmio farmio = new Farmio(false);
             StorageDummy storage = (StorageDummy) farmio.getStorage();
