@@ -10,7 +10,7 @@ public class Log extends TaskList {
 
     protected TaskList logTasklist;
 
-    Log() {
+    public Log() {
         logTasklist = new TaskList();
     }
 
