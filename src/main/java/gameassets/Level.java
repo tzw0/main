@@ -94,7 +94,7 @@ public class Level {
         INVALID
     }
 
-    private boolean checkDeadlineExceeded(int currentDay) {
+    public boolean checkDeadlineExceeded(int currentDay) {
         return deadline < currentDay;
     }
 
