@@ -65,36 +65,6 @@ public class Farmer {
     }
 
     /**
-     * Constructor to initialize farmer object from saved JSON file.
-     *
-     * @param jsonObject load variables saved from save file.
-     * @throws FarmioException if level and name are not valid.
-     */
-    public Farmer(JSONObject jsonObject) throws FarmioException {
-        try {
-            this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
-            this.gold = Math.max((int) (long) jsonObject.get(JSON_KEY_GOLD), 0);
-            this.day = Math.max((int) (long) jsonObject.get(JSON_KEY_DAY), 0);
-            this.location = validateLoaction((String) jsonObject.get(JSON_KEY_LOCATION));
-            this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
-            this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
-            this.cowFarm = new CowFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_COW));
-            this.tasks = new TaskList((JSONArray) jsonObject.get(JSON_KEY_TASK_LIST));
-            this.currentTask = -1;
-            this.hasfailedCurrentTask = false;
-            String savedName = (String) jsonObject.get(JSON_KEY_NAME);
-            String loadName = savedName.toUpperCase();
-            isValidName(loadName);
-            isValidTaskList(this.tasks);
-            isValidAssets(this);
-            this.name = loadName;
-            this.logTaskList = new Log();
-        } catch (Exception e) {
-            throw new FarmioException("Game save corrupted!");
-        }
-    }
-
-    /**
      * Checks whether the name that was loaded from the save file is a valid name.
      *
      * @param loadName as the name that is loaded from the save file.
@@ -657,8 +627,8 @@ public class Farmer {
     public Farmer setJson(JSONObject jsonObject) throws FarmioException {
         try {
             this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
-            this.gold = Math.max((int) (long) jsonObject.get(JSON_KEY_GOLD), 0);
-            this.day = Math.max((int) (long) jsonObject.get(JSON_KEY_DAY), 0);
+            this.gold =  Math.min(Math.max((int)(long) jsonObject.get(JSON_KEY_GOLD), 0), 999999);
+            this.day = Math.min(Math.max((int) (long) jsonObject.get(JSON_KEY_DAY), 0), 999999);
             this.location = validateLoaction((String) jsonObject.get(JSON_KEY_LOCATION));
             this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
             this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
@@ -700,15 +670,12 @@ public class Farmer {
         JSONObject obj = new JSONObject();
         obj.put(JSON_KEY_LEVEL, level);
         obj.put(JSON_KEY_GOLD, gold);
-
         obj.put(JSON_KEY_DAY, day);
         obj.put(JSON_KEY_LOCATION, location);
         obj.put(JSON_KEY_FARM_WHEAT, wheatFarm.toJson());
         obj.put(JSON_KEY_FARM_CHICKEN, chickenFarm.toJson());
         obj.put(JSON_KEY_FARM_COW, cowFarm.toJson());
         obj.put(JSON_KEY_TASK_LIST, tasks.toJson());
-        obj.put(JSON_KEY_TASK_CURRENT, currentTask);
-        obj.put(JSON_KEY_TASK_STATUS_FAIL, hasfailedCurrentTask);
         obj.put(JSON_KEY_NAME, name);
         return obj;
     }
