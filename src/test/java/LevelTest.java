@@ -64,35 +64,40 @@ public class LevelTest {
     public List<String> successfulFeedback;
     public Level level;
 
+    /**
+     * Intialises Level Test.
+     * @throws ParseException thrown when given wrong value
+     * @throws FarmioException if file cant be found
+     */
     public LevelTest() throws ParseException, FarmioException {
 
-       Level level = new Level(jsonLevel, "tester");
-       Farmer farmer = new Farmer(jsonFarmer);
-       Farmio farmio = new Farmio(false);
+        Level level = new Level(jsonLevel, "tester");
+        Farmer farmer = new Farmer(jsonFarmer);
+        Farmio farmio = new Farmio(false);
 
-       narratives = level.getNarratives();
-       filePath = level.getPath();
-       objective = level.getObjective();
-       hint = level.getHint();
-       endSeeds = level.getEndSeeds();
-       endSeedlings = level.getEndSeedlings();
-       endWheat = level.getEndWheat();
-       endGrain = level.getEndGrain();
-       endGold = level.getEndGold();
-       deadline = level.getDeadline();
-       modelAnswer = level.getModelAnswer();
-       successfulFeedback = level.getSuccessfulFeedback();
+        narratives = level.getNarratives();
+        filePath = level.getPath();
+        objective = level.getObjective();
+        hint = level.getHint();
+        endSeeds = level.getEndSeeds();
+        endSeedlings = level.getEndSeedlings();
+        endWheat = level.getEndWheat();
+        endGrain = level.getEndGrain();
+        endGold = level.getEndGold();
+        deadline = level.getDeadline();
+        modelAnswer = level.getModelAnswer();
+        successfulFeedback = level.getSuccessfulFeedback();
 
     }
 
     @Test
-    public void checkDeadlineExceededTest(){
+    public void checkDeadlineExceededTest() {
 
         try {
             int currentDayExceeded = 5;
             boolean deadlineExceeded = level.checkDeadlineExceeded(currentDayExceeded);
             assertEquals(true, deadlineExceeded);
-        } catch (Exception e){
+        } catch (Exception e) {
             assert false;
         }
 
@@ -100,7 +105,7 @@ public class LevelTest {
             int currentDayNotExceeded = 1;
             boolean deadlineNotExceeded = level.checkDeadlineExceeded(currentDayNotExceeded);
             assertEquals(false, deadlineNotExceeded);
-        }catch(Exception e){
+        } catch (Exception e) {
             assert false;
         }
 
@@ -109,7 +114,7 @@ public class LevelTest {
 
     @Test
     public void getSuccessfulFeedbackTest() {
-        try{
+        try {
             List<String> succesfulFeedback = level.getSuccessfulFeedback();
             List<String> testFeedback = new ArrayList<>();
             testFeedback.add("You have succesfully travelled to the market");
@@ -121,13 +126,13 @@ public class LevelTest {
                 assertEquals(succesfulFeedback.get(i), testFeedback.get(i));
             }
 
-        } catch (Exception e){
-
+        } catch (Exception e) {
+            assert false;
         }
     }
 
     @Test
-    public void convertStringtoListTest(){
+    public void convertStringtoListTest() {
         try {
             String modelAns = modelAnswer;
             List<String> expected = Arrays.asList("do buySeeds", "do gotoMarket");
@@ -135,14 +140,14 @@ public class LevelTest {
             for (int i = 0; i < expected.size(); i++) {
                 assertEquals(expected.get(i), testList.get(i));
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             assert false;
         }
 
     }
 
     @Test
-    public void convertTaskListFormatTest(){
+    public void convertTaskListFormatTest() {
         try {
             List<String> taskList = new ArrayList<>();
             taskList.add("1.do buySeeds");
@@ -157,14 +162,13 @@ public class LevelTest {
             for (int i = 0; i < compareList.size(); i++) {
                 assertEquals(testTaskList.get(i), compareList.get(i));
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             assert false;
         }
     }
 
     @Test
-    public void checkCorrectTaskTest(){
-
+    public void checkCorrectTaskTest() {
         try {
             List<String> emptyTaskList1 = new ArrayList<>();
             List<String> emptyTaskList2 = new ArrayList<>();
@@ -182,40 +186,40 @@ public class LevelTest {
             assertEquals(true, checkEmptyCondition);
             assertEquals(false, checkIncorrect);
             assertEquals(true, checkCorrect);
-        } catch (Exception e){
+        } catch (Exception e) {
             assert false;
         }
 
     }
+
     @Test
-    public void setCheckPercentageCorrectTasksTest(){
+    public void setCheckPercentageCorrectTasksTest() {
 
         try {
             List<String> taskList1 = new ArrayList<String>(Arrays.asList("do gotoMarket", "do buySeeds"));
             List<String> taskList2 = new ArrayList<String>(Arrays.asList("do gotoMarket"));
-            int checkFifty = level.checkPercentageCorrectTasks(taskList1, taskList2);
+            int checkFifty = level.checkPercentageCorrectTasks(taskList1,taskList2);
+            assertEquals(checkFifty, 50);
 
             List<String> taskList3 = new ArrayList<String>(Arrays.asList("do gotoMarket", "do buySeeds"));
             List<String> taskList4 = new ArrayList<String>(Arrays.asList("do gotoMarket", "do buySeeds"));
             int checkHundred = level.checkPercentageCorrectTasks(taskList3, taskList4);
+            assertEquals(checkHundred, 100);
 
             List<String> taskList5 = new ArrayList<>();
             List<String> taskList6 = new ArrayList<>();
             int checkEmptyList = level.checkPercentageCorrectTasks(taskList5, taskList6);
+            assertEquals(checkEmptyList, 0);
 
             List<String> taskList7 = new ArrayList<>();
             List<String> taskList8 = new ArrayList<>();
-
             taskList7.add("do gotoMarket");
             taskList8.add("do buySeeds");
 
             int checkEmpty = level.checkPercentageCorrectTasks(taskList7, taskList8);
-
-            assertEquals(checkHundred, 100);
-            assertEquals(checkFifty, 50);
-            assertEquals(checkEmptyList, 0);
             assertEquals(checkEmpty, 100);
-        } catch (Exception e){
+
+        } catch (Exception e) {
             assert false;
         }
     }
