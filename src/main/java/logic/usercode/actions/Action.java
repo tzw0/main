@@ -1,5 +1,6 @@
 package logic.usercode.actions;
 
+import farmio.Farmio;
 import farmio.exceptions.FarmioFatalException;
 import frontend.Frontend;
 import storage.Storage;
@@ -8,6 +9,7 @@ import gameassets.Farmer;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public abstract class Action {
 
@@ -106,6 +108,7 @@ public abstract class Action {
             }
         }
         if (hasError) {
+            Farmio.LOGGER.log(Level.INFO, this.toString() + " executed with an error");
             frontend.typeWriter("",true);
             String userInput = frontend.getInput();
             while (!userInput.equals("")) {
@@ -115,5 +118,6 @@ public abstract class Action {
             }
             throw new FarmioException("Task Error!");
         }
+        Farmio.LOGGER.log(Level.INFO, this.toString() + " executed");
     }
 }

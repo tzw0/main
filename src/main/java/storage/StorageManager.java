@@ -7,6 +7,7 @@ import gameassets.Farmer;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import farmio.Farmio;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -25,7 +26,6 @@ public class StorageManager implements Storage {
 
     private static final String GAME_FILENAME = "save.json";
     private JSONObject jsonFarmer;
-    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
      * Storage constructor to initialise storage object.
@@ -45,25 +45,25 @@ public class StorageManager implements Storage {
         try {
             reader = new FileReader(GAME_FILENAME);
         } catch (FileNotFoundException e) {
-            LOGGER.log(Level.WARNING, e.toString());
+            Farmio.LOGGER.log(Level.WARNING, e.toString());
             throw new FarmioException("Game save not found!");
         }
         JSONParser parser = new JSONParser();
         try {
             jsonFarmer = (JSONObject) parser.parse(reader);
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, e.toString());
+            Farmio.LOGGER.log(Level.WARNING, e.toString());
             throw new FarmioException("Game save corrupted!");
         }
         double level;
         try {
             level = (Double) jsonFarmer.get("level");
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Failed level double check. " + e.toString());
+            Farmio.LOGGER.log(Level.WARNING, "Failed level double check. " + e.toString());
             throw new FarmioException("Game level is corrupted!");
         }
         if (!getLevelExist(level)) {
-            LOGGER.log(Level.INFO, "Detected invalid level: " + level);
+            Farmio.LOGGER.log(Level.INFO, "Detected invalid level: " + level);
             throw new FarmioException("Game level is corrupted!");
         }
         return jsonFarmer;
@@ -77,7 +77,7 @@ public class StorageManager implements Storage {
             file.write(jsonFarmer.toJSONString());
             file.close();
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, e.toString());
+            Farmio.LOGGER.log(Level.WARNING, e.toString());
             throw new FarmioException("Recovery failed!");
         }
         return jsonFarmer;
@@ -130,7 +130,7 @@ public class StorageManager implements Storage {
                     break;
                 }
             } catch (IOException e) {
-                LOGGER.log(Level.WARNING, e.toString());
+                Farmio.LOGGER.log(Level.WARNING, e.toString());
                 throw new FarmioFatalException(formatFatalMessage(path));
             }
             frame.add(line);
@@ -145,7 +145,7 @@ public class StorageManager implements Storage {
         try {
             return (JSONObject) parser.parse(new InputStreamReader(getResourceStream(path)));
         } catch (IOException | ParseException e) {
-            LOGGER.log(Level.WARNING, e.toString());
+            Farmio.LOGGER.log(Level.WARNING, e.toString());
             throw new FarmioFatalException(formatFatalMessage(path));
         }
     }

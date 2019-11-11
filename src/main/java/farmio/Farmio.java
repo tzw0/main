@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Farmio {
-    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private Storage storage;
     private Farmer farmer;
     private Level level;
