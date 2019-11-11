@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Farmer {
 
@@ -627,8 +628,8 @@ public class Farmer {
     public Farmer setJson(JSONObject jsonObject) throws FarmioException {
         try {
             this.level = (Double) jsonObject.get(JSON_KEY_LEVEL);
-            this.gold =  Math.min(Math.max((int)(long) jsonObject.get(JSON_KEY_GOLD), 0), 999999);
-            this.day = Math.min(Math.max((int) (long) jsonObject.get(JSON_KEY_DAY), 0), 999999);
+            this.gold = validateInt((int) (long) jsonObject.get(JSON_KEY_GOLD));
+            this.day = validateInt((int) (long) jsonObject.get(JSON_KEY_DAY));
             this.location = validateLoaction((String) jsonObject.get(JSON_KEY_LOCATION));
             this.wheatFarm = new WheatFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_WHEAT));
             this.chickenFarm = new ChickenFarm((JSONObject) jsonObject.get(JSON_KEY_FARM_CHICKEN));
@@ -640,7 +641,6 @@ public class Farmer {
             String loadName = savedName.toUpperCase();
             isValidName(loadName);
             isValidTaskList(this.tasks);
-            isValidAssets(this);
             this.name = loadName;
         } catch (Exception e) {
             throw new FarmioException("Game save corrupted!");
@@ -656,7 +656,7 @@ public class Farmer {
      */
     private void isValidAssets(Farmer farmer) throws FarmioException {
         if (farmer.getGold() < 0 || farmer.getSeeds() < 0 || farmer.getWheat() < 0 || farmer.getSeedlings() < 0
-            || farmer.getGrain() < 0) {
+                || farmer.getGrain() < 0) {
             throw new FarmioException("Negative assets");
         }
     }
@@ -705,5 +705,19 @@ public class Farmer {
             }
         }
         throw new FarmioException("Game save is corrupted.");
+    }
+
+    /**
+     * Validates asset integer value within limits.
+     * @param number Value to be validated.
+     * @return Valid value for game assets.
+     * @throws FarmioException Invalid value for game assets.
+     */
+    public static int validateInt(int number) throws FarmioException {
+        int limit = 3000000 + new Random().nextInt(500000);
+        if (number < 0 || number > limit) {
+            throw new FarmioException("Game is corrupted");
+        }
+        return number;
     }
 }

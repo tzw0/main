@@ -1,6 +1,7 @@
 package gameassets.places;
 
 import farmio.exceptions.FarmioException;
+import gameassets.Farmer;
 import org.json.simple.JSONObject;
 
 public class WheatFarm extends Farm {
@@ -61,10 +62,10 @@ public class WheatFarm extends Farm {
      */
     public WheatFarm(JSONObject obj) throws FarmioException {
         try {
-            this.seeds = Math.max((int) (long) obj.get(JSON_KEY_SEED), 0);
-            this.seedlings = Math.max((int) (long) obj.get(JSON_KEY_SEEDLING), 0);
-            this.wheat = Math.max((int) (long) obj.get(JSON_KEY_WHEAT), 0);
-            this.grain = Math.max((int) (long) obj.get(JSON_KEY_GRAIN), 0);
+            this.seeds = Farmer.validateInt((int) (long) obj.get(JSON_KEY_SEED));
+            this.seedlings = Farmer.validateInt((int) (long) obj.get(JSON_KEY_SEEDLING));
+            this.wheat = Farmer.validateInt((int) (long) obj.get(JSON_KEY_WHEAT));
+            this.grain = Farmer.validateInt((int) (long) obj.get(JSON_KEY_GRAIN));
         } catch (Exception e) {
             throw new FarmioException("Game save corrupted!");
         }
