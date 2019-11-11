@@ -5,16 +5,23 @@ import frontend.Frontend;
 import gameassets.Level;
 import gameassets.Farmer;
 import org.junit.jupiter.api.Test;
-import logic.usercode.actions.*;
+import logic.usercode.actions.GotoFarmAction;
+import logic.usercode.actions.GotoMarketAction;
+import logic.usercode.actions.BuySeedsAction;
+import logic.usercode.actions.PlantSeedsAction;
+import logic.usercode.actions.HarvestWheatAction;
+import logic.usercode.actions.SellGrainAction;
+import logic.usercode.actions.Action;
+
 import storage.Storage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ActionTest {
-    private final ArrayList<String> LIST_OF_VALID_ACTIONS =
+    private static final ArrayList<String> LIST_OF_VALID_ACTIONS =
             new ArrayList<>(Arrays.asList("gotomarket", "gotowheatfarm", "buyseeds", "plantseeds",
                     "harvestwheat", "sellgrain"));
     private Action gotoMarketAction;
@@ -23,9 +30,11 @@ public class ActionTest {
     private Action plantSeedsAction;
     private Action harvestWheatAction;
     private Action sellGrainAction;
-    private Farmio farmio;
+
+    /**
+     * Initialises the actions for testing.
+     */
     public ActionTest() {
-        farmio = new Farmio(false);
         gotoMarketAction = new GotoMarketAction();
         buySeedsAction = new BuySeedsAction();
         gotoWheatFarmAction = new GotoFarmAction();
@@ -33,6 +42,7 @@ public class ActionTest {
         harvestWheatAction = new HarvestWheatAction();
         sellGrainAction = new SellGrainAction();
     }
+
     @Test
     void isValidActionPositiveTest() {
         for (String validAction: LIST_OF_VALID_ACTIONS) {
